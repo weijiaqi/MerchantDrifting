@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="12dp"
+    android:layout_marginBottom="24dp">
+
+    <TextView
+        android:id="@+id/tv_rank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_title"
+        android:text="TOP1"
+        android:textColor="@color/color_c2"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_toRightOf="@+id/tv_rank"
+        android:text="杨枝甘露"
+        android:textColor="@color/color_17"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/tv_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:text="383"
+        android:textColor="@color/color_97"
+        android:textSize="12sp" />
+
+    <com.merchant.drifting.view.ZzHorizontalProgressBar
+        android:id="@+id/pb_bar"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_alignStart="@+id/tv_title"
+        android:layout_alignTop="@+id/tv_rank"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/tv_rank"
+        app:zpb_bg_color="@color/color_fb"
+        app:zpb_gradient_from="@color/color_42"
+        app:zpb_gradient_to="@color/color_42"
+        app:zpb_max="100"
+        app:zpb_open_gradient="true"
+        app:zpb_open_second_gradient="true" />
+
+
+</RelativeLayout>

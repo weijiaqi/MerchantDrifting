@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/purple_200</item>
+        <item name="colorPrimaryDark">@color/purple_200</item>
+        <item name="colorAccent">@color/purple_200</item>
+        <item name="android:windowAnimationStyle">@style/Animation_Activity</item>
+    </style>
+
+    <style name="Animation_Activity">
+        <!--        <item name="android:activityOpenEnterAnimation">@anim/translate_right_to_center</item>-->
+        <!--        <item name="android:activityOpenExitAnimation">@anim/translate_center_to_left</item>-->
+        <!--        <item name="android:activityCloseEnterAnimation">@anim/translate_left_to_center</item>-->
+        <!--        <item name="android:activityCloseExitAnimation">@anim/translate_center_to_right</item>-->
+    </style>
+
+
+    <declare-styleable name="VerificationCodeView">
+        <attr name="pwv_maxLength" format="integer" />
+
+        <attr name="pwv_borderColor" format="color" />
+        <attr name="pwv_pwdColor" format="color" />
+        <attr name="pwv_haveInputBorderColor" format="color" />
+
+        <attr name="pwv_strokeWidth" format="dimension" />
+        <attr name="pwv_radius" format="dimension" />
+        <attr name="pwv_spacing" format="dimension" />
+        <attr name="pwv_asterisk" format="string" />
+
+        <attr name="pwv_borderStyle" format="enum">
+            <enum name="box" value="0" />
+            <enum name="line" value="1" />
+        </attr>
+        <attr name="pwv_pwdStyle" format="enum">
+            <enum name="circle" value="0" />
+            <enum name="asterisk" value="1" />
+            <enum name="plaintext" value="2" />
+        </attr>
+    </declare-styleable>
+
+
+
+    <declare-styleable name="ZzHorizontalProgressBar">
+        <attr name="zpb_padding" format="dimension" />
+        <attr name="zpb_bg_color" format="color|reference" />
+        <attr name="zpb_pb_color" format="color|reference" />
+        <attr name="zpb_second_pb_color" format="color|reference" />
+        <attr name="zpb_max" format="integer" />
+        <attr name="zpb_text" format="color|reference" />
+        <attr name="zpb_progress" format="integer" />
+        <attr name="zpb_show_zero_point" format="boolean" />
+        <attr name="zpb_show_second_progress" format="boolean" />
+        <attr name="zpb_second_progress" format="integer" />
+        <attr name="zpb_show_second_point_shape" format="enum">
+            <enum name="point" value="0" />
+            <enum name="line" value="1" />
+        </attr>
+        <attr name="zpb_open_gradient" format="boolean" />
+        <attr name="zpb_gradient_from" format="color|reference" />
+        <attr name="zpb_gradient_to" format="color|reference" />
+        <attr name="zpb_open_second_gradient" format="boolean" />
+        <attr name="zpb_second_gradient_from" format="color|reference" />
+        <attr name="zpb_second_gradient_to" format="color|reference" />
+        <attr name="zpb_show_mode" format="enum">
+            <enum name="round" value="0" />
+            <enum name="rect" value="1" />
+            <enum name="round_rect" value="2" />
+        </attr>
+        <attr name="zpb_round_rect_radius" format="dimension|reference" />
+        <attr name="zpb_draw_border" format="boolean" />
+        <attr name="zpb_border_width" format="dimension|reference" />
+        <attr name="zpb_border_color" format="color|reference" />
+
+    </declare-styleable>
+
+</resources>

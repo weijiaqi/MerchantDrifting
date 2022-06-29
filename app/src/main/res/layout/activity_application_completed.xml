@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingLeft="14dp"
+    android:paddingEnd="28dp">
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="99dp"
+        android:layout_marginBottom="33dp"
+        android:src="@drawable/completed_status" />
+
+
+    <include layout="@layout/view_color_line" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="店铺名称"
+            android:textColor="@color/color_97"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="漂流局茶饮店"
+            android:textColor="@color/color_17"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="负责人"
+            android:textColor="@color/color_97"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="王宝钏"
+            android:textColor="@color/color_17"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="23dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="手机号"
+            android:textColor="@color/color_97"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="18235107237"
+            android:textColor="@color/color_17"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/view_color_line" />
+
+
+    <com.hjq.shape.view.ShapeTextView
+        android:id="@+id/tv_complete"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/tv_merchant"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginHorizontal="46dp"
+        android:layout_marginTop="99dp"
+        android:layout_marginBottom="24dp"
+        android:gravity="center"
+        android:text="完 成"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:shape_angle="270"
+        app:shape_endColor="@color/color_ff"
+        app:shape_radius="20dp"
+        app:shape_startColor="@color/color_f9" />
+
+</LinearLayout>

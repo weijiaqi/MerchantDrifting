@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_height_title_lay" />
+
+    <ImageView
+        android:id="@+id/iv_pic2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/login_top_right" />
+
+    <ImageView
+        android:id="@+id/iv_pic4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="-25dp"
+        android:layout_marginBottom="45dp"
+        android:src="@drawable/login_bottom_left" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_toolbar"
+        android:layout_marginTop="86dp"
+        android:orientation="vertical"
+        android:paddingHorizontal="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="商家开店"
+            android:textColor="@color/color_17"
+            android:textSize="27sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="未注册的手机号验证通过后自动创建帐号"
+            android:textColor="@color/color_97" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="25dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/codenum"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="+86"
+                android:textColor="@color/color_42"
+                tools:ignore="RtlCompat" />
+
+            <View
+                android:layout_width="0.8dp"
+                android:layout_height="13dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="15dp"
+                android:background="@color/color_d4" />
+
+            <com.merchant.drifting.view.ClearEditText
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="请输入手机号"
+                android:inputType="number"
+                android:singleLine="true"
+                android:text=""
+                android:textColor="@color/color_33"
+                android:textColorHint="@color/color_d4"
+                android:textCursorDrawable="@drawable/edit_cursor_color"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.8dp"
+            android:layout_marginHorizontal="25dp"
+            android:background="@color/color_e9" />
+
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+           android:layout_marginHorizontal="29dp">
+
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="@null"
+                android:hint="输入验证码"
+                android:textSize="12sp" />
+
+            <com.hjq.shape.view.ShapeTextView
+                android:id="@+id/tv_get_code"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:shape_solidColor="@color/color_f4"
+                app:shape_radius="100dp"
+                android:text="获取验证码"
+                android:textSize="14sp"
+                android:textColor="@color/color_42"
+                android:gravity="center"
+                android:paddingTop="3dp"
+                android:paddingBottom="4dp"
+                />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.8dp"
+            android:layout_marginHorizontal="25dp"
+            android:background="@color/color_e9" />
+
+
+        <com.hjq.shape.view.ShapeTextView
+            android:id="@+id/tv_login"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/tv_merchant"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginTop="39dp"
+            android:gravity="center"
+            android:text="我 要 开 店"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:shape_angle="270"
+            app:shape_endColor="@color/color_ff"
+            app:shape_radius="20dp"
+            app:shape_startColor="@color/color_f9" />
+
+        <RelativeLayout
+            android:id="@+id/rl_agree"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginBottom="12dp">
+
+            <CheckBox
+                android:id="@+id/ck_protocol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@color/transparent"
+                android:button="@drawable/selector_protocol"
+                android:textColor="@color/white"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/tv_protocol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/ck_protocol"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="阅读并同意商家中心的"
+                android:textColor="@color/color_9a"
+                android:textSize="11sp" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>

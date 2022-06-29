@@ -3,14 +3,14 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
 
     defaultConfig {
         applicationId "com.merchant.drifting"
-        minSdk 23
-        targetSdk 32
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -28,10 +28,41 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.3.0'
-    implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation rootProject.ext.dependencies["material"]
+    implementation rootProject.ext.dependencies["constraintlayout"]
+    testImplementation rootProject.ext.dependencies["junit"]
+    androidTestImplementation rootProject.ext.dependencies["junit-test"]
+    //androidx
+    implementation rootProject.ext.dependencies["cardview"]
+    annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
+    implementation rootProject.ext.dependencies["progressmanager"]
+    implementation rootProject.ext.dependencies["retrofit-url-manager"]
+    implementation rootProject.ext.dependencies["lifecyclemodel"]
+    implementation 'androidx.core:core:1.5.0'
+
+    //rbcore
+    implementation project(':rbcore')
+    //arms
+    implementation project(':arms')
+    implementation project(':compress')
+
+    // Shape 框架：https://github.com/getActivity/ShapeView
+    implementation 'com.github.getActivity:ShapeView:8.0'
+    // 吐司框架：https://github.com/getActivity/ToastUtils
+    implementation 'com.github.getActivity:ToastUtils:10.3'
+    implementation rootProject.ext.dependencies["autosize"]
+    //图片选择器
+    implementation 'io.github.lucksiege:pictureselector:v3.10.2'
+
+    //view
+    annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
+        exclude module: 'annotation'
+    }
+    //glide
+    implementation rootProject.ext.dependencies["glide"]
+    //test
+    debugImplementation rootProject.ext.dependencies["canary-debug"]
+
+
 }

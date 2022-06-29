@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/ll_tab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/iv_tab_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:src="@drawable/tab_index_y" />
+
+        <TextView
+            android:id="@+id/tv_tab_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="首页"
+            android:textColor="#aaa29e"
+            android:textSize="9sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_num"
+        android:layout_width="wrap_content"
+        android:layout_height="15dp"
+        android:layout_alignTop="@id/ll_tab"
+        android:layout_marginLeft="-8dp"
+        android:layout_toRightOf="@id/ll_tab"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:minWidth="15dp"
+        android:paddingHorizontal="3dp"
+        android:textColor="#ffffff"
+        android:textSize="5sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+
+</RelativeLayout>

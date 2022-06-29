@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="60dp"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="14dp"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <com.hjq.shape.view.ShapeImageView
+        android:id="@+id/iv_pic"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/balance"
+        app:shape_radius="5dp"
+        app:shape_solidColor="@color/color_3342" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:text="账户余额"
+        android:textColor="@color/color_17"
+        android:textSize="12sp" />
+</LinearLayout>

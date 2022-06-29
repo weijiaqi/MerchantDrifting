@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+    <RelativeLayout
+        android:id="@+id/rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="265dp"
+        android:background="@color/color_42"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:adjustViewBounds="true"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/index_top" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="14dp">
+
+            <TextView
+                android:id="@+id/tv_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
+            <RelativeLayout
+                android:id="@+id/rl_shop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <com.hjq.shape.view.ShapeTextView
+                    android:id="@+id/tv_switch_merchants"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/switch_shop"
+                    android:drawablePadding="5dp"
+                    android:paddingHorizontal="13dp"
+                    android:paddingVertical="6dp"
+                    android:text="元宇宙漂流局朝阳店"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    app:shape_radius="100dp"
+                    app:shape_solidColor="@color/color_17_4d" />
+
+                <ImageView
+                    android:id="@+id/iv_message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:paddingHorizontal="14dp"
+                    android:src="@drawable/unread_message" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_turnover"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="今日营业额"
+                android:textColor="@color/color_white_7f"
+                android:textSize="12sp" />
+
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="15dp"
+
+                android:textColor="@color/white"
+                android:textSize="45sp"
+                android:textStyle="bold" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@drawable/shape_dashed_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="今日订单量：2000单"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:text="今日客单价：200.00元"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+    <com.hjq.shape.layout.ShapeRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rl_top"
+        android:layout_marginTop="-32dp"
+        android:orientation="vertical"
+        app:shape_solidColor="@color/white"
+        app:shape_topLeftRadius="32dp"
+        app:shape_topRightRadius="32dp">
+
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/tv_transaction"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="14dp"
+                    android:layout_marginTop="32dp"
+                    android:lineSpacingMultiplier="1.5"
+                    android:text="交易功能" />
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcy_transaction"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp" />
+
+
+                <TextView
+                    android:id="@+id/tv_order_record"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="33dp"
+                    android:paddingHorizontal="14dp"
+                    android:text="订单记录"
+                    android:textColor="@color/color_17"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcy_order_record"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginHorizontal="14dp"
+                    android:layout_marginTop="12dp" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </com.hjq.shape.layout.ShapeRelativeLayout>
+
+</RelativeLayout>

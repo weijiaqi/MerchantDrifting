@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#010511</color>
+    <color name="colorPrimaryDark">#010511</color>
+    <color name="colorAccent">#010511</color>
+
+
+    <color name="bg_color">#010511</color>
+    <color name="lottery_bg_color_start">#010511</color>
+    <color name="lottery_bg_color_end">#010511</color>
+
+
+</resources>

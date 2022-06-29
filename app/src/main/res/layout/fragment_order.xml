@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_height_title_lay" />
+
+    <com.rb.core.xrecycleview.XRecyclerView
+        android:id="@+id/rcy_public"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rl_toolbar"
+        android:background="@color/color_f0"
+        android:paddingTop="14dp" />
+
+    <include layout="@layout/layout_show_state" />
+</RelativeLayout>

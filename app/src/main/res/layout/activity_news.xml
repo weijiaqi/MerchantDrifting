@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_title" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/color_f0" />
+
+
+    <RelativeLayout
+        android:id="@+id/rl_system"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="14dp"
+        android:layout_marginTop="23dp">
+
+        <ImageView
+            android:id="@+id/iv_system"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/system" />
+
+        <TextView
+            android:id="@+id/tv_notice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="17dp"
+            android:layout_toRightOf="@+id/iv_system"
+            android:text="系统通知"
+            android:textColor="@color/color_17"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_notice"
+            android:layout_alignStart="@+id/tv_notice"
+            android:layout_marginTop="10dp"
+            android:text="您修改的店铺logo未通过"
+            android:textColor="@color/color_d4"
+            android:textSize="12sp" />
+
+
+        <TextView
+            android:id="@+id/tv_system_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="两小时前"
+            android:textSize="12sp"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/color_d4"
+            />
+
+        <ImageView
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:layout_below="@+id/tv_system_time"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="14dp"
+            android:src="@drawable/shape_red_circle"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="14dp"
+        android:layout_marginTop="46dp">
+
+        <ImageView
+            android:id="@+id/iv_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/order" />
+
+        <TextView
+            android:id="@+id/tv_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="17dp"
+            android:layout_toRightOf="@+id/iv_order"
+            android:text="订单通知"
+            android:textColor="@color/color_17"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_order"
+            android:layout_alignStart="@+id/tv_order"
+            android:layout_marginTop="10dp"
+            android:text="您有新的订单需要处理"
+            android:textColor="@color/color_d4"
+            android:textSize="12sp" />
+
+
+        <TextView
+            android:id="@+id/tv_order_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="两小时前"
+            android:textSize="12sp"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/color_d4"
+            />
+
+        <ImageView
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:layout_below="@+id/tv_order_time"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="14dp"
+            android:src="@drawable/shape_red_circle"
+            />
+    </RelativeLayout>
+</LinearLayout>

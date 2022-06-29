@@ -1,0 +1,634 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_title" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:background="@color/color_f0"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="14dp">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginVertical="14dp"
+                android:text="请如实填写以下资料，谢谢您的支持与配合！"
+                android:textColor="@color/color_97"
+                android:textSize="12sp" />
+
+
+            <com.hjq.shape.layout.ShapeLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingHorizontal="18dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="17dp"
+                app:shape_radius="7dp"
+                app:shape_solidColor="@color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="-联系方式-"
+                    android:textColor="@color/color_42"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="15dp"
+                    android:paddingEnd="10dp">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="姓&#12288;名"
+                        android:textColor="@color/color_17"
+                        android:textSize="14sp" />
+
+                    <com.merchant.drifting.view.ClearEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:hint="请输入姓名"
+                        android:paddingStart="22dp"
+                        android:text=""
+                        android:textColor="@color/color_33"
+                        android:textColorHint="@color/color_d4"
+                        android:textCursorDrawable="@drawable/edit_cursor_color"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <include layout="@layout/gray_view_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="15dp"
+                    android:paddingEnd="10dp">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="手机号"
+                        android:textColor="@color/color_17"
+                        android:textSize="14sp" />
+
+                    <com.merchant.drifting.view.ClearEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:hint="请输入手机号"
+                        android:paddingStart="22dp"
+                        android:text=""
+                        android:textColor="@color/color_33"
+                        android:textColorHint="@color/color_d4"
+                        android:textCursorDrawable="@drawable/edit_cursor_color"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+
+                <include layout="@layout/gray_view_line" />
+            </com.hjq.shape.layout.ShapeLinearLayout>
+
+
+            <com.hjq.shape.layout.ShapeLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingHorizontal="18dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="17dp"
+                app:shape_radius="7dp"
+                app:shape_solidColor="@color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-门店信息-"
+                    android:textColor="@color/color_42"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="15dp"
+                    android:paddingEnd="10dp">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="店&#12288;名"
+                        android:textColor="@color/color_17"
+                        android:textSize="14sp" />
+
+                    <com.merchant.drifting.view.ClearEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:hint="漂流局店"
+                        android:paddingStart="22dp"
+                        android:text=""
+                        android:textColor="@color/color_33"
+                        android:textColorHint="@color/color_d4"
+                        android:textCursorDrawable="@drawable/edit_cursor_color"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <include layout="@layout/gray_view_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="15dp"
+                    android:paddingEnd="10dp">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="所在地"
+                        android:textColor="@color/color_17"
+                        android:textSize="14sp" />
+
+                    <com.merchant.drifting.view.ClearEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:hint="例如：北京市丰台区"
+                        android:paddingStart="22dp"
+                        android:text=""
+                        android:textColor="@color/color_33"
+                        android:textColorHint="@color/color_d4"
+                        android:textCursorDrawable="@drawable/edit_cursor_color"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+
+                <include layout="@layout/gray_view_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="15dp">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="详细地址"
+                        android:textColor="@color/color_17"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:hint="例如：西罗园街道"
+                        android:paddingStart="22dp"
+                        android:text=""
+                        android:textColor="@color/color_33"
+                        android:textColorHint="@color/color_d4"
+                        android:textCursorDrawable="@drawable/edit_cursor_color"
+                        android:textSize="12sp" />
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:src="@drawable/location"
+
+                        />
+
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.4dp"
+                    android:layout_marginStart="56dp"
+                    android:layout_marginEnd="18dp"
+                    android:background="@color/color_e9" />
+
+            </com.hjq.shape.layout.ShapeLinearLayout>
+
+
+            <com.hjq.shape.layout.ShapeLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingTop="12dp"
+                android:paddingBottom="21dp"
+                app:shape_radius="7dp"
+                app:shape_solidColor="@color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-门店照片-"
+                    android:textColor="@color/color_42"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+
+                <com.hjq.shape.view.ShapeImageView
+                    android:id="@+id/iv_facade"
+                    android:layout_width="match_parent"
+                    android:layout_height="197dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="15dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/camera"
+                    app:shape_radius="3dp"
+                    app:shape_solidColor="@color/color_f4" />
+
+
+                <TextView
+                    android:id="@+id/tv_facade"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="门面图（需要包含完整牌匾）"
+                    android:textColor="@color/color_97"
+                    android:textSize="12sp" />
+
+                <com.hjq.shape.view.ShapeImageView
+                    android:id="@+id/iv_environment"
+                    android:layout_width="match_parent"
+                    android:layout_height="197dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/camera"
+                    app:shape_radius="3dp"
+                    app:shape_solidColor="@color/color_f4" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    android:text="店内真实环境图"
+                    android:textColor="@color/color_97"
+                    android:textSize="12sp" />
+
+            </com.hjq.shape.layout.ShapeLinearLayout>
+
+
+            <com.hjq.shape.layout.ShapeLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingHorizontal="18dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="17dp"
+                app:shape_radius="7dp"
+                app:shape_solidColor="@color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="-法人信息-"
+                    android:textColor="@color/color_42"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="15dp"
+                    android:paddingEnd="10dp">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="法人姓名"
+                        android:textColor="@color/color_17"
+                        android:textSize="14sp" />
+
+                    <com.merchant.drifting.view.ClearEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:hint="请输入法人姓名"
+                        android:paddingStart="22dp"
+                        android:text=""
+                        android:textColor="@color/color_33"
+                        android:textColorHint="@color/color_d4"
+                        android:textCursorDrawable="@drawable/edit_cursor_color"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.4dp"
+                    android:layout_marginStart="56dp"
+                    android:layout_marginEnd="18dp"
+                    android:background="@color/color_e9" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="15dp"
+                    android:paddingEnd="10dp">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="性&#12288;&#12288;别"
+                        android:textColor="@color/color_17"
+                        android:textSize="14sp" />
+
+                    <com.merchant.drifting.view.ClearEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:hint="请输入性别"
+                        android:paddingStart="22dp"
+                        android:text=""
+                        android:textColor="@color/color_33"
+                        android:textColorHint="@color/color_d4"
+                        android:textCursorDrawable="@drawable/edit_cursor_color"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.4dp"
+                    android:layout_marginStart="56dp"
+                    android:layout_marginEnd="18dp"
+                    android:background="@color/color_e9" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="15dp"
+                    android:paddingEnd="10dp">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="证件类型"
+                        android:textColor="@color/color_17"
+                        android:textSize="14sp" />
+
+                    <com.merchant.drifting.view.ClearEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:hint="居民身份证"
+                        android:paddingStart="22dp"
+                        android:text=""
+                        android:textColor="@color/color_33"
+                        android:textColorHint="@color/color_d4"
+                        android:textCursorDrawable="@drawable/edit_cursor_color"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.4dp"
+                    android:layout_marginStart="56dp"
+                    android:layout_marginEnd="18dp"
+                    android:background="@color/color_e9" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="15dp"
+                    android:paddingEnd="10dp">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="&#12288;证件号"
+                        android:textColor="@color/color_17"
+                        android:textSize="14sp" />
+
+                    <com.merchant.drifting.view.ClearEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:hint="请输入证件号"
+                        android:paddingStart="22dp"
+                        android:text=""
+                        android:textColor="@color/color_33"
+                        android:textColorHint="@color/color_d4"
+                        android:textCursorDrawable="@drawable/edit_cursor_color"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.4dp"
+                    android:layout_marginStart="56dp"
+                    android:layout_marginEnd="18dp"
+                    android:background="@color/color_e9" />
+            </com.hjq.shape.layout.ShapeLinearLayout>
+
+
+            <com.hjq.shape.layout.ShapeLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingTop="12dp"
+                android:paddingBottom="21dp"
+                app:shape_radius="7dp"
+                app:shape_solidColor="@color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-证件照片-"
+                    android:textColor="@color/color_42"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+
+                <com.hjq.shape.view.ShapeImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="197dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="15dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/camera"
+                    app:shape_radius="3dp"
+                    app:shape_solidColor="@color/color_f4" />
+
+
+                <TextView
+                    android:id="@+id/tv_positive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="正面(*头像页)"
+                    android:textColor="@color/color_97"
+                    android:textSize="12sp" />
+
+                <com.hjq.shape.view.ShapeImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="197dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/camera"
+                    app:shape_radius="3dp"
+                    app:shape_solidColor="@color/color_f4" />
+
+                <TextView
+                    android:id="@+id/tv_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    android:text="背面(*国徽页)"
+                    android:textColor="@color/color_97"
+                    android:textSize="12sp" />
+
+            </com.hjq.shape.layout.ShapeLinearLayout>
+
+
+            <com.hjq.shape.layout.ShapeLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingVertical="12dp"
+                app:shape_radius="7dp"
+                app:shape_solidColor="@color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-营业执照-"
+                    android:textColor="@color/color_42"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+
+                <com.hjq.shape.view.ShapeImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="197dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="15dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/camera"
+                    app:shape_radius="3dp"
+                    app:shape_solidColor="@color/color_f4" />
+
+
+                <TextView
+                    android:id="@+id/tv_license_positive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    android:layout_marginBottom="35dp"
+                    android:text="证件正面照（*注意照片清晰度）"
+                    android:textColor="@color/color_97"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:text="-许可证-"
+                    android:textColor="@color/color_42"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+
+                <com.hjq.shape.view.ShapeImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="197dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/camera"
+                    app:shape_radius="3dp"
+                    app:shape_solidColor="@color/color_f4" />
+
+                <TextView
+                    android:id="@+id/tv_licence_positive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    android:text="证件正面照（*注意照片清晰度）"
+                    android:textColor="@color/color_97"
+                    android:textSize="12sp" />
+
+            </com.hjq.shape.layout.ShapeLinearLayout>
+
+
+            <com.hjq.shape.view.ShapeTextView
+                android:id="@+id/tv_submit"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/tv_merchant"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginHorizontal="46dp"
+                android:layout_marginTop="19dp"
+                android:layout_marginBottom="24dp"
+                android:gravity="center"
+                android:text="提 交 审 核"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:shape_angle="270"
+                app:shape_endColor="@color/color_ff"
+                app:shape_radius="20dp"
+                app:shape_startColor="@color/color_f9" />
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

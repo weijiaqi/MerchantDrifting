@@ -1,10 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_200">#FFFFFFFF</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="color_42">#424FC2</color>
+
+    <color name="color_fb">#F4F5FB</color>
+    <color name="color_f9">#F9AB2E</color>
+    <color name="color_ff">#FFBF87</color>
+    <color name="color_d4">#D4D7DE</color>
+    <color name="color_33">#333333</color>
+    <color name="color_17">#172B4D</color>
+    <color name="color_e9">#E9E9E9</color>
+    <color name="color_line">#E6E6E6</color>
+    <color name="color_9a">#9AA0AF</color>
+    <color name="transparent">#00000000</color>
+    <color name="color_97">#97A0AF</color>
+    <color name="color_4d_97">#4d97A0AF</color><!--30% -->
+
+
+    <color name="color_17_4d">#4d172B4D</color><!--30% -->
+    <color name="color_97_4d">#4d97A0AF</color><!--30% -->
+    <color name="color_97_A0">#9797A0AF</color><!--50% -->
+
+    <color name="color_97_17">#97172B4D</color><!--50% -->
+
+    <color name="color_white_7f">#7fFFFFFF</color><!--50% -->
+    <color name="color_f4">#F4F4F4</color>
+    <color name="color_f0">#F0F6FF</color>
+    <color name="color_ff0">#FF0000</color>
+    <color name="color_3342">#33424FC2</color><!-- #424FC2 20% -->
+    <color name="color_42_99">#99424FC2</color><!--60% -->
+    <color name="color_cc_42">#cc424FC2</color><!--80% -->
+
+    <color name="color_cb">#CBD0FF</color>
+    <color name="color_60">#606EEB</color>
+    <color name="color_c2">#C24242</color>
+    <color name="color_e3_7f">#7fE3E3E3</color><!--50% -->
+    <color name="color_fe">#FEFEFE</color>
+    <color name="color_00">#000000</color>
+
+    <color name="color_c2_00">#19000000</color><!--10% -->
+
+    <color name="color_4d_00">#4d000000</color><!--30% -->
+
+
+    <color name="color_c2_19">#19C24242</color><!--10% -->
+
+    <color name="color_42c">#42C26F</color>
+
+    <color name="color_42_19">#1942C26F</color><!--10% -->
+    <color name="color_80">#80D4AA</color>
+    <color name="color_dc">#DCDDE0</color>
 </resources>
