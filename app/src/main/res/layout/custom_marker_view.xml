@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="40dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    tools:ignore="Overdraw">
+
+    <com.hjq.shape.view.ShapeTextView
+        android:id="@+id/tvContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="7dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:text=""
+        android:paddingVertical="2dp"
+        android:paddingHorizontal="10dp"
+        app:shape_radius="100dp"
+        app:shape_solidColor="@color/color_f9"
+        android:textSize="10sp"
+        android:textColor="@android:color/white"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+</RelativeLayout>

@@ -13,4 +13,16 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="DialogTheme.Base" parent="@android:style/Theme.Dialog" />
+    <style name="DialogTheme.Fade" parent="DialogTheme.Base">
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowAnimationStyle">@style/DialogFadeAnimation</item>
+    </style>
+
+    <style name="DialogTheme.Sheet" parent="DialogTheme.Base">
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowAnimationStyle">@style/DialogSheetAnimation</item>
+    </style>
+
 </resources>

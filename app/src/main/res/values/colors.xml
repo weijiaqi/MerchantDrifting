@@ -28,8 +28,12 @@
     <color name="color_97_A0">#9797A0AF</color><!--50% -->
 
     <color name="color_97_17">#97172B4D</color><!--50% -->
-
+    <color name="color_white_b2">#b2FFFFFF</color><!--70% -->
     <color name="color_white_7f">#7fFFFFFF</color><!--50% -->
+
+    <color name="color_white_4d">#4dFFFFFF</color><!--30% -->
+
+    <color name="color_ef">#EFF3F9</color>
     <color name="color_f4">#F4F4F4</color>
     <color name="color_f0">#F0F6FF</color>
     <color name="color_ff0">#FF0000</color>
@@ -45,9 +49,8 @@
     <color name="color_00">#000000</color>
 
     <color name="color_c2_00">#19000000</color><!--10% -->
-
     <color name="color_4d_00">#4d000000</color><!--30% -->
-
+    <color name="color_66_00">#66000000</color><!--40% -->
 
     <color name="color_c2_19">#19C24242</color><!--10% -->
 
@@ -56,4 +59,14 @@
     <color name="color_42_19">#1942C26F</color><!--10% -->
     <color name="color_80">#80D4AA</color>
     <color name="color_dc">#DCDDE0</color>
+
+    <!--Google扫码-->
+    <color name="laser_color">#0F0</color>
+    <color name="corner_color">#00FF00</color>
+    <color name="viewfinder_frame">#90FFFFFF</color>
+    <color name="result_view">#B0000000</color>
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="result_point_color">#C0FFFF00</color>
+
+    <color name="color_black_99000000">#99000000</color><!-- #000000 60% -->
 </resources>

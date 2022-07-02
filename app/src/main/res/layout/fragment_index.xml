@@ -17,8 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:adjustViewBounds="true"
             android:layout_marginBottom="10dp"
+            android:adjustViewBounds="true"
             android:src="@drawable/index_top" />
 
         <LinearLayout
@@ -57,10 +57,21 @@
                     android:id="@+id/iv_message"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/iv_scan"
+                    android:paddingHorizontal="14dp"
+                    android:src="@drawable/unread_message" />
+
+
+                <ImageView
+                    android:id="@+id/iv_scan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:paddingHorizontal="14dp"
-                    android:src="@drawable/unread_message" />
+                    android:src="@drawable/scan" />
+
             </RelativeLayout>
 
             <TextView
@@ -68,7 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="今日营业额"
+                android:text="账户余额"
                 android:textColor="@color/color_white_7f"
                 android:textSize="12sp" />
 
@@ -106,7 +117,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
-                    android:text="今日客单价：200.00元"
+                    android:text="今日营业额：200.00元"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
 
@@ -130,7 +141,8 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -155,25 +167,39 @@
                     android:layout_marginTop="15dp" />
 
 
-                <TextView
-                    android:id="@+id/tv_order_record"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="33dp"
-                    android:paddingHorizontal="14dp"
-                    android:text="订单记录"
-                    android:textColor="@color/color_17"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rcy_order_record"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp">
 
-                    android:layout_marginHorizontal="14dp"
-                    android:layout_marginTop="12dp" />
+                    <TextView
+                        android:id="@+id/tv_order_record"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:paddingHorizontal="14dp"
+                        android:text="订单记录"
+                        android:textColor="@color/color_17"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+
+                    <com.rb.core.tab.view.indicator.ScrollIndicatorView
+                        android:id="@+id/indicator_tablayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="21dp"
+                        android:layout_marginEnd="-2dp"
+                        android:layout_alignParentEnd="true"
+                       />
+
+
+                </RelativeLayout>
+
+
+              <androidx.viewpager.widget.ViewPager
+                  android:id="@+id/viewpager"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"/>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </com.hjq.shape.layout.ShapeRelativeLayout>

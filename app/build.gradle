@@ -1,5 +1,7 @@
 plugins {
     id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
 }
 
 android {
@@ -11,19 +13,57 @@ android {
         targetSdkVersion rootProject.ext.android["targetSdkVersion"]
         versionCode rootProject.ext.android["versionCode"]
         versionName rootProject.ext.android["versionName"]
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes {
+
+    signingConfigs {
+        debug {
+            storeFile file('./keystore/merchant.jks')
+            keyAlias 'merchant'
+            keyPassword 'md2022'
+            storePassword 'md2022'
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
         release {
+            storeFile file('./keystore/merchant.jks')
+            keyAlias 'merchant'
+            keyPassword 'md2022'
+            storePassword 'md2022'
+        }
+    }
+
+
+    buildTypes {
+        debug {
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            buildConfigField "boolean", "USE_CANARY", "false"
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        release {
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            buildConfigField "boolean", "USE_CANARY", "false"
+            minifyEnabled false
+            signingConfig signingConfigs.release
+            //   proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+    defaultConfig {
+        ndk {
+            abiFilters "armeabi"
+        }
     }
 }
 
@@ -63,6 +103,9 @@ dependencies {
     implementation rootProject.ext.dependencies["glide"]
     //test
     debugImplementation rootProject.ext.dependencies["canary-debug"]
-
-
+    //Google
+    implementation rootProject.ext.dependencies["zxing"]
+    //曲线图
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+    implementation(name: 'BaiduLBS_AndroidSDK_Lib', ext: 'aar')
 }

@@ -57,13 +57,6 @@
                 android:textColor="@color/color_white_7f"
                 android:textSize="12sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50sp"
-                android:text="今日客单价：200.00元"
-                android:textColor="@color/color_white_7f"
-                android:textSize="12sp" />
 
 
         </LinearLayout>
@@ -218,7 +211,15 @@
                 app:shape_radius="8dp"
                 app:shape_shadowColor="@color/color_4d_00"
                 app:shape_shadowSize="2dp"
-                app:shape_solidColor="@color/white" />
+                app:shape_solidColor="@color/white" >
+
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/lineChart1"
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </com.hjq.shape.layout.ShapeRelativeLayout>
 
             <TextView
                 android:id="@+id/tv_order_rank"

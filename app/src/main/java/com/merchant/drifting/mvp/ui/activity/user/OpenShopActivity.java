@@ -60,7 +60,6 @@ public class OpenShopActivity extends BaseActivity {
     }
 
     public void initListener() {
-
         setStoreComment();
     }
 

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_title" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:background="@color/color_f0"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="134dp"
+            android:layout_marginHorizontal="14dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/account_bg"
+            android:orientation="vertical"
+            android:paddingLeft="19dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/doubt"
+                android:layout_alignParentEnd="true"
+                android:padding="13dp"
+                />
+
+            <TextView
+                android:id="@+id/tv_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="我的余额"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_account_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_balance"
+                android:layout_marginTop="15dp"
+                android:text="¥ 2,353.00"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="7dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="3dp"
+                    android:text="*"
+                    android:textColor="@color/color_ff0"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="余额自动结算固定周期为每月15日"
+                    android:textColor="@color/color_white_b2"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+        <com.hjq.shape.layout.ShapeLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="14dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            app:shape_radius="7dp"
+            app:shape_solidColor="@color/white">
+
+
+            <RelativeLayout
+                android:id="@+id/rl_bank"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="19dp"
+                android:paddingStart="24dp"
+                android:paddingEnd="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="@drawable/icon_bank"
+                    android:drawablePadding="16dp"
+                    android:text="银行卡管理"
+                    android:textColor="@color/color_17"
+                    android:textSize="15sp" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/iv_gray_back" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.4dp"
+                android:layout_marginHorizontal="18dp"
+                android:background="@color/color_4d_97" />
+
+
+            <RelativeLayout
+                android:id="@+id/rl_running_records"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="19dp"
+                android:paddingStart="24dp"
+                android:paddingEnd="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="@drawable/running_records"
+                    android:drawablePadding="16dp"
+                    android:text="流水记录"
+                    android:textColor="@color/color_17"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/iv_gray_back" />
+
+
+            </RelativeLayout>
+        </com.hjq.shape.layout.ShapeLinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

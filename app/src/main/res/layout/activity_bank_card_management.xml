@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_title" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/color_f0" />
+
+
+    <ImageView
+        android:id="@+id/iv_add_bank"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="14dp"
+        android:layout_marginVertical="19dp"
+
+        android:src="@drawable/add_bank" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="14dp"
+        android:layout_marginVertical="19dp"
+        android:background="@drawable/bank_bg"
+        android:visibility="gone">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="16dp">
+
+            <com.hjq.shape.view.ShapeView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:shape_radius="100dp"
+                app:shape_solidColor="@color/white" />
+
+            <com.hjq.shape.view.ShapeView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="12dp"
+                app:shape_radius="100dp"
+                app:shape_solidColor="@color/color_white_7f" />
+
+        </FrameLayout>
+
+
+        <com.hjq.shape.view.ShapeTextView
+            android:layout_width="56dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="19dp"
+            android:gravity="center"
+            android:text="编辑"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:shape_radius="2dp"
+            app:shape_solidColor="@color/color_66_00" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="65dp"
+            android:text="**** **** **** 7116"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_cardholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="21dp"
+            android:layout_marginTop="101dp"
+            android:text="持卡人"
+            android:textColor="@color/color_white_7f"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_cardholder"
+            android:layout_marginStart="21dp"
+            android:layout_marginTop="10dp"
+            android:text="王宝钏"
+            android:textColor="@color/white"
+            android:textSize="17sp" />
+
+        <com.hjq.shape.view.ShapeTextView
+            android:layout_width="56dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="129dp"
+            android:layout_marginEnd="19dp"
+            android:gravity="center"
+            android:text="解绑"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:shape_radius="2dp"
+            app:shape_solidColor="@color/color_white_4d" />
+
+
+    </RelativeLayout>
+
+</LinearLayout>

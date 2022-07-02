@@ -14,6 +14,7 @@ import com.jess.arms.base.delegate.AppLifecycles;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.Preconditions;
 import com.merchant.drifting.app.api.Api;
+import com.merchant.drifting.storageinfo.Preferences;
 
 import java.util.Locale;
 
@@ -71,6 +72,7 @@ public class MerchantDriftingApplication extends Application implements App {
 
 
     private void initSDK() {
+        Preferences.initialize(this);
         // 初始化 Toast 框架
         ToastUtils.init(this);
 

@@ -9,12 +9,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jess.arms.base.BaseActivity;
@@ -23,9 +26,12 @@ import com.jess.arms.di.component.AppComponent;
 import com.merchant.drifting.R;
 import com.merchant.drifting.di.component.DaggerBusinessOpeningComponent;
 import com.merchant.drifting.mvp.contract.BusinessOpeningContract;
+import com.merchant.drifting.mvp.model.entity.LoginEntity;
 import com.merchant.drifting.mvp.presenter.BusinessOpeningPresenter;
 import com.merchant.drifting.mvp.ui.activity.user.OpenShopActivity;
 import com.merchant.drifting.util.ClickUtil;
+import com.merchant.drifting.util.StringUtil;
+import com.merchant.drifting.util.ToastUtil;
 
 import org.w3c.dom.Text;
 
@@ -42,10 +48,18 @@ import butterknife.OnClick;
 public class BusinessOpeningActivity extends BaseActivity<BusinessOpeningPresenter> implements BusinessOpeningContract.View {
     @BindView(R.id.tv_bar)
     TextView mTvBar;
+    @BindView(R.id.et_phone)
+    EditText mEtPhone;
     @BindView(R.id.tv_get_code)
     TextView mTvGetCode;
     @BindView(R.id.tv_protocol)
     TextView mTvProtocol;
+    @BindView(R.id.ck_protocol)
+    CheckBox mCkProtocol;
+    @BindView(R.id.et_code)
+    EditText mEtCode;
+    private CountDownTimer timer;
+
     public static void start(Context context, boolean closePage) {
         Intent intent = new Intent(context, BusinessOpeningActivity.class);
         context.startActivity(intent);
@@ -79,7 +93,6 @@ public class BusinessOpeningActivity extends BaseActivity<BusinessOpeningPresent
         mTvGetCode.getPaint().setAntiAlias(true);//抗锯齿
         setUserComment();
     }
-
 
 
     /**
@@ -140,26 +153,107 @@ public class BusinessOpeningActivity extends BaseActivity<BusinessOpeningPresent
     }
 
 
-    public Activity getActivity() {
-        return this;
-    }
-
-    @Override
-    public void showMessage(@NonNull String message) {
-
-    }
-
-    @OnClick({R.id.toolbar_back,R.id.tv_login})
+    @OnClick({R.id.toolbar_back, R.id.tv_login, R.id.tv_get_code})
     public void onClick(View view) {
         if (!ClickUtil.isFastClick(view.getId())) {
             switch (view.getId()) {
                 case R.id.toolbar_back:
                     finish();
                     break;
+                case R.id.tv_get_code:
+                    if (StringUtil.isEmpty(mEtPhone.getText().toString())) {
+                        showMessage("请输入手机号");
+                        return;
+                    }
+                    if (!mCkProtocol.isChecked()) {
+                        showMessage("请勾选是否同意服务隐私协议!");
+                        return;
+                    }
+                    if (mPresenter != null) {
+                        mPresenter.getCodeData(mEtPhone.getText().toString(), 1);
+                    }
+                    break;
                 case R.id.tv_login:
-                    OpenShopActivity.start(this,false);
+                    if (StringUtil.isEmpty(mEtPhone.getText().toString())) {
+                        showMessage("请输入手机号");
+                        return;
+                    }
+                    if (StringUtil.isEmpty(mEtCode.getText().toString())) {
+                        showMessage("请输入验证码");
+                        return;
+                    }
+                    if (mPresenter != null) {
+                        mPresenter.register(mEtPhone.getText().toString(),mEtCode.getText().toString());
+                    }
                     break;
             }
         }
+    }
+
+
+    @Override
+    public void onCodeSuccess() {
+        startCountDown();
+    }
+
+    @Override
+    public void onLoginSuccess(LoginEntity loginEntity) {
+        OpenShopActivity.start(this, true);
+    }
+
+
+    /**
+     * 开始倒计时
+     */
+    private void startCountDown() {
+        if (timer == null) {
+            timer = new CountDownTimer(60 * 1000, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    //剩余秒数
+                    int surplusSeconds = (int) (millisUntilFinished / 1000);
+                    mTvGetCode.setEnabled(false);
+                    mTvGetCode.setText(surplusSeconds + "");
+                }
+
+                @Override
+                public void onFinish() {
+                    mTvGetCode.setEnabled(true);
+                    mTvGetCode.setText("重新获取");
+                    cleanCountDown();
+                }
+            }.start();
+        }
+    }
+
+    /**
+     * 结束倒计时
+     */
+    public void cleanCountDown() {
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
+    }
+
+
+    @Override
+    public void showMessage(@NonNull String message) {
+        ToastUtil.showToast(message);
+    }
+
+    @Override
+    public void onNetError() {
+
+    }
+
+    public Activity getActivity() {
+        return this;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        cleanCountDown();
     }
 }

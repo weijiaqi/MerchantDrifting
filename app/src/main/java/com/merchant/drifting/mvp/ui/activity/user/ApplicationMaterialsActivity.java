@@ -15,10 +15,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.baidu.mapapi.PermissionUtils;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 
 
+import com.jess.arms.utils.PermissionUtil;
 import com.luck.picture.lib.basic.PictureSelectionCameraModel;
 import com.luck.picture.lib.basic.PictureSelectionModel;
 import com.luck.picture.lib.basic.PictureSelector;
@@ -34,17 +36,20 @@ import com.luck.picture.lib.style.PictureSelectorStyle;
 import com.luck.picture.lib.style.SelectMainStyle;
 import com.luck.picture.lib.utils.DateUtils;
 import com.merchant.drifting.R;
-import com.merchant.drifting.app.FilePathConstant;
 import com.merchant.drifting.di.component.DaggerApplicationMaterialsComponent;
+import com.merchant.drifting.location.SelectAddressByMapActivity;
 import com.merchant.drifting.mvp.contract.ApplicationMaterialsContract;
 import com.merchant.drifting.mvp.presenter.ApplicationMaterialsPresenter;
+import com.merchant.drifting.mvp.ui.activity.home.HomeActivity;
 import com.merchant.drifting.util.ClickUtil;
 import com.merchant.drifting.util.GlideEngine;
 import com.merchant.drifting.util.GlideUtil;
+import com.merchant.drifting.util.PermissionDialog;
 import com.merchant.drifting.util.SpannableUtil;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -77,6 +82,11 @@ public class ApplicationMaterialsActivity extends BaseActivity<ApplicationMateri
     ImageView mIvFacade;
     @BindView(R.id.iv_environment)
     ImageView mIvEnvironment;
+    @BindView(R.id.iv_location)
+    ImageView mIvLocation;
+    @BindView(R.id.tv_address)
+    TextView mTvAddress;
+    private String address;
     private SpannableStringBuilder passer1, passer2, passer3, passer4;
     private static final int FACADE = 1, ENVIRONMENT = 2, IDCARD_BACKGROUND = 3, CERTIFICATE = 4, COACH_CERT = 5;
     private String facade, environment;
@@ -139,7 +149,7 @@ public class ApplicationMaterialsActivity extends BaseActivity<ApplicationMateri
         return this;
     }
 
-    @OnClick({R.id.toolbar_back, R.id.iv_facade, R.id.iv_environment,R.id.tv_submit})
+    @OnClick({R.id.toolbar_back, R.id.iv_facade, R.id.iv_environment, R.id.tv_submit, R.id.iv_location})
     public void onClick(View view) {
         if (!ClickUtil.isFastClick(view.getId())) {
             switch (view.getId()) {
@@ -153,7 +163,11 @@ public class ApplicationMaterialsActivity extends BaseActivity<ApplicationMateri
                     goToSelectPic(ENVIRONMENT);
                     break;
                 case R.id.tv_submit:  //提交审核
-                    ApplicationCompletedActivity.start(this,false);
+                    ApplicationCompletedActivity.start(this, false);
+                    break;
+                case R.id.iv_location:
+                    // 申请动态权限
+                    requestPermission();
                     break;
             }
         }
@@ -241,6 +255,41 @@ public class ApplicationMaterialsActivity extends BaseActivity<ApplicationMateri
 
     @Override
     public void showMessage(@NonNull String message) {
+
+    }
+
+
+    /**
+     * Android6.0之后需要动态申请权限
+     */
+    private void requestPermission() {
+        PermissionDialog.requestLeboPermissions(this, new PermissionDialog.PermissionCallBack() {
+            @Override
+            public void onSuccess() {
+                Intent intent = new Intent(ApplicationMaterialsActivity.this, SelectAddressByMapActivity.class);
+                startActivityForResult(intent, 99);
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+
+            @Override
+            public void onAlwaysFailure() {
+                PermissionDialog.showDialog(ApplicationMaterialsActivity.this, "android.permission.ACCESS_FINE_LOCATION");
+            }
+        });
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 99 && resultCode == Activity.RESULT_OK) {
+            address = data.getStringExtra("address");
+            mTvAddress.setText(address);
+        }
 
     }
 }

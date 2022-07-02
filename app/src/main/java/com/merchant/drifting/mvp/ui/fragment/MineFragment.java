@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.jess.arms.base.BaseFragment;
 import com.jess.arms.di.component.AppComponent;
@@ -16,6 +19,11 @@ import com.merchant.drifting.R;
 import com.merchant.drifting.di.component.DaggerMineComponent;
 import com.merchant.drifting.mvp.contract.MineContract;
 import com.merchant.drifting.mvp.presenter.MinePresenter;
+import com.merchant.drifting.mvp.ui.activity.user.SetUpActivity;
+import com.merchant.drifting.util.ClickUtil;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 
 /**
@@ -25,6 +33,15 @@ import com.merchant.drifting.mvp.presenter.MinePresenter;
  * module name is MineFragment
  */
 public class MineFragment extends BaseFragment<MinePresenter> implements MineContract.View {
+
+    @BindView(R.id.toolbar_back)
+    RelativeLayout mToobarBack;
+    @BindView(R.id.toolbar_title)
+    TextView mToolbarTitle;
+    @BindView(R.id.tv_bar)
+    TextView mTvBar;
+    @BindView(R.id.iv_right)
+    ImageView mIvRight;
 
     public static MineFragment newInstance() {
         MineFragment fragment = new MineFragment();
@@ -51,8 +68,12 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
      */
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        //setToolBarNoBack(toolbar, "Mine");
-
+        setStatusBar(true);
+        setStatusBarHeight(mTvBar);
+        mToobarBack.setVisibility(View.GONE);
+        mToolbarTitle.setText("我的");
+        mIvRight.setVisibility(View.VISIBLE);
+        mIvRight.setImageResource(R.drawable.seeting);
         initListener();
     }
 
@@ -64,6 +85,18 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private void initListener() {
 
     }
+
+    @OnClick({R.id.iv_right})
+    public void onClick(View view) {
+        if (!ClickUtil.isFastClick(view.getId())) {
+            switch (view.getId()) {
+                case R.id.iv_right:
+                    SetUpActivity.start(mContext,false);
+                    break;
+            }
+        }
+    }
+
 
     public Fragment getFragment() {
         return this;

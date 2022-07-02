@@ -1,7 +1,7 @@
 package com.merchant.drifting.mvp.ui.activity.login;
 
 import android.os.Bundle;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -9,11 +9,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.jess.arms.base.BaseActivity;
+import com.jess.arms.base.BaseEntity;
 import com.jess.arms.di.component.AppComponent;
 import com.merchant.drifting.R;
+import com.merchant.drifting.mvp.model.entity.HaveShopEntity;
+import com.merchant.drifting.mvp.ui.activity.home.HomeActivity;
+import com.merchant.drifting.mvp.ui.activity.index.SwitchMerchantsActivity;
+import com.merchant.drifting.mvp.ui.activity.user.OpenShopActivity;
+import com.merchant.drifting.storageinfo.Preferences;
 import com.merchant.drifting.util.ClickUtil;
-import com.merchant.drifting.util.ToastUtil;
+import com.merchant.drifting.util.request.RequestUtil;
 import com.merchant.drifting.util.animator.AnimatorUtil;
+import com.merchant.drifting.util.callback.BaseDataCallBack;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -50,11 +57,29 @@ public class MerchantCenterActivity extends BaseActivity {
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         setStatusBar(false);
-        AnimatorUtil.floatAnim(mPic1, 4000);
-        AnimatorUtil.floatAnim(mPic2, 4000);
-        AnimatorUtil.floatAnim(mPic5, 4000);
-        AnimatorUtil.ZoomAnim(mPic3, 4000);
-        AnimatorUtil.ZoomAnim(mPic4, 4000);
+        if (Preferences.isAnony()) {
+            if (!TextUtils.isEmpty(Preferences.getShopId())) {
+                HomeActivity.start(this, true);
+            } else {
+                RequestUtil.create().haveshop(entity -> {
+                    if (entity != null && entity.getCode() == 200) {
+                        if (entity.getData().getTotal() > 0) {
+                            Preferences.saveShopId(entity.getData().getShops().get(0).getShop_id() + "");
+                            Preferences.saveShopName(entity.getData().getShops().get(0).getShop_name() + "");
+                            HomeActivity.start(this, true);
+                        } else {
+                            SwitchMerchantsActivity.start(this, 1, true);
+                        }
+                    }
+                });
+            }
+        } else {
+            AnimatorUtil.floatAnim(mPic1, 4000);
+            AnimatorUtil.floatAnim(mPic2, 4000);
+            AnimatorUtil.floatAnim(mPic5, 4000);
+            AnimatorUtil.ZoomAnim(mPic3, 4000);
+            AnimatorUtil.ZoomAnim(mPic4, 4000);
+        }
     }
 
 
@@ -66,9 +91,16 @@ public class MerchantCenterActivity extends BaseActivity {
                     VerificationCodeActivity.start(this, false);
                     break;
                 case R.id.tv_open_shop:
-                    BusinessOpeningActivity.start(this,false);
+                    BusinessOpeningActivity.start(this, false);
                     break;
             }
         }
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RequestUtil.create().disDispose();
     }
 }

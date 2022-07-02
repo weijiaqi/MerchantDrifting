@@ -70,19 +70,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="18235107237"
+                android:text=""
                 android:textColor="@color/color_97"
                 android:textSize="14sp" />
 
             <com.hjq.shape.view.ShapeTextView
-                android:id="@+id/tv_code"
+                android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
                 android:layout_toRightOf="@+id/tv_phone"
                 android:paddingHorizontal="14dp"
                 android:paddingVertical="4dp"
-                android:text="50S"
+                android:text=""
                 android:textColor="@color/color_42"
                 android:textSize="14sp"
                 app:shape_radius="100dp"

@@ -6,13 +6,14 @@ import com.jess.arms.base.BaseRecyclerAdapter;
 import com.jess.arms.base.BaseRecyclerHolder;
 import com.merchant.drifting.R;
 import com.merchant.drifting.mvp.model.entity.MerchantsEntity;
+import com.merchant.drifting.mvp.model.entity.ShopListEntity;
 import com.merchant.drifting.mvp.ui.holder.SwitchMerchantsHolder;
 import com.merchant.drifting.mvp.ui.holder.SystemNotificationHolder;
 
 import java.util.List;
 
-public class SwitchMerchantsAdapter extends BaseRecyclerAdapter<MerchantsEntity> {
-    public SwitchMerchantsAdapter(List<MerchantsEntity> infos) {
+public class SwitchMerchantsAdapter extends BaseRecyclerAdapter<ShopListEntity> {
+    public SwitchMerchantsAdapter(List<ShopListEntity> infos) {
         super(infos);
     }
 

@@ -28,7 +28,7 @@ public class TokenInterceptor implements Interceptor {
             baseEntity = new Gson().fromJson(respString, BaseEntity.class);
         } catch (JsonSyntaxException e) {
         }
-        if (baseEntity != null && baseEntity.getCode() == 1000) {
+        if (baseEntity != null && baseEntity.getCode() == 20000) {
        //     Preferences.clearUserLoginData();
 //            EventBus.getDefault().post(new UserUnavailableEvent());
         }

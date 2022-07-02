@@ -181,5 +181,62 @@ public class GlideUtil {
 
 
 
+    /**
+     * 加载圆形头像
+     *
+     * @param context   上下文
+     * @param url       图片url链接
+     * @param imageView ImageView控件
+     */
+    public void loadHeadCirclePic(Context context, String url, final ImageView imageView) {
+        if (context == null || imageView == null) return;
+        if (!TextUtils.isEmpty(url)) {
+            RequestOptions options = RequestOptions
+                    .circleCropTransform()
+                    .placeholder(R.drawable.icon_head)
+                    .error(R.drawable.icon_head)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(false)
+                    .dontAnimate();
+
+            Glide.with(context)
+                    .load(url)
+                    .apply(options)
+                    .into(imageView);
+
+        } else {
+            imageView.setImageResource(R.drawable.icon_head);
+        }
+    }
+
+
+
+    /**
+     * 跳过缓存加载本地圆形图片
+     *
+     * @param context   上下文
+     * @param url       图片url链接
+     * @param imageView ImageView控件
+     */
+    public void loadFileSkipCirclePic(Context context, String url, final ImageView imageView) {
+        if (context == null || imageView == null) return;
+        if (!TextUtils.isEmpty(url)) {
+            RequestOptions options = RequestOptions
+                    .circleCropTransform()
+                    .placeholder(R.drawable.icon_pic)
+                    .error(R.drawable.icon_pic)
+//                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+//                    .skipMemoryCache(false)
+                    .dontAnimate();
+
+            Glide.with(context)
+                    .load(url)
+                    .apply(options)
+                    .into(imageView);
+
+        } else {
+            imageView.setImageResource(R.drawable.icon_pic);
+        }
+    }
 
 }

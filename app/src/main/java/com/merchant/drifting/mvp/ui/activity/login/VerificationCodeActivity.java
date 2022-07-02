@@ -14,6 +14,7 @@ import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.jess.arms.base.BaseActivity;
@@ -22,8 +23,11 @@ import com.jess.arms.di.component.AppComponent;
 import com.merchant.drifting.R;
 import com.merchant.drifting.di.component.DaggerVerificationCodeComponent;
 import com.merchant.drifting.mvp.contract.VerificationCodeContract;
+import com.merchant.drifting.mvp.model.entity.LoginEntity;
 import com.merchant.drifting.mvp.presenter.VerificationCodePresenter;
 import com.merchant.drifting.util.ClickUtil;
+import com.merchant.drifting.util.StringUtil;
+import com.merchant.drifting.util.ToastUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -38,7 +42,10 @@ import butterknife.OnClick;
 public class VerificationCodeActivity extends BaseActivity<VerificationCodePresenter> implements VerificationCodeContract.View {
     @BindView(R.id.tv_protocol)
     TextView mTvProtocol;
-
+    @BindView(R.id.et_phone)
+    TextView mEtPhone;
+    @BindView(R.id.ck_protocol)
+    CheckBox mCkProtocol;
     public static void start(Context context, boolean closePage) {
         Intent intent = new Intent(context, VerificationCodeActivity.class);
         context.startActivity(intent);
@@ -128,20 +135,43 @@ public class VerificationCodeActivity extends BaseActivity<VerificationCodePrese
     }
 
 
+    @Override
+    public void OnGetCodeSuccess() {
+        VerificationCodeLoginActivity.start(this, mEtPhone.getText().toString(),false);
+    }
+
+
+
+    @Override
+    public void onNetError() {
+
+    }
+
     public Activity getActivity() {
         return this;
     }
 
 
-    @OnClick({R.id.tv_open_shop,R.id.tv_login})
+    @OnClick({R.id.tv_open_shop, R.id.tv_login})
     public void onClick(View view) {
         if (!ClickUtil.isFastClick(view.getId())) {
             switch (view.getId()) {
                 case R.id.tv_open_shop:
-                    BusinessOpeningActivity.start(this,false);
+                    BusinessOpeningActivity.start(this, false);
                     break;
-                case R.id.tv_login :
-                    VerificationCodeLoginActivity.start(this,false);
+                case R.id.tv_login:
+                    if (StringUtil.isEmpty(mEtPhone.getText().toString())) {
+                        showMessage("请输入手机号");
+                        return;
+                    }
+                    if (!mCkProtocol.isChecked()) {
+                        showMessage("请勾选是否同意服务隐私协议!");
+                        return;
+                    }
+                    if (mPresenter != null) {
+                        mPresenter.getCodeData(mEtPhone.getText().toString(), 2);
+                    }
+
                     break;
             }
         }
@@ -149,6 +179,6 @@ public class VerificationCodeActivity extends BaseActivity<VerificationCodePrese
 
     @Override
     public void showMessage(@NonNull String message) {
-
+        ToastUtil.showToast(message);
     }
 }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -10,6 +9,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="-1dp"
         android:adjustViewBounds="true"
         android:src="@drawable/merchant_center_top" />
 
@@ -48,44 +48,36 @@
                 android:layout_marginHorizontal="17dp"
                 android:layout_marginTop="19dp">
 
-                <com.hjq.shape.layout.ShapeFrameLayout
-                    android:id="@+id/fl_left"
+
+                <ImageView
+                    android:id="@+id/iv_left"
                     android:layout_width="56dp"
-                    android:layout_height="match_parent"
-
-                    app:shape_radius="100dp"
-                    app:shape_solidColor="@color/color_f4">
-
-                    <com.hjq.shape.view.ShapeImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/camera" />
-
-                </com.hjq.shape.layout.ShapeFrameLayout>
+                    android:layout_height="56dp"
+                    android:src="@drawable/icon_head" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_alignTop="@+id/fl_left"
+                    android:layout_alignTop="@+id/iv_left"
                     android:layout_marginStart="13dp"
-                    android:layout_toRightOf="@+id/fl_left"
+                    android:layout_toRightOf="@+id/iv_left"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tv_title"
+                        android:id="@+id/tv_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="王宝钏"
+                        android:text=""
                         android:textColor="@color/color_17"
                         android:textSize="15sp" />
 
                     <TextView
+                        android:id="@+id/tv_phone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
-                        android:text="18235107237"
+                        android:text=""
                         android:textColor="@color/color_97_17"
                         android:textSize="12sp" />
 
@@ -137,6 +129,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp" />
+
+
+        <ImageView
+            android:id="@+id/iv_no_shop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="43dp"
+            android:src="@drawable/no_shop"
+            android:visibility="gone" />
 
     </LinearLayout>
 </RelativeLayout>

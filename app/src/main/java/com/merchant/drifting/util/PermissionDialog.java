@@ -120,7 +120,7 @@ public class PermissionDialog {
      */
     public static void requestLeboPermissions(Activity activity, PermissionCallBack permissionCallBack) {
         new RxPermissions((FragmentActivity) activity)
-                .requestEachCombined(Manifest.permission.ACCESS_FINE_LOCATION)
+                .requestEachCombined(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .subscribe(permission -> {
                     if (permission.granted) {
                         permissionCallBack.onSuccess();

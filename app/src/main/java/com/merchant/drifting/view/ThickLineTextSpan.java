@@ -71,7 +71,7 @@ public class ThickLineTextSpan extends ReplacementSpan {
         float rectCenterY = rect.bottom - (rect.bottom - rect.top) / 2;
         float tagBaseLineY = rectCenterY + (tagFontMetrics.descent - tagFontMetrics.ascent) / 2f - tagFontMetrics.descent;
         String tag = text.subSequence(start, end).toString();
-        Log.e(TAG, tag + "文本#start#" + start + "####end######" + end + "=======textCenterX======" + textCenterX + "-==" + tagBaseLineY);
+
         canvas.drawText(tag, textCenterX, tagBaseLineY, mTextPaint);
     }
 }

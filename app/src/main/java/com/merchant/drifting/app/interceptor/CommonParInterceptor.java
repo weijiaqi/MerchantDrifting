@@ -76,7 +76,7 @@ public class CommonParInterceptor implements Interceptor {
 
     private String  getSign(String phone){
         if (!TextUtils.isEmpty(phone)){
-            return StringUtil.md5(phone+"gu940s");
+            return StringUtil.md5(phone+"7jg0fk");
         }else {
             return "";
         }

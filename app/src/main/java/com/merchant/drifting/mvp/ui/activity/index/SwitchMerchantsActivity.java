@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jess.arms.base.BaseActivity;
@@ -22,7 +23,9 @@ import com.merchant.drifting.R;
 import com.merchant.drifting.di.component.DaggerSwitchMerchantsComponent;
 import com.merchant.drifting.mvp.contract.SwitchMerchantsContract;
 import com.merchant.drifting.mvp.model.entity.MerchantsEntity;
+import com.merchant.drifting.mvp.model.entity.ShopListEntity;
 import com.merchant.drifting.mvp.presenter.SwitchMerchantsPresenter;
+import com.merchant.drifting.mvp.ui.activity.user.ApplicationMaterialsActivity;
 import com.merchant.drifting.mvp.ui.adapter.SwitchMerchantsAdapter;
 import com.merchant.drifting.util.ClickUtil;
 import com.merchant.drifting.view.ThickLineTextSpan;
@@ -51,10 +54,19 @@ public class SwitchMerchantsActivity extends BaseActivity<SwitchMerchantsPresent
     RecyclerView mRcyShop;
     @BindView(R.id.tv_bar)
     TextView mTvBar;
+    @BindView(R.id.iv_no_shop)
+    ImageView mIvNoShop;
+    @BindView(R.id.tv_name)
+    TextView mTvName;
+    @BindView(R.id.tv_phone)
+    TextView mTvPhone;
     private SwitchMerchantsAdapter adapter;
+    private int type;
+    private static final String EXRA_TYPE = "exra_type";
 
-    public static void start(Context context, boolean closePage) {
+    public static void start(Context context, int type, boolean closePage) {
         Intent intent = new Intent(context, SwitchMerchantsActivity.class);
+        intent.putExtra(EXRA_TYPE, type);
         context.startActivity(intent);
         if (closePage) ((Activity) context).finish();
     }
@@ -81,24 +93,41 @@ public class SwitchMerchantsActivity extends BaseActivity<SwitchMerchantsPresent
         mToolbarTitle.setText("商家中心");
         mTvRightWord.setText("申请记录");
         mTvRightWord.setVisibility(View.VISIBLE);
-
+        if (getIntent() != null) {
+            type = getIntent().getIntExtra(EXRA_TYPE, 0);
+        }
         initListener();
     }
 
     public void initListener() {
         initTextSpan(mTvShopName, "选择店铺开始营业 ");
-        mRcyShop.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new SwitchMerchantsAdapter(new ArrayList<>());
-        mRcyShop.setAdapter(adapter);
-        adapter.setData(getData());
+        if (type == 1) {
+            mIvNoShop.setVisibility(View.VISIBLE);
+            mRcyShop.setVisibility(View.GONE);
+        } else {
+            mRcyShop.setLayoutManager(new LinearLayoutManager(this));
+            adapter = new SwitchMerchantsAdapter(new ArrayList<>());
+            mRcyShop.setAdapter(adapter);
+
+        }
     }
 
-    public List<MerchantsEntity> getData() {
-        List<MerchantsEntity> list = new ArrayList<>();
-        list.add(new MerchantsEntity("1"));
-        list.add(new MerchantsEntity("2"));
-        list.add(new MerchantsEntity("3"));
-        return list;
+    public void getData() {
+        if (mPresenter != null) {
+            mPresenter.shoplist();
+        }
+    }
+
+    @Override
+    public void OnShopListSuccess(List<ShopListEntity> entity) {
+        if (entity != null) {
+            adapter.setData(entity);
+        }
+    }
+
+    @Override
+    public void onNetError() {
+
     }
 
     public Activity getActivity() {
@@ -112,7 +141,7 @@ public class SwitchMerchantsActivity extends BaseActivity<SwitchMerchantsPresent
         textView.setText(mSpannableStringBuilder);
     }
 
-    @OnClick({R.id.toolbar_back, R.id.iv_right_word})
+    @OnClick({R.id.toolbar_back, R.id.iv_right_word, R.id.iv_no_shop})
     public void onClick(View view) {
         if (!ClickUtil.isFastClick(view.getId())) {
             switch (view.getId()) {
@@ -121,6 +150,9 @@ public class SwitchMerchantsActivity extends BaseActivity<SwitchMerchantsPresent
                     break;
                 case R.id.iv_right_word:
                     ApplicationRecordActivity.start(this, false);
+                    break;
+                case R.id.iv_no_shop:
+                    ApplicationMaterialsActivity.start(this, false);
                     break;
             }
         }

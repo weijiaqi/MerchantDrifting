@@ -17,7 +17,7 @@
 
 
     <com.hjq.shape.view.ShapeTextView
-        android:id="@+id/tv_switch_merchants"
+        android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -35,24 +35,25 @@
         android:id="@+id/tv_call"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_switch_merchants"
+        android:layout_below="@+id/tv_title"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:drawableLeft="@drawable/shop_call"
         android:drawablePadding="7dp"
-        android:text="+86 18235107237"
+        android:text=""
         android:textColor="@color/color_white_7f"
         android:textSize="12sp" />
 
 
     <TextView
+        android:id="@+id/tv_open_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="23dp"
         android:layout_marginBottom="13dp"
         android:gravity="bottom"
-        android:text="开店时间：2022/2/18"
+        android:text=""
         android:textColor="@color/color_white_7f"
         android:textSize="12sp" />
 

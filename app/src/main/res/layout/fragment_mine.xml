@@ -1,9 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/iv_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@drawable/mine_top" />
+
+    <include layout="@layout/view_height_white_title_lay" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_toolbar">
+
+        <ImageView
+            android:id="@+id/iv_head"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/icon_head" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/iv_head"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="9dp"
+            android:layout_toRightOf="@+id/iv_head"
+            android:text="漂流局茶饮店(丰台店)"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_name"
+            android:layout_alignStart="@+id/tv_name"
+            android:layout_marginTop="15dp"
+            android:drawableLeft="@drawable/call"
+            android:drawablePadding="7dp"
+            android:gravity="center_vertical"
+            android:text="+86 18235107237"
+            android:textColor="@color/color_white_7f"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/iv_top"
+        android:orientation="vertical"
+        android:paddingTop="20dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="19dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="14dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/icon_shop"
+                android:drawablePadding="16dp"
+                android:text="店铺管理"
+                android:textColor="@color/color_17"
+                android:textSize="15sp" />
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/iv_gray_back" />
+        </RelativeLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:layout_marginHorizontal="14dp"
+            android:background="@color/color_4d_97" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="19dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="14dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/icon_qualifications"
+                android:drawablePadding="16dp"
+                android:text="资质信息"
+                android:textColor="@color/color_17"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/iv_gray_back" />
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</RelativeLayout>

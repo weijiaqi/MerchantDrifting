@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import com.jess.arms.base.BaseRecyclerHolder;
 import com.merchant.drifting.R;
 import com.merchant.drifting.data.entity.TransactionEntity;
+import com.merchant.drifting.mvp.ui.activity.index.AccountBalanceActivity;
+import com.merchant.drifting.mvp.ui.activity.index.CommodityManagementActivity;
 import com.merchant.drifting.mvp.ui.activity.index.OrderDataActivity;
 import com.merchant.drifting.mvp.ui.activity.index.StoreManagementActivity;
 import com.merchant.drifting.util.TextUtil;
@@ -39,10 +41,14 @@ public class TransactionHolder extends BaseRecyclerHolder {
         TextUtil.setText(mTvTitle, listBeanList.get(position).getTitle());
 
         mLlContent.setOnClickListener(v -> {
-            if (position == 2) {
+            if (position == 0) {
+                AccountBalanceActivity.start(context, false);
+            }else if (position==1){
+                CommodityManagementActivity.start(context, false);
+            } else if (position == 2) {
                 OrderDataActivity.start(context, false);
             } else if (position == 3) {
-                StoreManagementActivity.start(context,false);
+                StoreManagementActivity.start(context, false);
             }
         });
 

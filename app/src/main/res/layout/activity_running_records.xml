@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/ll_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/running_record_bg"
+        android:orientation="vertical">
+
+        <include layout="@layout/view_height_white_title_lay" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:text="我的余额"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="5dp"
+            android:text="¥ 2,353.00"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+
+        <com.hjq.shape.layout.ShapeRelativeLayout
+            android:id="@+id/rl_picker"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginHorizontal="27dp"
+            android:layout_marginTop="10dp"
+            app:shape_radius="4dp"
+            app:shape_solidColor="@color/color_white_4d">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="14dp"
+                android:drawableLeft="@drawable/date_pickers"
+                android:drawablePadding="11dp"
+                android:text="2022/01/15"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+
+            <ImageView
+                android:padding="14dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/drop_down" />
+        </com.hjq.shape.layout.ShapeRelativeLayout>
+
+
+    </LinearLayout>
+
+
+    <com.rb.core.xrecycleview.XRecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ll_top" />
+</RelativeLayout>

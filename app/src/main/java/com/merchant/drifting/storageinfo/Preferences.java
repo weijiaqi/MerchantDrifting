@@ -17,8 +17,17 @@ public class Preferences {
     private static final String KEY_USER_NAME = "user_name";
     private static final String KEY_USER_TOKEN = "user_token";
     private static final String KEY_USER_PHONE = "user_phone";
+
+    private static final String KEY_USER_PHOTO = "user_photo";
+
+
+    private static final String KEY_USER_NICKNAME = "user_nickname";
     private static final String KEY_USER_ID = "user_id";
 
+    private static final String KEY_SHOP_ID = "shop_id";
+
+
+    private static final String KEY_SHOP_NAME = "shop_name";
     private static final String KEY_USER_PASSWORD = "user_password";
 
     private static final String KEY_USER_IS_ANONY = "isanony";//是否为匿名状态
@@ -81,6 +90,29 @@ public class Preferences {
     }
 
 
+
+
+    //用户头像
+    public static void savePhoto(String photo) {
+        saveString(KEY_USER_PHOTO, photo);
+    }
+
+    public static String getPhoto() {
+        return getString(KEY_USER_PHOTO);
+    }
+
+
+    //用户昵称
+    public static void saveNickName(String nickname) {
+        saveString(KEY_USER_NICKNAME, nickname);
+    }
+
+    public static String getNickName() {
+        return getString(KEY_USER_NICKNAME);
+    }
+
+
+
     //用户ID
     public static void saveUserId(String userid) {
         saveString(KEY_USER_ID, userid);
@@ -88,6 +120,28 @@ public class Preferences {
 
     public static String getUserId() {
         return getString(KEY_USER_ID);
+    }
+
+
+
+    //店铺 id
+    public static void saveShopId(String shopid) {
+        saveString(KEY_SHOP_ID, shopid);
+    }
+
+    public static String getShopId() {
+        return getString(KEY_SHOP_ID);
+    }
+
+
+
+    //店铺 名称
+    public static void saveShopName(String shopname) {
+        saveString(KEY_SHOP_NAME, shopname);
+    }
+
+    public static String getShopName() {
+        return getString(KEY_SHOP_NAME);
     }
 
 
