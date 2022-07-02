@@ -8,18 +8,26 @@ import android.content.Intent;
 import androidx.fragment.app.FragmentActivity;
 
 import com.google.zxing.activity.CaptureActivity;
+import com.jess.arms.base.BaseEntity;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.FragmentScope;
 import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.http.imageloader.ImageLoader;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 
 import javax.inject.Inject;
 
 import com.jess.arms.utils.PermissionUtil;
+import com.jess.arms.utils.RxLifecycleUtils;
 import com.merchant.drifting.mvp.contract.IndexContract;
+import com.merchant.drifting.mvp.model.entity.ShopApplyLogEntity;
+import com.merchant.drifting.mvp.model.entity.TodayOrderEntity;
 import com.merchant.drifting.util.PermissionDialog;
+import com.merchant.drifting.util.ViewUtil;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.List;
@@ -50,6 +58,32 @@ public class IndexPresenter extends BasePresenter<IndexContract.Model, IndexCont
     @Inject
     public IndexPresenter(IndexContract.Model model, IndexContract.View rootView) {
         super(model, rootView);
+    }
+
+    /**
+     *余额、今日订单量、营业额（首页）
+     */
+    public void statistictoday(String shop_id) {
+        mModel.statistictoday(shop_id).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseEntity<TodayOrderEntity>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseEntity<TodayOrderEntity> baseEntity) {
+                        if (mRootView != null) {
+                            if (baseEntity.getCode() == 200) {
+                               mRootView.OnTodayOrderSuccess(baseEntity.getData());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        if (mRootView != null) {
+                            mRootView.onNetError();
+                        }
+                    }
+                });
     }
 
 

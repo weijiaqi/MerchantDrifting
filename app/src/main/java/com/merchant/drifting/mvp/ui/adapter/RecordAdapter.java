@@ -5,16 +5,19 @@ import android.view.View;
 import com.jess.arms.base.BaseRecyclerAdapter;
 import com.jess.arms.base.BaseRecyclerHolder;
 import com.merchant.drifting.R;
-import com.merchant.drifting.mvp.model.entity.RecordEntity;
+
+import com.merchant.drifting.mvp.model.entity.ShopApplyLogEntity;
 import com.merchant.drifting.mvp.ui.holder.RecordHolder;
 
 
 
 import java.util.List;
 
-public class RecordAdapter  extends BaseRecyclerAdapter<RecordEntity> {
+public class RecordAdapter  extends BaseRecyclerAdapter<ShopApplyLogEntity> {
 
-    public RecordAdapter(List<RecordEntity> infos) {
+
+
+    public RecordAdapter(List<ShopApplyLogEntity> infos) {
         super(infos);
     }
 
@@ -28,6 +31,7 @@ public class RecordAdapter  extends BaseRecyclerAdapter<RecordEntity> {
     protected int getLayoutId(int viewType) {
         return R.layout.item_record;
     }
+
 
     @Override
     public BaseRecyclerHolder getCreateViewHolder(View view, int viewType) {

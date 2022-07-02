@@ -99,9 +99,9 @@ public class ApplicationRecordActivity extends BaseActivity<ApplicationRecordPre
     public void getData() {
         mTabTitle = new ArrayList();
         mTabTitle.clear();
-        mTabTitle.add(new ApplicationRecordEntity("全部", 1));
-        mTabTitle.add(new ApplicationRecordEntity("审核中", 2));
-        mTabTitle.add(new ApplicationRecordEntity("已完结", 3));
+        mTabTitle.add(new ApplicationRecordEntity("全部", -1));
+        mTabTitle.add(new ApplicationRecordEntity("审核中", 0));
+        mTabTitle.add(new ApplicationRecordEntity("已完结", 1));
     }
 
 

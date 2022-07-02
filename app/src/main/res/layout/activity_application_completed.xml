@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:fitsSystemWindows="true"
     android:gravity="center_horizontal"
     android:orientation="vertical"
@@ -34,10 +35,11 @@
             android:textSize="14sp" />
 
         <TextView
+            android:id="@+id/tv_store_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:text="漂流局茶饮店"
+            android:text=""
             android:textColor="@color/color_17"
             android:textSize="14sp" />
 
@@ -57,10 +59,11 @@
             android:textSize="14sp" />
 
         <TextView
+            android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:text="王宝钏"
+            android:text=""
             android:textColor="@color/color_17"
             android:textSize="14sp" />
 
@@ -79,10 +82,11 @@
             android:textSize="14sp" />
 
         <TextView
+            android:id="@+id/tv_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:text="18235107237"
+            android:text=""
             android:textColor="@color/color_17"
             android:textSize="14sp" />
 

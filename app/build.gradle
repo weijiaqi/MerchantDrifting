@@ -102,7 +102,7 @@ dependencies {
     //glide
     implementation rootProject.ext.dependencies["glide"]
     //test
-    debugImplementation rootProject.ext.dependencies["canary-debug"]
+   // debugImplementation rootProject.ext.dependencies["canary-debug"]
     //Google
     implementation rootProject.ext.dependencies["zxing"]
     //曲线图

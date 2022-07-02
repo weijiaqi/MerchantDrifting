@@ -40,12 +40,13 @@
 
 
         <TextView
+            android:id="@+id/tv_system_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_notice"
             android:layout_alignStart="@+id/tv_notice"
             android:layout_marginTop="10dp"
-            android:text="您修改的店铺logo未通过"
+            android:text="暂无消息"
             android:textColor="@color/color_d4"
             android:textSize="12sp" />
 
@@ -54,20 +55,20 @@
             android:id="@+id/tv_system_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="两小时前"
-            android:textSize="12sp"
             android:layout_alignParentEnd="true"
+            android:text=""
             android:textColor="@color/color_d4"
-            />
+            android:textSize="12sp" />
 
         <ImageView
+            android:id="@+id/iv_system_unread"
             android:layout_width="5dp"
             android:layout_height="5dp"
             android:layout_below="@+id/tv_system_time"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="14dp"
             android:src="@drawable/shape_red_circle"
-            />
+            android:visibility="gone" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -96,12 +97,13 @@
 
 
         <TextView
+            android:id="@+id/tv_order_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_order"
             android:layout_alignStart="@+id/tv_order"
             android:layout_marginTop="10dp"
-            android:text="您有新的订单需要处理"
+            android:text="暂无消息"
             android:textColor="@color/color_d4"
             android:textSize="12sp" />
 
@@ -110,19 +112,33 @@
             android:id="@+id/tv_order_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="两小时前"
-            android:textSize="12sp"
             android:layout_alignParentEnd="true"
+            android:text=""
             android:textColor="@color/color_d4"
-            />
+            android:textSize="12sp" />
 
         <ImageView
+            android:id="@+id/iv_order_unread"
             android:layout_width="5dp"
             android:layout_height="5dp"
             android:layout_below="@+id/tv_order_time"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="14dp"
             android:src="@drawable/shape_red_circle"
-            />
+            android:visibility="gone" />
     </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:adjustViewBounds="true"
+            android:src="@drawable/message_bottom" />
+    </FrameLayout>
+
 </LinearLayout>

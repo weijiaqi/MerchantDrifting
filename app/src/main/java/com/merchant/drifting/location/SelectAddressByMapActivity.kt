@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -23,6 +24,7 @@ import com.baidu.mapapi.search.geocode.*
 import com.baidu.mapapi.search.sug.SuggestionResult
 import com.baidu.mapapi.search.sug.SuggestionSearch
 import com.baidu.mapapi.search.sug.SuggestionSearchOption
+import com.jess.arms.utils.LogUtils
 import com.jess.arms.utils.StatusBarUtil
 import com.merchant.drifting.R
 import kotlinx.android.synthetic.main.activity_select_address_by_map.*
@@ -40,7 +42,10 @@ class SelectAddressByMapActivity : AppCompatActivity() {
     private lateinit var mCurrentMode: MyLocationConfiguration.LocationMode
     private lateinit var sugAdapter: ArrayAdapter<String> //输入搜索内容显示的提示
     private lateinit var mSelectCity: String
-    private var mSuggestionInfos: MutableList<SuggestionResult.SuggestionInfo> = ArrayList()// 搜索结果列表
+    private lateinit var province: String
+    private lateinit var city: String
+    private var mSuggestionInfos: MutableList<SuggestionResult.SuggestionInfo> =
+        ArrayList()// 搜索结果列表
     private var acStateIsMap = true//当前页面是地图还是搜索
     private lateinit var mContext: Context
     private var mPoiInfoList: MutableList<PoiInfo> = ArrayList() //存放地图中心点附近的POI信息
@@ -64,7 +69,7 @@ class SelectAddressByMapActivity : AppCompatActivity() {
                 finish()
             }
         }
-        toolbar_title.text="地址选择"
+        toolbar_title.text = "地址选择"
 
         mEtJiedaoName.setOnClickListener { v ->
             if (acStateIsMap) {
@@ -115,6 +120,12 @@ class SelectAddressByMapActivity : AppCompatActivity() {
             override fun onGetGeoCodeResult(p0: GeoCodeResult?) {}
 
             override fun onGetReverseGeoCodeResult(p0: ReverseGeoCodeResult?) {
+                if (p0 != null) {
+                    if (p0.addressDetail != null) {
+                        province = p0.addressDetail.province
+                        city = p0.addressDetail.district;
+                    }
+                }
                 p0?.poiList?.let {
                     mPoiInfoList.clear()
                     mPoiInfoList.addAll(it) //只读
@@ -127,7 +138,9 @@ class SelectAddressByMapActivity : AppCompatActivity() {
         mLvResult.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             val poiInfo = mPoiInfoList[position]
             val intent = Intent()
-            intent.putExtra("address", poiInfo.name)
+            intent.putExtra("province ", province +" "+ city)
+            intent.putExtra("address", poiInfo.address)
+            intent.putExtra("location", poiInfo.location)
             setResult(RESULT_OK, intent)
             finish()
         }
@@ -152,11 +165,11 @@ class SelectAddressByMapActivity : AppCompatActivity() {
                 return@registerLocationListener
             }
             val data = MyLocationData.Builder()// 定位数据
-                    .accuracy(bdLocation.radius)// 定位精度bdLocation.getRadius()
-                    .direction(bdLocation.direction)// 此处设置开发者获取到的方向信息，顺时针0-360
-                    .latitude(bdLocation.latitude)// 经度
-                    .longitude(bdLocation.longitude)// 纬度
-                    .build()// 构建
+                .accuracy(bdLocation.radius)// 定位精度bdLocation.getRadius()
+                .direction(bdLocation.direction)// 此处设置开发者获取到的方向信息，顺时针0-360
+                .latitude(bdLocation.latitude)// 经度
+                .longitude(bdLocation.longitude)// 纬度
+                .build()// 构建
             mBaiduMap.setMyLocationData(data)// 设置定位数据
             // 是否是第一次定位
             if (isFirstLoc) {
@@ -192,7 +205,9 @@ class SelectAddressByMapActivity : AppCompatActivity() {
         mLvSearch.onItemClickListener = AdapterView.OnItemClickListener { _, _, i, _ ->
             val info = mSuggestionInfos[i]
             val intent = Intent()
-            intent.putExtra("address", info.district + info.key)
+            intent.putExtra("province ", province +" "+ city)
+            intent.putExtra("address", info.address)
+            intent.putExtra("location", info.pt)
             setResult(RESULT_OK, intent)
             finish()
         }
@@ -206,10 +221,12 @@ class SelectAddressByMapActivity : AppCompatActivity() {
                 if (cs.isEmpty()) {
                     return
                 }
-                mSuggestionSearch.requestSuggestion(SuggestionSearchOption()
+                mSuggestionSearch.requestSuggestion(
+                    SuggestionSearchOption()
                         .citylimit(true)
                         .keyword(cs.toString())
-                        .city(mSelectCity))
+                        .city(mSelectCity)
+                )
             }
         })
     }
@@ -266,7 +283,8 @@ class SelectAddressByMapActivity : AppCompatActivity() {
     /**
      * 拖动检索提示
      */
-    internal inner class PoiAdapter(private val context: Context, private val pois: List<PoiInfo>) : BaseAdapter() {
+    internal inner class PoiAdapter(private val context: Context, private val pois: List<PoiInfo>) :
+        BaseAdapter() {
         private lateinit var linearLayout: LinearLayout
 
         override fun getCount(): Int {
@@ -286,7 +304,8 @@ class SelectAddressByMapActivity : AppCompatActivity() {
             var holder: ViewHolder
             if (convertView == null) {
                 convertView = LayoutInflater.from(context).inflate(R.layout.locationpois_item, null)
-                linearLayout = convertView!!.findViewById(R.id.locationpois_linearlayout) as LinearLayout
+                linearLayout =
+                    convertView!!.findViewById(R.id.locationpois_linearlayout) as LinearLayout
                 holder = ViewHolder(convertView!!)
                 convertView!!.tag = holder
             } else {
@@ -311,7 +330,8 @@ class SelectAddressByMapActivity : AppCompatActivity() {
         internal inner class ViewHolder(view: View) {
             var iv_gps: ImageView = view.findViewById(R.id.iv_gps) as ImageView
             var locationpoi_name: TextView = view.findViewById(R.id.locationpois_name) as TextView
-            var locationpoi_address: TextView = view.findViewById(R.id.locationpois_address) as TextView
+            var locationpoi_address: TextView =
+                view.findViewById(R.id.locationpois_address) as TextView
 
 
         }

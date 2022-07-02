@@ -58,21 +58,22 @@ public class MerchantCenterActivity extends BaseActivity {
     public void initData(@Nullable Bundle savedInstanceState) {
         setStatusBar(false);
         if (Preferences.isAnony()) {
-            if (!TextUtils.isEmpty(Preferences.getShopId())) {
-                HomeActivity.start(this, true);
-            } else {
-                RequestUtil.create().haveshop(entity -> {
-                    if (entity != null && entity.getCode() == 200) {
-                        if (entity.getData().getTotal() > 0) {
-                            Preferences.saveShopId(entity.getData().getShops().get(0).getShop_id() + "");
-                            Preferences.saveShopName(entity.getData().getShops().get(0).getShop_name() + "");
-                            HomeActivity.start(this, true);
-                        } else {
-                            SwitchMerchantsActivity.start(this, 1, true);
-                        }
-                    }
-                });
-            }
+//            if (!TextUtils.isEmpty(Preferences.getShopId())) {
+//                HomeActivity.start(this, true);
+//            } else {
+//                RequestUtil.create().haveshop(entity -> {
+//                    if (entity != null && entity.getCode() == 200) {
+//                        if (entity.getData().getTotal() > 0) {
+//                            Preferences.saveShopId(entity.getData().getShops().get(0).getShop_id() + "");
+//                            Preferences.saveShopName(entity.getData().getShops().get(0).getShop_name() + "");
+//                            HomeActivity.start(this, true);
+//                        } else {
+//                            SwitchMerchantsActivity.start(this, 1, true);
+//                        }
+//                    }
+//                });
+//            }
+            HomeActivity.start(this, true);
         } else {
             AnimatorUtil.floatAnim(mPic1, 4000);
             AnimatorUtil.floatAnim(mPic2, 4000);

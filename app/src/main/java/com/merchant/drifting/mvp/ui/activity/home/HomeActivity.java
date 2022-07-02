@@ -23,6 +23,7 @@ import com.merchant.drifting.mvp.ui.fragment.IndexFragment;
 import com.merchant.drifting.mvp.ui.fragment.MineFragment;
 import com.merchant.drifting.mvp.ui.fragment.OrderFragment;
 import com.merchant.drifting.mvp.ui.listener.OnTabTransitionTextListener;
+import com.merchant.drifting.util.request.RequestUtil;
 import com.rb.core.tab.view.indicator.FixedIndicatorView;
 import com.rb.core.tab.view.indicator.IndicatorViewPager;
 import com.rb.core.tab.view.viewpager.SViewPager;
@@ -134,6 +135,12 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
         if (mPresenter != null) {
             mPresenter.exitBy2Click();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RequestUtil.create().disDispose();
     }
 
     /**

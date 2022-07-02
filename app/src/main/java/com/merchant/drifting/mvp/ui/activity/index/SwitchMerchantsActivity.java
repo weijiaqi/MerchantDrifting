@@ -27,7 +27,9 @@ import com.merchant.drifting.mvp.model.entity.ShopListEntity;
 import com.merchant.drifting.mvp.presenter.SwitchMerchantsPresenter;
 import com.merchant.drifting.mvp.ui.activity.user.ApplicationMaterialsActivity;
 import com.merchant.drifting.mvp.ui.adapter.SwitchMerchantsAdapter;
+import com.merchant.drifting.storageinfo.Preferences;
 import com.merchant.drifting.util.ClickUtil;
+import com.merchant.drifting.util.GlideUtil;
 import com.merchant.drifting.view.ThickLineTextSpan;
 
 import java.util.ArrayList;
@@ -60,6 +62,9 @@ public class SwitchMerchantsActivity extends BaseActivity<SwitchMerchantsPresent
     TextView mTvName;
     @BindView(R.id.tv_phone)
     TextView mTvPhone;
+    @BindView(R.id.iv_photo)
+    ImageView mIvPhoto;
+
     private SwitchMerchantsAdapter adapter;
     private int type;
     private static final String EXRA_TYPE = "exra_type";
@@ -100,6 +105,9 @@ public class SwitchMerchantsActivity extends BaseActivity<SwitchMerchantsPresent
     }
 
     public void initListener() {
+        mTvName.setText(Preferences.getNickName());
+        mTvPhone.setText(Preferences.getPhone());
+        GlideUtil.create().loadHeadCirclePic(this,Preferences.getPhoto(),mIvPhoto);
         initTextSpan(mTvShopName, "选择店铺开始营业 ");
         if (type == 1) {
             mIvNoShop.setVisibility(View.VISIBLE);
@@ -151,7 +159,7 @@ public class SwitchMerchantsActivity extends BaseActivity<SwitchMerchantsPresent
                 case R.id.iv_right_word:
                     ApplicationRecordActivity.start(this, false);
                     break;
-                case R.id.iv_no_shop:
+                case R.id.iv_no_shop:  //提交资料
                     ApplicationMaterialsActivity.start(this, false);
                     break;
             }

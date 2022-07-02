@@ -48,9 +48,8 @@
                 android:layout_marginHorizontal="17dp"
                 android:layout_marginTop="19dp">
 
-
                 <ImageView
-                    android:id="@+id/iv_left"
+                    android:id="@+id/iv_photo"
                     android:layout_width="56dp"
                     android:layout_height="56dp"
                     android:src="@drawable/icon_head" />
@@ -58,9 +57,9 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_alignTop="@+id/iv_left"
+                    android:layout_alignTop="@+id/iv_photo"
                     android:layout_marginStart="13dp"
-                    android:layout_toRightOf="@+id/iv_left"
+                    android:layout_toRightOf="@+id/iv_photo"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
 
@@ -88,7 +87,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/iv_gray_back" />
+                    android:src="@drawable/iv_gray_back"
+                    android:visibility="gone" />
             </RelativeLayout>
 
 
@@ -97,6 +97,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="-1dp"
+
                 android:src="@drawable/switch_merchants_bg" />
 
         </com.hjq.shape.layout.ShapeRelativeLayout>

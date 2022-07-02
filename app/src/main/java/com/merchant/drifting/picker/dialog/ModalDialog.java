@@ -51,7 +51,7 @@ public abstract class ModalDialog extends BottomDialog implements View.OnClickLi
     protected View bodyView;
     protected View footerView;
 
-    protected int type = 1;
+    protected int type = 3;
 
     public ModalDialog(@NonNull Activity activity) {
         super(activity, DialogConfig.getDialogStyle() == DialogStyle.Three
@@ -230,12 +230,12 @@ public abstract class ModalDialog extends BottomDialog implements View.OnClickLi
         int id = v.getId();
         if (id == R.id.dialog_modal_cancel) {
             DialogLog.print("cancel clicked");
-            if (type == 1) {
+            if (type == 3) {
                 type = 2;
                 cancelView.getShapeDrawableBuilder().setSolidColor(activity.getColor(R.color.color_f9)).intoBackground();
                 cancelView.setText("按月选择");
             } else {
-                type = 1;
+                type = 3;
                 cancelView.getShapeDrawableBuilder().setSolidColor(activity.getColor(R.color.color_42)).intoBackground();
                 cancelView.setText("按日选择");
             }

@@ -1,11 +1,17 @@
 package com.merchant.drifting.mvp.model;
 import android.app.Application;
 import com.google.gson.Gson;
+import com.jess.arms.base.BaseEntity;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
 import com.jess.arms.di.scope.ActivityScope;
 import javax.inject.Inject;
+
+import com.merchant.drifting.app.api.ApiService;
 import com.merchant.drifting.mvp.contract.SystemNotificationContract;
+import com.merchant.drifting.mvp.model.entity.SystemNotificationEntity;
+
+import io.reactivex.Observable;
 
 /**
  * ================================================
@@ -36,5 +42,10 @@ public class SystemNotificationModel extends BaseModel implements SystemNotifica
         super.onDestroy();
         this.mGson = null;
         this.mApplication = null;
+    }
+
+    @Override
+    public Observable<BaseEntity<SystemNotificationEntity>> messagelist(int msg_type, int page, int limit) {
+        return mRepositoryManager.obtainRetrofitService(ApiService.class).messagelist(msg_type,page,limit);
     }
 }

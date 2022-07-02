@@ -1,11 +1,20 @@
 package com.merchant.drifting.mvp.model;
+
 import android.app.Application;
+
 import com.google.gson.Gson;
+import com.jess.arms.base.BaseEntity;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
 import com.jess.arms.di.scope.ActivityScope;
+
 import javax.inject.Inject;
+
+import com.merchant.drifting.app.api.ApiService;
 import com.merchant.drifting.mvp.contract.RunningRecordsContract;
+import com.merchant.drifting.mvp.model.entity.BusinessBillEntity;
+
+import io.reactivex.Observable;
 
 /**
  * ================================================
@@ -20,7 +29,7 @@ import com.merchant.drifting.mvp.contract.RunningRecordsContract;
  * ================================================
  */
 @ActivityScope
-public class RunningRecordsModel extends BaseModel implements RunningRecordsContract.Model{
+public class RunningRecordsModel extends BaseModel implements RunningRecordsContract.Model {
     @Inject
     Gson mGson;
     @Inject
@@ -36,5 +45,10 @@ public class RunningRecordsModel extends BaseModel implements RunningRecordsCont
         super.onDestroy();
         this.mGson = null;
         this.mApplication = null;
+    }
+
+    @Override
+    public Observable<BaseEntity<BusinessBillEntity>> businessbill(int search_type, String date, int page, int limit) {
+        return mRepositoryManager.obtainRetrofitService(ApiService.class).businessbill(search_type, date, page, limit);
     }
 }

@@ -6,6 +6,7 @@ import com.jess.arms.base.BaseEntity;
 import com.jess.arms.base.BaseObserver;
 import com.merchant.drifting.app.api.ApiProxy;
 import com.merchant.drifting.mvp.model.entity.HaveShopEntity;
+import com.merchant.drifting.mvp.model.entity.MessageUnreadEntity;
 import com.merchant.drifting.util.callback.BaseDataCallBack;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -64,6 +65,77 @@ public class RequestUtil {
                     }
                 });
     }
+
+
+
+
+
+    /**
+     * 未读消息
+     *
+     * @param callBack
+     */
+    public void messageunread(BaseDataCallBack<MessageUnreadEntity> callBack) {
+        ApiProxy.getApiService().messageunread()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new BaseObserver<BaseEntity<MessageUnreadEntity>>() {
+
+                    @Override
+                    public void onSubscribe(Disposable disposable) {
+                        mDisposables.put(mRequestCount++, disposable);
+                    }
+
+                    @Override
+                    public void onNext(BaseEntity<MessageUnreadEntity> entity) {
+                        if (callBack != null) {
+                            callBack.getData(entity);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (callBack != null) {
+                            callBack.getData(null);
+                        }
+                    }
+                });
+    }
+
+
+
+    /**
+     * 全部标记已读
+     *
+     * @param callBack
+     */
+    public void markread(BaseDataCallBack callBack) {
+        ApiProxy.getApiService().markread()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new BaseObserver<BaseEntity>() {
+
+                    @Override
+                    public void onSubscribe(Disposable disposable) {
+                        mDisposables.put(mRequestCount++, disposable);
+                    }
+
+                    @Override
+                    public void onNext(BaseEntity entity) {
+                        if (callBack != null) {
+                            callBack.getData(entity);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (callBack != null) {
+                            callBack.getData(null);
+                        }
+                    }
+                });
+    }
+
 
     /**
      * 取消订阅

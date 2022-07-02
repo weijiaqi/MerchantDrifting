@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_totle"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <com.merchant.drifting.view.ProgressBarCircular
+        android:layout_width="39dp"
+        android:layout_height="39dp"
+        app:matProg_barColor="@color/color_42"
+        app:matProg_barWidth="4dp"
+        app:matProg_circleRadius="39dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        app:matProg_progressIndeterminate="true"
+        app:matProg_rimColor="#ffeefb"
+        app:matProg_rimWidth="4dp" />
+
+</RelativeLayout>

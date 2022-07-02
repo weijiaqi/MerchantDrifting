@@ -1,11 +1,18 @@
 package com.merchant.drifting.mvp.model;
 import android.app.Application;
 import com.google.gson.Gson;
+import com.jess.arms.base.BaseEntity;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
 import com.jess.arms.di.scope.ActivityScope;
 import javax.inject.Inject;
+
+import com.merchant.drifting.app.api.ApiService;
+import com.merchant.drifting.data.entity.ApplicationMaterialsEntity;
 import com.merchant.drifting.mvp.contract.ApplicationMaterialsContract;
+
+import io.reactivex.Observable;
+import okhttp3.MultipartBody;
 
 /**
  * ================================================
@@ -36,5 +43,10 @@ public class ApplicationMaterialsModel extends BaseModel implements ApplicationM
         super.onDestroy();
         this.mGson = null;
         this.mApplication = null;
+    }
+
+    @Override
+    public Observable<BaseEntity<ApplicationMaterialsEntity>> shopapply(MultipartBody body) {
+        return mRepositoryManager.obtainRetrofitService(ApiService.class).shopapply(body);
     }
 }

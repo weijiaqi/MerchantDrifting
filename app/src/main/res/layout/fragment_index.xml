@@ -60,7 +60,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toLeftOf="@+id/iv_scan"
                     android:paddingHorizontal="14dp"
-                    android:src="@drawable/unread_message" />
+                    android:src="@drawable/unread" />
 
 
                 <ImageView
@@ -75,7 +75,7 @@
             </RelativeLayout>
 
             <TextView
-                android:id="@+id/tv_turnover"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -107,17 +107,19 @@
                 android:layout_marginTop="10dp">
 
                 <TextView
+                    android:id="@+id/tv_today_order_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="今日订单量：2000单"
+                    android:text=""
                     android:textColor="@color/white"
                     android:textSize="12sp" />
 
                 <TextView
+                    android:id="@+id/tv_turnover"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
-                    android:text="今日营业额：200.00元"
+                    android:text=""
                     android:textColor="@color/white"
                     android:textSize="12sp" />
 

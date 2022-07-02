@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.jess.arms.base.BaseFragment;
 import com.jess.arms.di.component.AppComponent;
@@ -19,6 +20,7 @@ import com.merchant.drifting.mvp.contract.OrderRecordContract;
 import com.merchant.drifting.mvp.model.entity.OrderRecordEntity;
 import com.merchant.drifting.mvp.presenter.OrderRecordPresenter;
 import com.merchant.drifting.mvp.ui.adapter.OrderRecordAdapter;
+import com.merchant.drifting.util.ViewUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,11 +37,12 @@ import butterknife.BindView;
 public class OrderRecordFragment extends BaseFragment<OrderRecordPresenter> implements OrderRecordContract.View {
     @BindView(R.id.rcy_public)
     RecyclerView mRcyOrderRecord;
-
+    @BindView(R.id.fl_container)
+    FrameLayout mFlState;
 
     private static final String BUNDLE_TYPE = "bundle_type";
 
-    private int type;
+    private int type, days;
     private OrderRecordAdapter orderRecordAdapter;
 
     public static OrderRecordFragment newInstance(int type) {
@@ -69,7 +72,18 @@ public class OrderRecordFragment extends BaseFragment<OrderRecordPresenter> impl
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
-        type =  args.getInt(BUNDLE_TYPE);
+        type = args.getInt(BUNDLE_TYPE);
+        switch (type) {
+            case 0:
+                days = 1;
+                break;
+            case 1:
+                days = 7;
+                break;
+            case 2:
+                days = 30;
+                break;
+        }
     }
 
     /**
@@ -77,7 +91,7 @@ public class OrderRecordFragment extends BaseFragment<OrderRecordPresenter> impl
      */
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        initListener();
+
     }
 
     @Override
@@ -85,30 +99,56 @@ public class OrderRecordFragment extends BaseFragment<OrderRecordPresenter> impl
 
     }
 
+    @Override
+    protected void onFirstVisible() {
+        super.onFirstVisible();
+        initListener();
+    }
+
     private void initListener() {
         mRcyOrderRecord.setLayoutManager(new LinearLayoutManager(mContext));
         orderRecordAdapter = new OrderRecordAdapter(new ArrayList<>());
         mRcyOrderRecord.setAdapter(orderRecordAdapter);
-        orderRecordAdapter.setData(getData2());
+        if (mPresenter != null) {
+            mPresenter.salesranking("", days);
+        }
     }
 
 
-    public List<OrderRecordEntity> getData2() {
-        List<OrderRecordEntity> list = new ArrayList<>();
-        list.add(new OrderRecordEntity("1"));
-        list.add(new OrderRecordEntity("2"));
-        if (type==1){
-            list.add(new OrderRecordEntity("3"));
-            list.add(new OrderRecordEntity("4"));
+    @Override
+    public void onloadStart() {
+        if (orderRecordAdapter.getDatas() == null || orderRecordAdapter.getDatas().size() == 0) {
+            ViewUtil.create().setAnimation(mContext, mFlState);
         }
-        if (type==2){
-            list.add(new OrderRecordEntity("3"));
-            list.add(new OrderRecordEntity("4"));
-            list.add(new OrderRecordEntity("5"));
-            list.add(new OrderRecordEntity("6"));
-        }
+    }
 
-        return list;
+    @Override
+    public void loadState(int dataState) {
+        if (orderRecordAdapter.getDatas() == null || orderRecordAdapter.getDatas().size() == 0) {
+            if (dataState == ViewUtil.NOT_DATA) {
+                ViewUtil.create().setView(mContext, mFlState, ViewUtil.NOT_DATA);
+            } else if (dataState == ViewUtil.NOT_SERVER) {
+                ViewUtil.create().setView(mContext, mFlState, ViewUtil.NOT_SERVER);
+            } else if (dataState == ViewUtil.NOT_NETWORK) {
+                ViewUtil.create().setView(mContext, mFlState, ViewUtil.NOT_NETWORK);
+            } else {
+                ViewUtil.create().setView(mFlState);
+            }
+        } else {
+            ViewUtil.create().setView(mFlState);
+        }
+    }
+
+    @Override
+    public void OnSalesRanking(List<OrderRecordEntity> list) {
+        if (list != null && list.size() > 0) {
+            orderRecordAdapter.setData(list);
+        }
+    }
+
+    @Override
+    public void onNetError() {
+
     }
 
     public Fragment getFragment() {

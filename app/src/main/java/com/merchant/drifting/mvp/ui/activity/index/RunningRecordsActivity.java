@@ -4,11 +4,13 @@ import android.app.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.jess.arms.base.BaseActivity;
@@ -17,7 +19,9 @@ import com.jess.arms.di.component.AppComponent;
 import com.merchant.drifting.R;
 import com.merchant.drifting.di.component.DaggerRunningRecordsComponent;
 import com.merchant.drifting.mvp.contract.RunningRecordsContract;
+import com.merchant.drifting.mvp.model.entity.BusinessBillEntity;
 import com.merchant.drifting.mvp.presenter.RunningRecordsPresenter;
+import com.merchant.drifting.mvp.ui.adapter.RunningRecordsAdapter;
 import com.merchant.drifting.picker.DateEntity;
 import com.merchant.drifting.picker.DateMode;
 import com.merchant.drifting.picker.DatePicker;
@@ -30,6 +34,11 @@ import com.merchant.drifting.picker.dialog.DialogStyle;
 import com.merchant.drifting.picker.widget.DateWheelLayout;
 import com.merchant.drifting.util.ClickUtil;
 import com.merchant.drifting.util.ToastUtil;
+import com.merchant.drifting.util.ViewUtil;
+import com.rb.core.xrecycleview.XRecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -40,15 +49,25 @@ import butterknife.OnClick;
  * @author 流水记录
  * module name is RunningRecordsActivity
  */
-public class RunningRecordsActivity extends BaseActivity<RunningRecordsPresenter> implements RunningRecordsContract.View, OnDatePickedListener, OnDatePickedSelectedListener {
+public class RunningRecordsActivity extends BaseActivity<RunningRecordsPresenter> implements RunningRecordsContract.View, OnDatePickedListener, OnDatePickedSelectedListener, XRecyclerView.LoadingListener {
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
     @BindView(R.id.tv_bar)
     TextView mTvBar;
-
-    private int status=1;
+    @BindView(R.id.tv_time)
+    TextView mTvTime;
+    @BindView(R.id.rcy_flowing_water)
+    XRecyclerView mRcyFlowingWater;
+    @BindView(R.id.fl_container)
+    FrameLayout mFlState;
+    private int status = 3;
     private DatePicker picker;
     private DateWheelLayout wheelLayout;
+    private int mPage = 1;
+    private int limit = 10;
+
+    private String date;
+    private RunningRecordsAdapter adapter;
 
     public static void start(Context context, boolean closePage) {
         Intent intent = new Intent(context, RunningRecordsActivity.class);
@@ -84,6 +103,78 @@ public class RunningRecordsActivity extends BaseActivity<RunningRecordsPresenter
         DialogConfig.setDialogColor(new DialogColor()
                 .cancelTextColor(0xFF0099CC)
                 .okTextColor(0xFF0099CC));
+        mRcyFlowingWater.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new RunningRecordsAdapter(new ArrayList<>());
+        mRcyFlowingWater.setAdapter(adapter);
+        getData(status, date, mPage, true);
+    }
+
+    public void getData(int status, String date, int mPage, boolean loadType) {
+        if (mPresenter != null) {
+            mPresenter.businessbill(status, date, mPage, limit, loadType);
+        }
+    }
+
+    @Override
+    public void onRefresh() {
+        mPage = 1;
+        getData(status, date, mPage, true);
+    }
+
+    @Override
+    public void onLoadMore() {
+        getData(status, date, mPage, true);
+    }
+
+    @Override
+    public void onloadStart() {
+        if (adapter.getDatas() == null || adapter.getDatas().size() == 0) {
+            ViewUtil.create().setAnimation(this, mFlState);
+        }
+    }
+
+    @Override
+    public void onRunningRecordSuccess(BusinessBillEntity entity, boolean isNotData) {
+        List<BusinessBillEntity.ListBean> list = entity.getList();
+        if (list != null && list.size() > 0) {
+            if (isNotData) {
+                mPage = 2;
+                adapter.setData(list);
+            } else {
+                mPage++;
+                adapter.addData(list);
+            }
+        }
+    }
+
+    @Override
+    public void loadFinish(boolean loadType, boolean isNotData) {
+        if (mRcyFlowingWater == null) {
+            return;
+        }
+        if (!loadType && isNotData) {
+            mRcyFlowingWater.loadEndLine();
+        } else {
+            mRcyFlowingWater.refreshEndComplete();
+        }
+    }
+
+    @Override
+    public void loadState(int dataState) {
+        if (dataState == ViewUtil.NOT_DATA) {
+            ViewUtil.create().setView(this, mFlState, ViewUtil.NOT_DATA);
+        } else if (dataState == ViewUtil.NOT_SERVER) {
+            ViewUtil.create().setView(this, mFlState, ViewUtil.NOT_SERVER);
+        } else if (dataState == ViewUtil.NOT_NETWORK) {
+            ViewUtil.create().setView(this, mFlState, ViewUtil.NOT_NETWORK);
+        } else {
+            ViewUtil.create().setView(mFlState);
+        }
+    }
+
+    @Override
+    public void onNetError() {
+
     }
 
     public Activity getActivity() {
@@ -106,29 +197,30 @@ public class RunningRecordsActivity extends BaseActivity<RunningRecordsPresenter
 
     @Override
     public void showMessage(@NonNull String message) {
-
+        ToastUtil.showToast(message);
     }
 
     @Override
     public void onDatePicked(int year, int month, int day) {
-        if (status==1){
-            ToastUtil.showToast(year+"---"+month+"---"+day);
-        }else {
-            ToastUtil.showToast(year+"---"+month);
+        if (status == 3) {
+            date = year + "/" + month + "/" + day;
+        } else {
+            date = year + "/" + month;
         }
+        mTvTime.setText(date);
     }
 
     @Override
     public void onDatePicked(int type) {
-        status=type;
-        wheelLayout.setDateMode(status == 1 ? DateMode.YEAR_MONTH_DAY : DateMode.YEAR_MONTH);
+        status = type;
+        wheelLayout.setDateMode(status == 3 ? DateMode.YEAR_MONTH_DAY : DateMode.YEAR_MONTH);
     }
 
 
     public void setSelectPiker() {
         picker = new DatePicker(this);
         wheelLayout = picker.getWheelLayout();
-        wheelLayout.setDateMode(DateMode.YEAR_MONTH_DAY );
+        wheelLayout.setDateMode(DateMode.YEAR_MONTH_DAY);
         wheelLayout.setDateFormatter(new UnitDateFormatter());
         wheelLayout.setRange(DateEntity.target(2021, 1, 1), DateEntity.target(2050, 12, 31), DateEntity.today());
         wheelLayout.setCurtainEnabled(true);
@@ -139,4 +231,6 @@ public class RunningRecordsActivity extends BaseActivity<RunningRecordsPresenter
         picker.setOnDatePickedSelectedListener(this);
         picker.show();
     }
+
+
 }

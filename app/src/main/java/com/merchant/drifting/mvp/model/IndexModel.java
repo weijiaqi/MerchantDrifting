@@ -3,13 +3,18 @@ package com.merchant.drifting.mvp.model;
 import android.app.Application;
 
 import com.google.gson.Gson;
+import com.jess.arms.base.BaseEntity;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
 import com.jess.arms.di.scope.FragmentScope;
 
 import javax.inject.Inject;
 
+import com.merchant.drifting.app.api.ApiService;
 import com.merchant.drifting.mvp.contract.IndexContract;
+import com.merchant.drifting.mvp.model.entity.TodayOrderEntity;
+
+import io.reactivex.Observable;
 
 /**
  * ================================================
@@ -40,5 +45,10 @@ public class IndexModel extends BaseModel implements IndexContract.Model {
         super.onDestroy();
         this.mGson = null;
         this.mApplication = null;
+    }
+
+    @Override
+    public Observable<BaseEntity<TodayOrderEntity>> statistictoday(String shop_id) {
+        return mRepositoryManager.obtainRetrofitService(ApiService.class).statistictoday(shop_id);
     }
 }

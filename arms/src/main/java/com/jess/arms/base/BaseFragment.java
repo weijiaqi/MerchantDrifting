@@ -64,6 +64,9 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
     @Nullable
     protected P mPresenter;//如果当前页面逻辑简单, Presenter 可以为 null
     private Cache<String, Object> mCache;
+    private boolean isViewNull;
+    private boolean isUserVisible;
+    private boolean isFirstVisible;
 
     @NonNull
     @Override
@@ -85,6 +88,54 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
+    }
+
+    private void initVariable() {
+        isFirstVisible = true;
+        isUserVisible = false;
+        isViewNull = true;
+    }
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (!isViewNull) {
+            return;
+        }
+        if (isVisibleToUser) {
+            isUserVisible = true;
+            if (isFirstVisible) {
+                isFirstVisible = false;
+                onFirstVisible();
+                initEvents();
+            } else {
+                onVisible();
+            }
+            return;
+        }
+        if (isUserVisible) {
+            isUserVisible = false;
+            onInVisible();
+        }
+    }
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initVariable();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (getUserVisibleHint()) {
+            isUserVisible = true;
+            if (isFirstVisible) {
+                isFirstVisible = false;
+                onFirstVisible();
+                initEvents();
+            } else {
+                onVisible();
+            }
+        }
     }
 
     @Nullable
@@ -121,6 +172,33 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             tvBar.setVisibility(View.VISIBLE);
         }
+    }
+
+    /**
+     * Fragment第一次可见
+     */
+    protected void onFirstVisible() {
+
+    }
+
+    /**
+     * Fragment不可见
+     */
+    protected void onInVisible() {
+    }
+
+
+    /**
+     * 初始化监听事件
+     */
+    protected void initEvents() {
+    }
+
+
+    /**
+     * Fragment可见
+     */
+    protected void onVisible() {
     }
 
     @Override

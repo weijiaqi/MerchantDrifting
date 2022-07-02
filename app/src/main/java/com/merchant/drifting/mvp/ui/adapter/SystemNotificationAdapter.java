@@ -11,16 +11,18 @@ import com.merchant.drifting.mvp.ui.holder.SystemNotificationHolder;
 
 import java.util.List;
 
-public class SystemNotificationAdapter extends BaseRecyclerAdapter<SystemNotificationEntity> {
+public class SystemNotificationAdapter extends BaseRecyclerAdapter<SystemNotificationEntity.ListBean> {
 
-    public SystemNotificationAdapter(List<SystemNotificationEntity> infos) {
+    private int type;
+    public SystemNotificationAdapter(List<SystemNotificationEntity.ListBean> infos,int status) {
         super(infos);
+        type=status;
     }
 
     @Override
     public void getHolder(BaseRecyclerHolder holder, int position) {
         SystemNotificationHolder systemNotificationHolder=(SystemNotificationHolder) holder;
-        systemNotificationHolder.setData(mDatas, position);
+        systemNotificationHolder.setData(mDatas, position,type);
     }
 
     @Override

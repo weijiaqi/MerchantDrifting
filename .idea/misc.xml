@@ -11,6 +11,7 @@
         <entry key="..\:/MerchantDrifting/app/src/main/res/drawable/check_protocol_none.xml" value="0.287" />
         <entry key="..\:/MerchantDrifting/app/src/main/res/drawable/edit_cursor_color.xml" value="0.287" />
         <entry key="..\:/MerchantDrifting/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2755" />
+        <entry key="..\:/MerchantDrifting/app/src/main/res/drawable/my_dialog.xml" value="0.276" />
         <entry key="..\:/MerchantDrifting/app/src/main/res/drawable/progress_sale_bar.xml" value="0.2795" />
         <entry key="..\:/MerchantDrifting/app/src/main/res/drawable/selector_protocol.xml" value="0.287" />
         <entry key="..\:/MerchantDrifting/app/src/main/res/drawable/shape_blue_20_circle.xml" value="0.2755" />
@@ -27,7 +28,7 @@
         <entry key="..\:/MerchantDrifting/app/src/main/res/drawable/ye_underline_bg.xml" value="0.2755" />
         <entry key="..\:/MerchantDrifting/app/src/main/res/layout/activity_account_balance.xml" value="0.33" />
         <entry key="..\:/MerchantDrifting/app/src/main/res/layout/activity_add_bank_card.xml" value="0.22" />
-        <entry key="..\:/MerchantDrifting/app/src/main/res/layout/activity_application_completed.xml" value="0.15806159420289856" />
+        <entry key="..\:/MerchantDrifting/app/src/main/res/layout/activity_application_completed.xml" value="0.25" />
         <entry key="..\:/MerchantDrifting/app/src/main/res/layout/activity_application_materials.xml" value="0.24048913043478262" />
         <entry key="..\:/MerchantDrifting/app/src/main/res/layout/activity_application_record.xml" value="0.13994565217391305" />
         <entry key="..\:/MerchantDrifting/app/src/main/res/layout/activity_bank_card_management.xml" value="0.22871376811594202" />
@@ -53,9 +54,12 @@
         <entry key="..\:/MerchantDrifting/app/src/main/res/layout/activity_verification_code_login.xml" value="0.25" />
         <entry key="..\:/MerchantDrifting/app/src/main/res/layout/custom_marker_view.xml" value="0.30344202898550726" />
         <entry key="..\:/MerchantDrifting/app/src/main/res/layout/dialog_currency.xml" value="0.3177083333333333" />
+        <entry key="..\:/MerchantDrifting/app/src/main/res/layout/dialog_document_type.xml" value="0.2671875" />
         <entry key="..\:/MerchantDrifting/app/src/main/res/layout/dialog_footer_style_default.xml" value="0.30344202898550726" />
         <entry key="..\:/MerchantDrifting/app/src/main/res/layout/dialog_header_style_default.xml" value="0.30104166666666665" />
+        <entry key="..\:/MerchantDrifting/app/src/main/res/layout/dialog_loading.xml" value="0.29635416666666664" />
         <entry key="..\:/MerchantDrifting/app/src/main/res/layout/dialog_message.xml" value="0.25" />
+        <entry key="..\:/MerchantDrifting/app/src/main/res/layout/dialog_select_sex.xml" value="0.2671875" />
         <entry key="..\:/MerchantDrifting/app/src/main/res/layout/fragment_commodity_manager.xml" value="0.22871376811594202" />
         <entry key="..\:/MerchantDrifting/app/src/main/res/layout/fragment_index.xml" value="0.25" />
         <entry key="..\:/MerchantDrifting/app/src/main/res/layout/fragment_mine.xml" value="0.22871376811594202" />
@@ -68,17 +72,21 @@
         <entry key="..\:/MerchantDrifting/app/src/main/res/layout/item_commodity_manager.xml" value="0.5" />
         <entry key="..\:/MerchantDrifting/app/src/main/res/layout/item_order.xml" value="0.30344202898550726" />
         <entry key="..\:/MerchantDrifting/app/src/main/res/layout/item_order_data.xml" value="0.28421052631578947" />
-        <entry key="..\:/MerchantDrifting/app/src/main/res/layout/item_order_record.xml" value="0.5" />
-        <entry key="..\:/MerchantDrifting/app/src/main/res/layout/item_record.xml" value="0.25" />
+        <entry key="..\:/MerchantDrifting/app/src/main/res/layout/item_order_record.xml" value="0.25" />
+        <entry key="..\:/MerchantDrifting/app/src/main/res/layout/item_record.xml" value="0.5" />
+        <entry key="..\:/MerchantDrifting/app/src/main/res/layout/item_running_records.xml" value="0.25" />
         <entry key="..\:/MerchantDrifting/app/src/main/res/layout/item_switch_merchants.xml" value="0.2717391304347826" />
         <entry key="..\:/MerchantDrifting/app/src/main/res/layout/item_system_notification.xml" value="0.25" />
         <entry key="..\:/MerchantDrifting/app/src/main/res/layout/item_transaction.xml" value="0.335" />
         <entry key="..\:/MerchantDrifting/app/src/main/res/layout/layout_home_tab_bottom.xml" value="0.25" />
         <entry key="..\:/MerchantDrifting/app/src/main/res/layout/layout_indicator_view.xml" value="0.11548913043478261" />
+        <entry key="..\:/MerchantDrifting/app/src/main/res/layout/layout_loading.xml" value="0.29635416666666664" />
+        <entry key="..\:/MerchantDrifting/app/src/main/res/layout/layout_not_data.xml" value="0.29635416666666664" />
         <entry key="..\:/MerchantDrifting/app/src/main/res/layout/layout_record_view.xml" value="0.30344202898550726" />
         <entry key="..\:/MerchantDrifting/app/src/main/res/layout/layout_show_state.xml" value="0.11548913043478261" />
         <entry key="..\:/MerchantDrifting/app/src/main/res/layout/layout_tab_top.xml" value="0.11548913043478261" />
         <entry key="..\:/MerchantDrifting/app/src/main/res/layout/locationpois_item.xml" value="0.30344202898550726" />
+        <entry key="..\:/MerchantDrifting/app/src/main/res/layout/my_dialog.xml" value="0.2671875" />
         <entry key="..\:/MerchantDrifting/app/src/main/res/layout/toast_layout_center.xml" value="0.22871376811594202" />
         <entry key="..\:/MerchantDrifting/app/src/main/res/layout/view_color_line.xml" value="0.2942708333333333" />
         <entry key="..\:/MerchantDrifting/app/src/main/res/layout/view_height_title_lay.xml" value="0.284375" />

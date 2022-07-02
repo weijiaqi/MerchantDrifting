@@ -68,7 +68,7 @@ public class DateUtil {
         try {
             String s = (Long.parseLong(unixTime) * 1000) + "";
             String res;
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd HH:mm");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd HH:mm");
             long lt = new Long(s);
             Date date = new Date(lt);
             res = simpleDateFormat.format(date);
@@ -116,7 +116,7 @@ public class DateUtil {
         try {
             String s = Long.parseLong(unixTime) * 1000 + "";
             String res;
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
             long lt = new Long(s);
             Date date = new Date(lt);
             res = simpleDateFormat.format(date);

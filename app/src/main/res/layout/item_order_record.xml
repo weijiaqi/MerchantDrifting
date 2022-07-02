@@ -27,29 +27,30 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_toRightOf="@+id/iv_pic"
-        android:text="杨枝甘露"
+        android:text=""
         android:textColor="@color/color_17"
         android:textSize="15sp"
         android:textStyle="bold" />
 
 
     <TextView
+        android:id="@+id/tv_sales_volume"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_title"
         android:layout_alignStart="@+id/tv_title"
-        android:text="今日销售额：200"
+        android:text=""
         android:textColor="@color/color_97"
         android:textSize="12sp" />
 
 
     <TextView
+        android:id="@+id/tv_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-
-        android:text="¥22.00"
+        android:text=""
         android:textColor="@color/color_17"
         android:textStyle="bold" />
 
