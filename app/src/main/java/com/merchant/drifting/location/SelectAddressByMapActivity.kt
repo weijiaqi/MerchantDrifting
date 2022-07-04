@@ -138,7 +138,7 @@ class SelectAddressByMapActivity : AppCompatActivity() {
         mLvResult.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             val poiInfo = mPoiInfoList[position]
             val intent = Intent()
-            intent.putExtra("province ", province +" "+ city)
+            intent.putExtra("province", province +" "+ city)
             intent.putExtra("address", poiInfo.address)
             intent.putExtra("location", poiInfo.location)
             setResult(RESULT_OK, intent)
@@ -205,7 +205,7 @@ class SelectAddressByMapActivity : AppCompatActivity() {
         mLvSearch.onItemClickListener = AdapterView.OnItemClickListener { _, _, i, _ ->
             val info = mSuggestionInfos[i]
             val intent = Intent()
-            intent.putExtra("province ", province +" "+ city)
+            intent.putExtra("province", province +" "+ city)
             intent.putExtra("address", info.address)
             intent.putExtra("location", info.pt)
             setResult(RESULT_OK, intent)

@@ -87,6 +87,35 @@ public class IndexPresenter extends BasePresenter<IndexContract.Model, IndexCont
     }
 
 
+
+    /**
+     *核销
+     */
+    public void shopwriteOff(String token,String shop_id) {
+        mModel.shopwriteOff(token,shop_id).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseEntity>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseEntity baseEntity) {
+                        if (mRootView != null) {
+                            if (baseEntity.getCode() == 200) {
+                                mRootView.OnShopWriteOff();
+                            }else {
+                                mRootView.showMessage(baseEntity.getMsg());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        if (mRootView != null) {
+                            mRootView.onNetError();
+                        }
+                    }
+                });
+    }
+
     public void startQrCode(Context context) {
         PermissionUtil.launchCamera(new PermissionUtil.RequestPermission() {
             @Override

@@ -14,6 +14,7 @@ import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.merchant.drifting.R;
 import com.merchant.drifting.mvp.ui.activity.home.HomeActivity;
+import com.merchant.drifting.mvp.ui.activity.index.SwitchMerchantsActivity;
 import com.merchant.drifting.util.ClickUtil;
 
 import butterknife.BindView;
@@ -60,6 +61,7 @@ public class ApplicationCompletedActivity extends BaseActivity {
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        setStatusBar(false);
         if (getIntent() != null) {
             name = getIntent().getExtras().getString(EXTRA_NAME);
             storename = getIntent().getExtras().getString(EXTRA_STORE_NAME);
@@ -75,7 +77,7 @@ public class ApplicationCompletedActivity extends BaseActivity {
         if (!ClickUtil.isFastClick(view.getId())) {
             switch (view.getId()) {
                 case R.id.tv_complete:
-                    HomeActivity.start(this, true);
+                    SwitchMerchantsActivity.start(this, 1, true);
                     break;
             }
         }

@@ -27,6 +27,8 @@ import butterknife.BindView;
 
 public class RecordHolder extends BaseRecyclerHolder {
 
+    @BindView(R.id.rl_content)
+    RelativeLayout mRlContent;
     @BindView(R.id.tv_reason)
     TextView mTvReason;
     @BindView(R.id.tv_title)
@@ -37,8 +39,7 @@ public class RecordHolder extends BaseRecyclerHolder {
     TextView mTvStatus;
     @BindView(R.id.tv_application_time)
     TextView mTvApplicationTime;
-    @BindView(R.id.rl_content)
-    RelativeLayout mRlContent;
+
     @BindView(R.id.rl_error)
     RelativeLayout mRlError;
     @BindView(R.id.tv_continue_apply)
@@ -55,9 +56,9 @@ public class RecordHolder extends BaseRecyclerHolder {
 
     public void setData(@NonNull List<ShopApplyLogEntity> listBeanList, int position) {
         TextUtil.setText(mTvTitle, listBeanList.get(position).getShop_name());
-        TextUtil.setText(mTvPhone,"+86 " + listBeanList.get(position).getMobile());
-        TextUtil.setText(mTvApplicationTime,DateUtil.unxiToDateYMDHM(listBeanList.get(position).getApply_at_int()+""));
-        pp=mRlContent.getLayoutParams();
+        TextUtil.setText(mTvPhone, "+86 " + listBeanList.get(position).getMobile());
+        TextUtil.setText(mTvApplicationTime, DateUtil.unxiToDateYMDHM(listBeanList.get(position).getApply_at_int() + ""));
+        pp = mRlContent.getLayoutParams();
         if (listBeanList.get(position).getStatus() == 1 || listBeanList.get(position).getStatus() == 0) {
             pp.height = ArmsUtils.dip2px(context, 148);
         } else {
@@ -77,12 +78,12 @@ public class RecordHolder extends BaseRecyclerHolder {
             mRlError.setVisibility(View.VISIBLE);
             mTvStatus.setText("已驳回");
             mTvStatus.setTextColor(context.getColor(R.color.color_c2));
-            passer = SpannableUtil.getBuilder(context, "原因： ").setForegroundColor(R.color.color_c2).append("照片模糊").build();
+            passer = SpannableUtil.getBuilder(context, "原因： ").setForegroundColor(R.color.color_c2).append(listBeanList.get(position).getReason()).build();
             mTvReason.setText(passer);
         }
 
-        mTvContinue.setOnClickListener(v->{
-            ApplicationMaterialsActivity.start(context, false);
+        mRlContent.setOnClickListener(v -> {
+            ApplicationMaterialsActivity.start(context, 2,listBeanList.get(position).getShop_id()+"",false);
         });
     }
 }

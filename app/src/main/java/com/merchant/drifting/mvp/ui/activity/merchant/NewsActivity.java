@@ -153,8 +153,6 @@ public class NewsActivity extends BaseActivity<NewsPresenter> implements NewsCon
                     break;
                 case R.id.rl_order:
                     SystemNotificationActivity.start(this, 2, false);
-
-
                     break;
             }
         }

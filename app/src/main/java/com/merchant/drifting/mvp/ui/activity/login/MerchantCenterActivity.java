@@ -1,7 +1,11 @@
 package com.merchant.drifting.mvp.ui.activity.login;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -15,6 +19,7 @@ import com.merchant.drifting.R;
 import com.merchant.drifting.mvp.model.entity.HaveShopEntity;
 import com.merchant.drifting.mvp.ui.activity.home.HomeActivity;
 import com.merchant.drifting.mvp.ui.activity.index.SwitchMerchantsActivity;
+import com.merchant.drifting.mvp.ui.activity.user.ApplicationCompletedActivity;
 import com.merchant.drifting.mvp.ui.activity.user.OpenShopActivity;
 import com.merchant.drifting.storageinfo.Preferences;
 import com.merchant.drifting.util.ClickUtil;
@@ -44,6 +49,12 @@ public class MerchantCenterActivity extends BaseActivity {
     @BindView(R.id.iv_logo)
     ImageView mIvLogo;
 
+    public static void start(Context context, boolean closePage) {
+        Intent intent = new Intent(context, MerchantCenterActivity.class);
+        context.startActivity(intent);
+        if (closePage) ((Activity) context).finish();
+    }
+
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
 
@@ -58,22 +69,21 @@ public class MerchantCenterActivity extends BaseActivity {
     public void initData(@Nullable Bundle savedInstanceState) {
         setStatusBar(false);
         if (Preferences.isAnony()) {
-//            if (!TextUtils.isEmpty(Preferences.getShopId())) {
-//                HomeActivity.start(this, true);
-//            } else {
-//                RequestUtil.create().haveshop(entity -> {
-//                    if (entity != null && entity.getCode() == 200) {
-//                        if (entity.getData().getTotal() > 0) {
-//                            Preferences.saveShopId(entity.getData().getShops().get(0).getShop_id() + "");
-//                            Preferences.saveShopName(entity.getData().getShops().get(0).getShop_name() + "");
-//                            HomeActivity.start(this, true);
-//                        } else {
-//                            SwitchMerchantsActivity.start(this, 1, true);
-//                        }
-//                    }
-//                });
-//            }
-            HomeActivity.start(this, true);
+            if (!TextUtils.isEmpty(Preferences.getShopId())) {
+                HomeActivity.start(this, true);
+            } else {
+                RequestUtil.create().haveshop(entity -> {
+                    if (entity != null && entity.getCode() == 200) {
+                        if (entity.getData().getTotal() > 0) {
+                            Preferences.saveShopId(entity.getData().getShops().get(0).getShop_id() + "");
+                            Preferences.saveShopName(entity.getData().getShops().get(0).getShop_name() + "");
+                            HomeActivity.start(this, true);
+                        } else {
+                            SwitchMerchantsActivity.start(this, 1, true);
+                        }
+                    }
+                });
+            }
         } else {
             AnimatorUtil.floatAnim(mPic1, 4000);
             AnimatorUtil.floatAnim(mPic2, 4000);

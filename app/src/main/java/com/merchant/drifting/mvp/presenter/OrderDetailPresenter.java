@@ -1,12 +1,27 @@
 package com.merchant.drifting.mvp.presenter;
+
 import android.app.Application;
+
+import com.jess.arms.base.BaseEntity;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.http.imageloader.ImageLoader;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
+
 import javax.inject.Inject;
+
+import com.jess.arms.utils.RxLifecycleUtils;
 import com.merchant.drifting.mvp.contract.OrderDetailContract;
+import com.merchant.drifting.mvp.model.entity.ShopApplyLogEntity;
+import com.merchant.drifting.mvp.model.entity.WriteOffDetailEntity;
+import com.merchant.drifting.util.ViewUtil;
+
+import java.util.List;
 
 /**
  * ================================================
@@ -21,7 +36,7 @@ import com.merchant.drifting.mvp.contract.OrderDetailContract;
  * ================================================
  */
 @ActivityScope
-public class OrderDetailPresenter extends BasePresenter<OrderDetailContract.Model, OrderDetailContract.View>{
+public class OrderDetailPresenter extends BasePresenter<OrderDetailContract.Model, OrderDetailContract.View> {
     @Inject
     RxErrorHandler mErrorHandler;
     @Inject
@@ -32,8 +47,34 @@ public class OrderDetailPresenter extends BasePresenter<OrderDetailContract.Mode
     AppManager mAppManager;
 
     @Inject
-    public OrderDetailPresenter (OrderDetailContract.Model model, OrderDetailContract.View rootView) {
+    public OrderDetailPresenter(OrderDetailContract.Model model, OrderDetailContract.View rootView) {
         super(model, rootView);
+    }
+
+    /**
+     * 订单详情（被核销订单）
+     */
+    public void writeOffDetail(int write_off_id, String shop_id) {
+        mModel.writeOffDetail(write_off_id, shop_id).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseEntity<WriteOffDetailEntity>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseEntity<WriteOffDetailEntity> baseEntity) {
+                        if (mRootView != null) {
+                            if (baseEntity.getCode() == 200) {
+                                mRootView.OnWriteOffDetailSuccess(baseEntity.getData());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        if (mRootView != null) {
+                            mRootView.onNetError();
+                        }
+                    }
+                });
     }
 
     @Override

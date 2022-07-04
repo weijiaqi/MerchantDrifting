@@ -63,6 +63,7 @@ public class CommodityManagementActivity extends BaseActivity<CommodityManagemen
     RelativeLayout mRlTab2;
     @BindView(R.id.rl_bottoms)
     RelativeLayout mRlBottom;
+
     private IndicatorViewPager indicatorViewPager;
     private CommodityManagementAdapter adapter;
     private List<ApplicationRecordEntity> mTabTitle;
@@ -93,6 +94,9 @@ public class CommodityManagementActivity extends BaseActivity<CommodityManagemen
     public void initData(@Nullable Bundle savedInstanceState) {
         setStatusBar(false);
         mToolbarTitle.setText("商品管理");
+        mIvRight.setVisibility(View.VISIBLE);
+        mIvRight.setImageResource(R.drawable.shop_add);
+        viewPager.setCanScroll(true);
         initListener();
     }
 
@@ -126,7 +130,7 @@ public class CommodityManagementActivity extends BaseActivity<CommodityManagemen
     }
 
 
-    @OnClick({R.id.toolbar_back, R.id.tv_choice, R.id.tv_cancel})
+    @OnClick({R.id.toolbar_back, R.id.tv_choice, R.id.tv_cancel, R.id.iv_right})
     public void onClick(View view) {
         if (!ClickUtil.isFastClick(view.getId())) {
             switch (view.getId()) {
@@ -139,20 +143,23 @@ public class CommodityManagementActivity extends BaseActivity<CommodityManagemen
                 case R.id.tv_cancel:  //取消
                     setTab(false);
                     break;
+                case R.id.iv_right:  //申请商品
+                    ApplyGoodsActivity.start(this,false);
+                    break;
             }
         }
     }
 
     public void setTab(boolean status) {
-        viewPager.setCanScroll(status?false:true);
+        viewPager.setCanScroll(status ? false : true);
         for (int i = 0; i < tabLayout.getChildCount(); i++) {
-            tabLayout.getChildAt(i).setClickable(status?false:true);
+            tabLayout.getChildAt(i).setClickable(status ? false : true);
         }
 
         mRlTab.setVisibility(status ? View.GONE : View.VISIBLE);
         mRlTab2.setVisibility(status ? View.VISIBLE : View.GONE);
-        mRlBottom.setVisibility(status  ? View.VISIBLE : View.GONE);
-        GoodsOnOffEvent goodsOnOffEvent=new GoodsOnOffEvent();
+        mRlBottom.setVisibility(status ? View.VISIBLE : View.GONE);
+        GoodsOnOffEvent goodsOnOffEvent = new GoodsOnOffEvent();
         goodsOnOffEvent.setEdit(status);
         EventBus.getDefault().post(goodsOnOffEvent);
     }

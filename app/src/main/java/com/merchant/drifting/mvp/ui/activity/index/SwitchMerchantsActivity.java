@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jess.arms.base.BaseActivity;
+import com.jess.arms.base.BaseRecyclerAdapter;
 import com.jess.arms.di.component.AppComponent;
 
 import com.merchant.drifting.R;
@@ -107,7 +108,7 @@ public class SwitchMerchantsActivity extends BaseActivity<SwitchMerchantsPresent
     public void initListener() {
         mTvName.setText(Preferences.getNickName());
         mTvPhone.setText(Preferences.getPhone());
-        GlideUtil.create().loadHeadCirclePic(this,Preferences.getPhoto(),mIvPhoto);
+        GlideUtil.create().loadHeadCirclePic(this, Preferences.getPhoto(), mIvPhoto);
         initTextSpan(mTvShopName, "选择店铺开始营业 ");
         if (type == 1) {
             mIvNoShop.setVisibility(View.VISIBLE);
@@ -116,7 +117,8 @@ public class SwitchMerchantsActivity extends BaseActivity<SwitchMerchantsPresent
             mRcyShop.setLayoutManager(new LinearLayoutManager(this));
             adapter = new SwitchMerchantsAdapter(new ArrayList<>());
             mRcyShop.setAdapter(adapter);
-
+            getData();
+            adapter.setRecyclerItemClickListner((v, position) -> finish());
         }
     }
 
@@ -128,7 +130,7 @@ public class SwitchMerchantsActivity extends BaseActivity<SwitchMerchantsPresent
 
     @Override
     public void OnShopListSuccess(List<ShopListEntity> entity) {
-        if (entity != null) {
+        if (entity != null && entity.size() > 0) {
             adapter.setData(entity);
         }
     }
@@ -160,7 +162,7 @@ public class SwitchMerchantsActivity extends BaseActivity<SwitchMerchantsPresent
                     ApplicationRecordActivity.start(this, false);
                     break;
                 case R.id.iv_no_shop:  //提交资料
-                    ApplicationMaterialsActivity.start(this, false);
+                    ApplicationMaterialsActivity.start(this, 1,"",false);
                     break;
             }
         }

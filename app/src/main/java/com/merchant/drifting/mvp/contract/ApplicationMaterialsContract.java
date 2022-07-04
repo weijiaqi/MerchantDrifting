@@ -6,6 +6,7 @@ import com.jess.arms.base.BaseEntity;
 import com.jess.arms.mvp.IModel;
 import com.jess.arms.mvp.IView;
 import com.merchant.drifting.data.entity.ApplicationMaterialsEntity;
+import com.merchant.drifting.mvp.model.entity.InfoEditEntity;
 import com.merchant.drifting.mvp.model.entity.LoginEntity;
 
 import io.reactivex.Observable;
@@ -29,7 +30,11 @@ public interface ApplicationMaterialsContract {
 
         void OnShopApplySuccess(ApplicationMaterialsEntity entity);
 
+        void OnInfoEditSuccess(InfoEditEntity entity);
+
+        void OnShopapplyForEditSuccess();
         void onNetError();
+
         Activity getActivity();
 
     }
@@ -37,5 +42,9 @@ public interface ApplicationMaterialsContract {
     //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存
     interface Model extends IModel {
         Observable<BaseEntity<ApplicationMaterialsEntity>> shopapply(MultipartBody shortVoice);
+
+        Observable<BaseEntity<InfoEditEntity>> infoForEdit(String shop_id);
+
+        Observable<BaseEntity> applyForEdit(MultipartBody shortVoice);
     }
 }

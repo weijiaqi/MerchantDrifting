@@ -1,12 +1,27 @@
 package com.merchant.drifting.mvp.presenter;
+
 import android.app.Application;
+
+import com.jess.arms.base.BaseEntity;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.http.imageloader.ImageLoader;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
+
 import javax.inject.Inject;
+
+import com.jess.arms.utils.RxLifecycleUtils;
 import com.merchant.drifting.mvp.contract.ApplicationRecordContract;
+import com.merchant.drifting.mvp.model.entity.ShopApplyLogEntity;
+import com.merchant.drifting.mvp.model.entity.ShopListEntity;
+import com.merchant.drifting.util.ViewUtil;
+
+import java.util.List;
 
 /**
  * ================================================
@@ -21,7 +36,7 @@ import com.merchant.drifting.mvp.contract.ApplicationRecordContract;
  * ================================================
  */
 @ActivityScope
-public class ApplicationRecordPresenter extends BasePresenter<ApplicationRecordContract.Model, ApplicationRecordContract.View>{
+public class ApplicationRecordPresenter extends BasePresenter<ApplicationRecordContract.Model, ApplicationRecordContract.View> {
     @Inject
     RxErrorHandler mErrorHandler;
     @Inject
@@ -32,9 +47,48 @@ public class ApplicationRecordPresenter extends BasePresenter<ApplicationRecordC
     AppManager mAppManager;
 
     @Inject
-    public ApplicationRecordPresenter (ApplicationRecordContract.Model model, ApplicationRecordContract.View rootView) {
+    public ApplicationRecordPresenter(ApplicationRecordContract.Model model, ApplicationRecordContract.View rootView) {
         super(model, rootView);
     }
+
+
+    /**
+     * 申请记录
+     */
+    public void shopapplyLog(int status) {
+        if (mRootView != null) {
+            mRootView.onloadStart();
+        }
+        mModel.shopapplyLog(status).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseEntity<List<ShopApplyLogEntity>>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseEntity<List<ShopApplyLogEntity>> baseEntity) {
+                        if (mRootView != null) {
+                            if (baseEntity.getCode() == 200) {
+                                if (baseEntity.getData() == null || baseEntity.getData().size() == 0) {
+                                    mRootView.loadState(ViewUtil.NOT_DATA);
+                                } else {
+                                    mRootView.loadState(ViewUtil.HAS_DATA);
+                                }
+                                mRootView.OnApplyLog(baseEntity.getData());
+                            } else {
+                                mRootView.loadState(ViewUtil.NOT_SERVER);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        if (mRootView != null) {
+                            mRootView.onNetError();
+                        }
+                    }
+                });
+    }
+
+
 
     @Override
     public void onDestroy() {

@@ -4,6 +4,8 @@ import android.app.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
@@ -11,6 +13,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.jess.arms.base.BaseActivity;
@@ -20,9 +23,12 @@ import com.merchant.drifting.R;
 import com.merchant.drifting.data.entity.ApplicationRecordEntity;
 import com.merchant.drifting.di.component.DaggerApplicationRecordComponent;
 import com.merchant.drifting.mvp.contract.ApplicationRecordContract;
+import com.merchant.drifting.mvp.model.entity.ShopApplyLogEntity;
 import com.merchant.drifting.mvp.presenter.ApplicationRecordPresenter;
 import com.merchant.drifting.mvp.ui.adapter.ApplicationRecordAdapter;
+import com.merchant.drifting.mvp.ui.adapter.RecordAdapter;
 import com.merchant.drifting.util.ClickUtil;
+import com.merchant.drifting.util.ViewUtil;
 import com.rb.core.tab.view.indicator.IndicatorViewPager;
 import com.rb.core.tab.view.indicator.ScrollIndicatorView;
 import com.rb.core.tab.view.indicator.slidebar.LayoutBar;
@@ -44,10 +50,15 @@ import butterknife.OnClick;
 public class ApplicationRecordActivity extends BaseActivity<ApplicationRecordPresenter> implements ApplicationRecordContract.View {
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
-    @BindView(R.id.indicator_tablayout)
-    ScrollIndicatorView mIndicatorTablayout;
-    @BindView(R.id.view_pager)
-    ViewPager viewPager;
+    @BindView(R.id.rcy_record)
+    RecyclerView mRcyRecord;
+    @BindView(R.id.fl_container)
+    FrameLayout mFlState;
+    private RecordAdapter recordAdapter;
+//    @BindView(R.id.indicator_tablayout)
+//    ScrollIndicatorView mIndicatorTablayout;
+//    @BindView(R.id.view_pager)
+//    ViewPager viewPager;
     private IndicatorViewPager indicatorViewPager;
     private ApplicationRecordAdapter adapter;
     private List<ApplicationRecordEntity> mTabTitle;
@@ -81,18 +92,25 @@ public class ApplicationRecordActivity extends BaseActivity<ApplicationRecordPre
     }
 
     public void initListener() {
-        getData();
-        mIndicatorTablayout.setOnTransitionListener(new OnTransitionTextListener().setValueFromRes(this,
-                R.color.color_42, R.color.color_97, R.dimen.text_size, R.dimen.text_size));
-        indicatorViewPager = new IndicatorViewPager(mIndicatorTablayout, viewPager);
-        indicatorViewPager.setIndicatorScrollBar(new LayoutBar(this, R.layout.layout_indicator_view));
-       adapter=new ApplicationRecordAdapter(getSupportFragmentManager());
-        adapter.setData(mTabTitle);
-        if (indicatorViewPager != null) {
-            indicatorViewPager.setAdapter(adapter);
-            if (adapter != null && adapter.getCount() > 0) {
-                indicatorViewPager.setCurrentItem(0, false);
-            }
+//        getData();
+//        mIndicatorTablayout.setOnTransitionListener(new OnTransitionTextListener().setValueFromRes(this,
+//                R.color.color_42, R.color.color_97, R.dimen.text_size, R.dimen.text_size));
+//        indicatorViewPager = new IndicatorViewPager(mIndicatorTablayout, viewPager);
+//        indicatorViewPager.setIndicatorScrollBar(new LayoutBar(this, R.layout.layout_indicator_view));
+//       adapter=new ApplicationRecordAdapter(getSupportFragmentManager());
+//        adapter.setData(mTabTitle);
+//        if (indicatorViewPager != null) {
+//            indicatorViewPager.setAdapter(adapter);
+//            if (adapter != null && adapter.getCount() > 0) {
+//                indicatorViewPager.setCurrentItem(0, false);
+//            }
+//        }
+
+        mRcyRecord.setLayoutManager(new LinearLayoutManager(this));
+        recordAdapter = new RecordAdapter(new ArrayList<>());
+        mRcyRecord.setAdapter(recordAdapter);
+        if (mPresenter != null) {
+            mPresenter.shopapplyLog(-1);
         }
     }
 
@@ -114,6 +132,42 @@ public class ApplicationRecordActivity extends BaseActivity<ApplicationRecordPre
                     break;
             }
         }
+    }
+
+    @Override
+    public void onloadStart() {
+        if (recordAdapter.getDatas() == null || recordAdapter.getDatas().size() == 0) {
+            ViewUtil.create().setAnimation(this, mFlState);
+        }
+    }
+
+    @Override
+    public void loadState(int dataState) {
+        if (recordAdapter.getDatas() == null || recordAdapter.getDatas().size() == 0) {
+            if (dataState == ViewUtil.NOT_DATA) {
+                ViewUtil.create().setView(this, mFlState, ViewUtil.NOT_DATA);
+            } else if (dataState == ViewUtil.NOT_SERVER) {
+                ViewUtil.create().setView(this, mFlState, ViewUtil.NOT_SERVER);
+            } else if (dataState == ViewUtil.NOT_NETWORK) {
+                ViewUtil.create().setView(this, mFlState, ViewUtil.NOT_NETWORK);
+            } else {
+                ViewUtil.create().setView(mFlState);
+            }
+        } else {
+            ViewUtil.create().setView(mFlState);
+        }
+    }
+
+    @Override
+    public void OnApplyLog(List<ShopApplyLogEntity> list) {
+        if (list != null && list.size() > 0) {
+            recordAdapter.setData(list);
+        }
+    }
+
+    @Override
+    public void onNetError() {
+
     }
 
     public Activity getActivity() {

@@ -1,4 +1,5 @@
 package com.merchant.drifting.mvp.presenter;
+
 import android.app.Application;
 
 import com.jess.arms.base.BaseEntity;
@@ -20,8 +21,11 @@ import javax.inject.Inject;
 import com.jess.arms.utils.RxLifecycleUtils;
 import com.merchant.drifting.data.entity.ApplicationMaterialsEntity;
 import com.merchant.drifting.mvp.contract.ApplicationMaterialsContract;
+import com.merchant.drifting.mvp.model.entity.InfoEditEntity;
+import com.merchant.drifting.mvp.model.entity.ShopListEntity;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * ================================================
@@ -36,7 +40,7 @@ import java.io.File;
  * ================================================
  */
 @ActivityScope
-public class ApplicationMaterialsPresenter extends BasePresenter<ApplicationMaterialsContract.Model, ApplicationMaterialsContract.View>{
+public class ApplicationMaterialsPresenter extends BasePresenter<ApplicationMaterialsContract.Model, ApplicationMaterialsContract.View> {
     @Inject
     RxErrorHandler mErrorHandler;
     @Inject
@@ -47,7 +51,7 @@ public class ApplicationMaterialsPresenter extends BasePresenter<ApplicationMate
     AppManager mAppManager;
 
     @Inject
-    public ApplicationMaterialsPresenter (ApplicationMaterialsContract.Model model, ApplicationMaterialsContract.View rootView) {
+    public ApplicationMaterialsPresenter(ApplicationMaterialsContract.Model model, ApplicationMaterialsContract.View rootView) {
         super(model, rootView);
     }
 
@@ -56,11 +60,11 @@ public class ApplicationMaterialsPresenter extends BasePresenter<ApplicationMate
      * 提交资料
      */
 
-    public void shopapply(String  shop_name, String mobile,String contact_name,String location,String address,File facade_image, File interiror_image, String corporation,int gender,int certificate_type,String certificate_no,File certificate_iamge1,File certificate_iamge2,File business_license,File permit,String lng,String lat ) {
+    public void shopapply(String shop_name, String mobile, String contact_name, String location, String address, File facade_image, File interiror_image, String corporation, int gender, int certificate_type, String certificate_no, File certificate_image1, File certificate_image2, File business_license, File permit, String lng, String lat) {
         RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), facade_image);
         RequestBody requestBody2 = RequestBody.create(MediaType.parse("image/*"), interiror_image);
-        RequestBody requestBody3 = RequestBody.create(MediaType.parse("image/*"), certificate_iamge1);
-        RequestBody requestBody4 = RequestBody.create(MediaType.parse("image/*"), certificate_iamge2);
+        RequestBody requestBody3 = RequestBody.create(MediaType.parse("image/*"), certificate_image1);
+        RequestBody requestBody4 = RequestBody.create(MediaType.parse("image/*"), certificate_image2);
         RequestBody requestBody5 = RequestBody.create(MediaType.parse("image/*"), business_license);
         RequestBody requestBody6 = RequestBody.create(MediaType.parse("image/*"), permit);
         MultipartBody multipartBody = new MultipartBody.Builder()
@@ -71,14 +75,14 @@ public class ApplicationMaterialsPresenter extends BasePresenter<ApplicationMate
                 .addFormDataPart("location", location)
                 .addFormDataPart("address", address)
                 .addFormDataPart("facade_image", facade_image.getName(), requestBody)
-                .addFormDataPart("interiror_image", interiror_image.getName(), requestBody2)
-                .addFormDataPart("certificate_iamge1", certificate_iamge1.getName(), requestBody3)
-                .addFormDataPart("certificate_iamge2", certificate_iamge2.getName(), requestBody4)
+                .addFormDataPart("interior_image", interiror_image.getName(), requestBody2)
+                .addFormDataPart("certificate_image1", certificate_image1.getName(), requestBody3)
+                .addFormDataPart("certificate_image2", certificate_image2.getName(), requestBody4)
                 .addFormDataPart("business_license", business_license.getName(), requestBody5)
                 .addFormDataPart("permit", permit.getName(), requestBody6)
                 .addFormDataPart("corporation", corporation)
-                .addFormDataPart("gender", gender+"")
-                .addFormDataPart("certificate_type", certificate_type+"")
+                .addFormDataPart("gender", gender + "")
+                .addFormDataPart("certificate_type", certificate_type + "")
                 .addFormDataPart("certificate_no", certificate_no)
                 .addFormDataPart("lng", lng)
                 .addFormDataPart("lat", lat)
@@ -91,6 +95,7 @@ public class ApplicationMaterialsPresenter extends BasePresenter<ApplicationMate
                     @Override
                     public void onNext(BaseEntity<ApplicationMaterialsEntity> entity) {
                         if (mRootView != null) {
+                            mRootView.hideLoading();
                             if (entity.getCode() == 200) {
                                 mRootView.OnShopApplySuccess(entity.getData());
                             } else {
@@ -108,6 +113,103 @@ public class ApplicationMaterialsPresenter extends BasePresenter<ApplicationMate
                 });
     }
 
+
+    //编辑店铺资料
+    public void applyForEdit(String shop_id, String shop_name, String mobile, String contact_name, String location, String address, String facade_image, String interiror_image, String corporation, int gender, int certificate_type, String certificate_no, String certificate_image1, String certificate_image2, String business_license, String permit, String lng, String lat) {
+        RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"),   new File(facade_image));
+        RequestBody requestBody2 = RequestBody.create(MediaType.parse("image/*"),  new File(interiror_image));
+        RequestBody requestBody3 = RequestBody.create(MediaType.parse("image/*"), new File(certificate_image1));
+        RequestBody requestBody4 = RequestBody.create(MediaType.parse("image/*"),  new File(certificate_image2));
+        RequestBody requestBody5 = RequestBody.create(MediaType.parse("image/*"),  new File(business_license) );
+        RequestBody requestBody6 = RequestBody.create(MediaType.parse("image/*"), new File(permit) );
+
+        MultipartBody.Builder multipartBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("shop_id", shop_id)
+                .addFormDataPart("shop_name", shop_name)
+                .addFormDataPart("mobile", mobile)
+                .addFormDataPart("contact_name", contact_name)
+                .addFormDataPart("location", location)
+                .addFormDataPart("address", address)
+                .addFormDataPart("corporation", corporation)
+                .addFormDataPart("gender", gender + "")
+                .addFormDataPart("certificate_type", certificate_type + "")
+                .addFormDataPart("certificate_no", certificate_no)
+                .addFormDataPart("lng", lng)
+                .addFormDataPart("lat", lat);
+
+        if (!facade_image.startsWith("http")) {
+            multipartBody.addFormDataPart("facade_image", new File(facade_image).getName(), requestBody);
+        }
+        if (!interiror_image.startsWith("http")) {
+            multipartBody.addFormDataPart("interiror_image", new File(interiror_image).getName(), requestBody2);
+        }
+        if (!interiror_image.startsWith("http")) {
+            multipartBody.addFormDataPart("certificate_image1", new File(certificate_image1).getName(), requestBody3);
+        }
+        if (!interiror_image.startsWith("http")) {
+            multipartBody.addFormDataPart("certificate_image2", new File(certificate_image2).getName(), requestBody4);
+        }
+        if (!interiror_image.startsWith("http")) {
+            multipartBody.addFormDataPart("business_license", new File(business_license).getName(), requestBody5);
+        }
+        if (!interiror_image.startsWith("http")) {
+            multipartBody.addFormDataPart("permit", new File(business_license).getName(), requestBody6);
+        }
+        MultipartBody body = multipartBody.build();
+        mModel.applyForEdit(body).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseEntity>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseEntity entity) {
+                        if (mRootView != null) {
+                            mRootView.hideLoading();
+                            if (entity.getCode() == 200) {
+                                mRootView.OnShopapplyForEditSuccess();
+                            } else {
+                                mRootView.showMessage(entity.getMsg());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        if (mRootView != null) {
+                            mRootView.onNetError();
+                        }
+                    }
+                });
+    }
+
+
+    /**
+     * 读取店铺信息（编辑时使用）
+     */
+    public void infoForEdit(String shop_id) {
+        mModel.infoForEdit(shop_id).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseEntity<InfoEditEntity>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseEntity<InfoEditEntity> baseEntity) {
+                        if (mRootView != null) {
+                            if (baseEntity.getCode() == 200) {
+                                mRootView.OnInfoEditSuccess(baseEntity.getData());
+                            } else {
+                                mRootView.showMessage(baseEntity.getMsg());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        if (mRootView != null) {
+                            mRootView.onNetError();
+                        }
+                    }
+                });
+    }
 
     @Override
     public void onDestroy() {

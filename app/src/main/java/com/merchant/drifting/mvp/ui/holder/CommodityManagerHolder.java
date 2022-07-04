@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import com.jess.arms.base.BaseRecyclerHolder;
 import com.merchant.drifting.R;
 import com.merchant.drifting.mvp.model.entity.CommodityManagerEntity;
-import com.merchant.drifting.mvp.model.entity.OrderEntity;
 import com.merchant.drifting.mvp.ui.adapter.CommodityManagerAdapter;
 
 

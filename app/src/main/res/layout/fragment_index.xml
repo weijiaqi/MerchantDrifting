@@ -47,7 +47,7 @@
                     android:drawablePadding="5dp"
                     android:paddingHorizontal="13dp"
                     android:paddingVertical="6dp"
-                    android:text="元宇宙漂流局朝阳店"
+                    android:text=""
                     android:textColor="@color/white"
                     android:textSize="14sp"
                     app:shape_radius="100dp"

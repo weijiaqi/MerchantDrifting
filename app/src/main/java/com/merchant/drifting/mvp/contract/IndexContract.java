@@ -29,6 +29,7 @@ public interface IndexContract {
 
         void OnTodayOrderSuccess(TodayOrderEntity entity);
 
+        void OnShopWriteOff();
         void onNetError();
 
         void PermissionVoiceSuccess();
@@ -40,5 +41,6 @@ public interface IndexContract {
     //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存
     interface Model extends IModel {
         Observable<BaseEntity<TodayOrderEntity>> statistictoday(String shop_id);
+        Observable<BaseEntity> shopwriteOff(String token,String shop_id);
     }
 }

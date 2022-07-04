@@ -14,7 +14,9 @@ import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.merchant.drifting.R;
 import com.merchant.drifting.mvp.ui.activity.index.BankCardManagementActivity;
+import com.merchant.drifting.mvp.ui.activity.login.MerchantCenterActivity;
 import com.merchant.drifting.util.ClickUtil;
+import com.merchant.drifting.util.LogInOutDataUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -50,14 +52,17 @@ public class SetUpActivity extends BaseActivity {
         mToolbarTitle.setText("设置");
     }
 
-    @OnClick({R.id.toolbar_back})
+    @OnClick({R.id.toolbar_back,R.id.tv_exit})
     public void onClick(View view) {
         if (!ClickUtil.isFastClick(view.getId())) {
             switch (view.getId()) {
                 case R.id.toolbar_back:
                     finish();
                     break;
-
+                case R.id.tv_exit:
+                    LogInOutDataUtil.successOutClearData();
+                    MerchantCenterActivity.start(this,true);
+                    break;
             }
         }
     }

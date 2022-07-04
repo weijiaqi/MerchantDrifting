@@ -80,7 +80,7 @@ public class SystemNotificationActivity extends BaseActivity<SystemNotificationP
         if (getIntent() != null) {
             type = getIntent().getExtras().getInt(EXTRA_TYPE);
         }
-        mToolbarTitle.setText("系统通知");
+        mToolbarTitle.setText(type==1?"系统通知":"订单通知");
         initListener();
     }
 
@@ -146,11 +146,11 @@ public class SystemNotificationActivity extends BaseActivity<SystemNotificationP
 
     @Override
     public void loadState(int dataState) {
-        if (type == ViewUtil.NOT_DATA) {
+        if (dataState == ViewUtil.NOT_DATA) {
             ViewUtil.create().setView(this, mFlState, ViewUtil.NOT_DATA);
-        } else if (type == ViewUtil.NOT_SERVER) {
+        } else if (dataState == ViewUtil.NOT_SERVER) {
             ViewUtil.create().setView(this, mFlState, ViewUtil.NOT_SERVER);
-        } else if (type == ViewUtil.NOT_NETWORK) {
+        } else if (dataState == ViewUtil.NOT_NETWORK) {
             ViewUtil.create().setView(this, mFlState, ViewUtil.NOT_NETWORK);
         } else {
             ViewUtil.create().setView(mFlState);

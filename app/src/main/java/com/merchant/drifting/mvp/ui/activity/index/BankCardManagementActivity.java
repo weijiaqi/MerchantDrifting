@@ -1,6 +1,5 @@
 package com.merchant.drifting.mvp.ui.activity.index;
 
-import static com.merchant.drifting.app.MDConstant.SCAN_BANKCARD_REQUEST;
 
 import android.app.Activity;
 

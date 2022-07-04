@@ -68,7 +68,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
      */
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        setStatusBar(true);
         setStatusBarHeight(mTvBar);
         mToobarBack.setVisibility(View.GONE);
         mToolbarTitle.setText("我的");

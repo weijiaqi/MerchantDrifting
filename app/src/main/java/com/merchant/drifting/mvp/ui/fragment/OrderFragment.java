@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -17,11 +18,13 @@ import com.jess.arms.di.component.AppComponent;
 import com.merchant.drifting.R;
 import com.merchant.drifting.di.component.DaggerOrderComponent;
 import com.merchant.drifting.mvp.contract.OrderContract;
-import com.merchant.drifting.mvp.model.entity.OrderEntity;
-import com.merchant.drifting.mvp.model.entity.SystemNotificationEntity;
+
+import com.merchant.drifting.mvp.model.entity.WriteOffListEntity;
 import com.merchant.drifting.mvp.presenter.OrderPresenter;
 import com.merchant.drifting.mvp.ui.adapter.OrderAdater;
-import com.merchant.drifting.mvp.ui.adapter.SystemNotificationAdapter;
+
+import com.merchant.drifting.storageinfo.Preferences;
+import com.merchant.drifting.util.ViewUtil;
 import com.rb.core.xrecycleview.XRecyclerView;
 
 import java.util.ArrayList;
@@ -36,7 +39,7 @@ import butterknife.BindView;
  * @author 订单
  * module name is OrderFragment
  */
-public class OrderFragment extends BaseFragment<OrderPresenter> implements OrderContract.View,XRecyclerView.LoadingListener {
+public class OrderFragment extends BaseFragment<OrderPresenter> implements OrderContract.View, XRecyclerView.LoadingListener {
     @BindView(R.id.tv_bar)
     TextView mTvBar;
     @BindView(R.id.toolbar_title)
@@ -45,8 +48,14 @@ public class OrderFragment extends BaseFragment<OrderPresenter> implements Order
     RelativeLayout mToolBarBack;
     @BindView(R.id.rcy_public)
     XRecyclerView mRcyPublic;
+    @BindView(R.id.fl_container)
+    FrameLayout mFlState;
 
     private OrderAdater orderAdater;
+
+    private int mPage = 1;
+    private int limit = 10;
+
     public static OrderFragment newInstance() {
         OrderFragment fragment = new OrderFragment();
         return fragment;
@@ -72,7 +81,6 @@ public class OrderFragment extends BaseFragment<OrderPresenter> implements Order
      */
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        setStatusBar(false);
         setStatusBarHeight(mTvBar);
         mToolbarTitle.setText("核销订单");
         mToolBarBack.setVisibility(View.GONE);
@@ -89,17 +97,77 @@ public class OrderFragment extends BaseFragment<OrderPresenter> implements Order
         mRcyPublic.setLoadingListener(this);
         orderAdater = new OrderAdater(new ArrayList<>());
         mRcyPublic.setAdapter(orderAdater);
-        orderAdater.setData(getData());
+        getData(mPage, true);
     }
 
 
-    public List<OrderEntity> getData() {
-        List<OrderEntity> list = new ArrayList<>();
-        list.add(new OrderEntity("1"));
-        list.add(new OrderEntity("2"));
-        list.add(new OrderEntity("3"));
-        list.add(new OrderEntity("4"));
-        return list;
+    public void getData(int mPage, boolean loadType) {
+        if (mPresenter != null) {
+            mPresenter.writeOffList(Preferences.getShopId(), mPage, limit, loadType);
+        }
+    }
+
+    @Override
+    public void onRefresh() {
+        mPage = 1;
+        getData(mPage, true);
+    }
+
+    @Override
+    public void onLoadMore() {
+        getData(mPage, false);
+    }
+
+    @Override
+    public void onloadStart() {
+        if (orderAdater.getDatas() == null || orderAdater.getDatas().size() == 0) {
+            ViewUtil.create().setAnimation(mContext, mFlState);
+        }
+    }
+
+    @Override
+    public void onWriteOffListSuccess(WriteOffListEntity entity, boolean isNotData) {
+        List<WriteOffListEntity.ListBean> list = entity.getList();
+        if (list != null && list.size() > 0) {
+            if (isNotData) {
+                mPage = 2;
+                orderAdater.setData(list);
+            } else {
+                mPage++;
+                orderAdater.addData(list);
+            }
+        }
+    }
+
+
+    @Override
+    public void loadFinish(boolean loadType, boolean isNotData) {
+        if (mRcyPublic == null) {
+            return;
+        }
+        if (!loadType && isNotData) {
+            mRcyPublic.loadEndLine();
+        } else {
+            mRcyPublic.refreshEndComplete();
+        }
+    }
+
+    @Override
+    public void loadState(int dataState) {
+        if (dataState == ViewUtil.NOT_DATA) {
+            ViewUtil.create().setView(mContext, mFlState, ViewUtil.NOT_DATA);
+        } else if (dataState == ViewUtil.NOT_SERVER) {
+            ViewUtil.create().setView(mContext, mFlState, ViewUtil.NOT_SERVER);
+        } else if (dataState == ViewUtil.NOT_NETWORK) {
+            ViewUtil.create().setView(mContext, mFlState, ViewUtil.NOT_NETWORK);
+        } else {
+            ViewUtil.create().setView(mFlState);
+        }
+    }
+
+    @Override
+    public void onNetError() {
+
     }
 
     public Fragment getFragment() {
@@ -111,13 +179,5 @@ public class OrderFragment extends BaseFragment<OrderPresenter> implements Order
 
     }
 
-    @Override
-    public void onRefresh() {
 
-    }
-
-    @Override
-    public void onLoadMore() {
-
-    }
 }

@@ -8,7 +8,9 @@ import androidx.annotation.Nullable;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jess.arms.base.BaseActivity;
@@ -17,8 +19,11 @@ import com.jess.arms.di.component.AppComponent;
 import com.merchant.drifting.R;
 import com.merchant.drifting.di.component.DaggerOrderDetailComponent;
 import com.merchant.drifting.mvp.contract.OrderDetailContract;
+import com.merchant.drifting.mvp.model.entity.WriteOffDetailEntity;
 import com.merchant.drifting.mvp.presenter.OrderDetailPresenter;
+import com.merchant.drifting.storageinfo.Preferences;
 import com.merchant.drifting.util.ClickUtil;
+import com.merchant.drifting.util.GlideUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -33,10 +38,34 @@ import butterknife.OnClick;
 public class OrderDetailActivity extends BaseActivity<OrderDetailPresenter> implements OrderDetailContract.View {
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
+    @BindView(R.id.iv_pic)
+    ImageView mIvPic;
+    @BindView(R.id.tv_title)
+    TextView mTvTitle;
+    @BindView(R.id.tv_desc)
+    TextView mTvDesc;
+    @BindView(R.id.tv_price)
+    TextView mTvPrice;
+    @BindView(R.id.tv_time)
+    TextView mTvTime;
+    @BindView(R.id.tv_status)
+    TextView mTvStatus;
+    @BindView(R.id.tv_nick_name)
+    TextView mTvNickName;
+    @BindView(R.id.tv_online_payment)
+    TextView mTvOnlinePayment;
+    @BindView(R.id.tv_order_no)
+    TextView mTvOrderNo;
 
+    @BindView(R.id.tv_store_no)
+    TextView mTvStoreNo;
+    private static final String EXRA_WRITE_OFF_ID = "exra_write_off_id";
 
-    public static void start(Context context, boolean closePage) {
+    private int exra_write_off_id;
+
+    public static void start(Context context, int write_off_id, boolean closePage) {
         Intent intent = new Intent(context, OrderDetailActivity.class);
+        intent.putExtra(EXRA_WRITE_OFF_ID, write_off_id);
         context.startActivity(intent);
         if (closePage) ((Activity) context).finish();
     }
@@ -61,12 +90,16 @@ public class OrderDetailActivity extends BaseActivity<OrderDetailPresenter> impl
     public void initData(@Nullable Bundle savedInstanceState) {
         setStatusBar(false);
         mToolbarTitle.setText("订单详情");
-
+        if (getIntent() != null) {
+            exra_write_off_id = getIntent().getIntExtra(EXRA_WRITE_OFF_ID, 0);
+        }
         initListener();
     }
 
     public void initListener() {
-
+        if (mPresenter != null) {
+            mPresenter.writeOffDetail(exra_write_off_id, Preferences.getShopId());
+        }
     }
 
 
@@ -79,6 +112,30 @@ public class OrderDetailActivity extends BaseActivity<OrderDetailPresenter> impl
                     break;
             }
         }
+    }
+
+    @Override
+    public void OnWriteOffDetailSuccess(WriteOffDetailEntity entity) {
+        if (entity != null) {
+            GlideUtil.create().loadNormalPic(this, entity.getSmall_image(), mIvPic);
+            mTvTitle.setText(entity.getSku_name());
+            mTvDesc.setText(entity.getIntro());
+            mTvPrice.setText("¥" + entity.getMoney());
+            mTvStoreNo.setText(entity.getOrder_sub_sn());
+            mTvOrderNo.setText(entity.getOrder_sub_sn());
+            mTvNickName.setText(entity.getUser_name());
+            mTvOnlinePayment.setText("¥" + entity.getMoney());
+            if (entity.getStatus() == 0) {
+                mTvStatus.setText("未核销");
+            } else {
+                mTvStatus.setText("已核销");
+            }
+        }
+    }
+
+    @Override
+    public void onNetError() {
+
     }
 
     public Activity getActivity() {

@@ -1,195 +1,130 @@
 package com.merchant.drifting.view;
 
-import android.annotation.SuppressLint;
+
+
+
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Matrix;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.RectF;
+
+import android.graphics.drawable.Drawable;
+
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.util.Log;
+
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.EditText;
+
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.core.content.ContextCompat;
 
 import com.merchant.drifting.R;
 
 
 /**
- *  带删除按钮的Edittext
+ * 输入文本框 右边有自带的删除按钮 当有输入时，显示删除按钮，当无输入时，隐藏删除按钮。
  */
+public class ClearEditText extends AppCompatEditText implements View.OnFocusChangeListener, TextWatcher {
 
-@SuppressLint("AppCompatCustomView")
-public class ClearEditText extends EditText {
-    private static final float DEFAUT_SCALE = 0.25f;
-    private Bitmap mClearBitmap;
-    private Paint mPaint;
-    private int mWidth;
-    private int mHeight;
-    private int mBitWidth;
-    private int mBitHeight;
-    private boolean showClose;
-    private float scale;
-    private float padding;
-    private float mDrawWidth;
+    //删除按钮的引用
+    private Drawable clearDrawable;
+
+    // 控件是否有焦点
+    private boolean hasFocus;
 
     public ClearEditText(Context context) {
-        super(context);
-        init(context, null);
+        this(context, null);
     }
 
     public ClearEditText(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(context, attrs);
+        // 这里构造方法也很重要，不加这个很多属性不能再XML里面定义
+        this(context, attrs, android.R.attr.editTextStyle);
     }
 
-    public ClearEditText(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init(context, attrs);
+    public ClearEditText(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        init();
     }
 
-    private void init(Context context, AttributeSet attrs) {
-        int clearIcon = 0;
-        if ( attrs != null ) {
-            //获得这个控件对应的属性。
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ClearEditText);
-            try {
-                //获得属性值
-                clearIcon = a.getResourceId(R.styleable.ClearEditText_clearIcon, 0);
-                scale = a.getFloat(R.styleable.ClearEditText_scaleSize, 0);
-                mDrawWidth = a.getDimension(R.styleable.ClearEditText_drawableWidth, 0.0f);
-            } finally { //回收这个对象
-                a.recycle();
-            }
-        }
-        //设置删除图标
-        BitmapFactory.Options bfoOptions = new BitmapFactory.Options();
-        bfoOptions.inScaled = false;
-        if ( clearIcon != 0 ) {
-            mClearBitmap = BitmapFactory.decodeResource(getResources(), clearIcon, bfoOptions);
-        } else
-            mClearBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.edit_delete, bfoOptions);
-
-        if ( scale == 0 ) {
-            scale = DEFAUT_SCALE;
+    private void init() {
+        // 获取EditText的DrawableRight,假如没有设置我们就使用默认的图片
+        clearDrawable = getCompoundDrawables()[2];
+        if (clearDrawable == null) {
+            // throw new
+            // NullPointerException("You can add drawableRight attribute in XML");
+            clearDrawable = ContextCompat.getDrawable(getContext(), R.drawable.edit_delete);
         }
 
-        mPaint = new Paint();
-
-        addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                showClose = !TextUtils.isEmpty(s);
-                invalidate();
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
-
-        setOnFocusChangeListener(new OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if ( hasFocus ) {
-                    if ( !TextUtils.isEmpty(getText().toString()) ) {
-                        showClose = true;
-                    }else{
-                        showClose = false;
-                    }
-                }else{
-                    showClose = false;
-                }
-                invalidate();
-            }
-        });
+        // 设置图标的大小
+        clearDrawable.setBounds(0, 0, 35, 35);
+        // 默认设置隐藏图标
+        setClearIconVisible(false);
+        // 设置焦点改变的监听
+        setOnFocusChangeListener(this);
+        // 设置输入框里面内容发生改变的监听
+        addTextChangedListener(this);
     }
 
-    // 处理删除事件
+    /**
+     * 因为我们不能直接给EditText设置点击事件，
+     * 因此我们用记住我们按下的位置来模拟点击事件
+     * 当我们按下的位置
+     * 在 EditText的宽度 -图标到控件右边的间距 - 图标的宽度 和 EditText的宽度 - 图标到控件右边的间距之间我们就算点击了图标，
+     * 竖直方向就没有考虑
+     */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if ( event.getAction() == MotionEvent.ACTION_UP ) {
-            //在图标的范围内点击有效
-            if ( showClose && event.getX() > (getWidth() - getHeight() + padding)
-                    && event.getX() < (getWidth() - padding)
-                    && event.getY() > padding
-                    && event.getY() < (getHeight() - padding) ) {
-                setText("");
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+            if (getCompoundDrawables()[2] != null) {
+
+                boolean touchable = event.getX() > (getWidth() - getTotalPaddingRight()) && (event.getX() < ((getWidth() - getPaddingRight())));
+
+                if (touchable) {
+                    this.setText("");
+                }
             }
         }
         return super.onTouchEvent(event);
     }
 
+    /**
+     * 当ClearEditText焦点发生变化的时候，判断里面字符串长度设置清除图标的显示与隐藏
+     */
     @Override
-    protected void finalize() throws Throwable {
-        super.finalize();
-    }
-
-
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-
-        if ( showClose ) {
-            Rect mSrcRect = new Rect(0, 0, mBitWidth, mBitWidth);
-            RectF mDestRect = new RectF(mWidth - mBitWidth - padding,
-                    padding, mWidth - padding, mHeight - padding);
-            canvas.drawBitmap(mClearBitmap, mSrcRect, mDestRect, mPaint);
+    public void onFocusChange(View v, boolean hasFocus) {
+        this.hasFocus = hasFocus;
+        if (hasFocus) {
+            setClearIconVisible(getText().length() > 0);
+        } else {
+            setClearIconVisible(false);
         }
     }
 
-    private boolean hasScale;
+    /**
+     * 设置清除图标的显示与隐藏，调用setCompoundDrawables为EditText绘制上去
+     */
+    protected void setClearIconVisible(boolean visible) {
+        Drawable right = visible ? clearDrawable : null;
+        setCompoundDrawables(getCompoundDrawables()[0], getCompoundDrawables()[1], right, getCompoundDrawables()[3]);
+    }
 
-    private void deal() {
-        if ( !hasScale ) {
-            int width = mClearBitmap.getWidth();
-            int height = mClearBitmap.getHeight();
-            Log.e("HHHHH", "width height " + width + " " + height);
-            // 设置想要的大小
-            if ( mDrawWidth == 0 ) {
-                padding = (( float ) mHeight) * (1 - scale) / 2;
-                mBitWidth = ( int ) (mHeight - 2 * padding);
-                mBitHeight = mBitWidth;
-            } else {
-                if ( mDrawWidth > mHeight ) {
-                    mDrawWidth = mHeight;
-                }
-                padding = (( float ) (mHeight - mDrawWidth)) / 2;
-                mBitWidth = ( int ) mDrawWidth;
-                mBitHeight = ( int ) mDrawWidth;
-            }
-            // 计算缩放比例
-            float scaleWidth = (( float ) mBitWidth) / width;
-            float scaleHeight = (( float ) mBitHeight) / height;
-            // 取得想要缩放的matrix参数
-            Matrix matrix = new Matrix();
-            matrix.postScale(scaleWidth, scaleHeight);
-            // 得到新的图片
-            mClearBitmap = Bitmap.createBitmap(mClearBitmap, 0, 0, width, height, matrix, true);
-            hasScale = true;
+    /**
+     * 当输入框里面内容发生变化的时候回调的方法
+     */
+    @Override
+    public void onTextChanged(CharSequence s, int start, int count, int after) {
+        if (hasFocus) {
+            setClearIconVisible(s.length() > 0);
         }
     }
 
     @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-        mWidth = w;
-        mHeight = h;
-
-        //第一次进来的时候对图片进行处理
-        deal();
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
     }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
+    }
+
 }

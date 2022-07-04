@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import com.merchant.drifting.app.api.ApiService;
 import com.merchant.drifting.data.entity.ApplicationMaterialsEntity;
 import com.merchant.drifting.mvp.contract.ApplicationMaterialsContract;
+import com.merchant.drifting.mvp.model.entity.InfoEditEntity;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
@@ -48,5 +49,15 @@ public class ApplicationMaterialsModel extends BaseModel implements ApplicationM
     @Override
     public Observable<BaseEntity<ApplicationMaterialsEntity>> shopapply(MultipartBody body) {
         return mRepositoryManager.obtainRetrofitService(ApiService.class).shopapply(body);
+    }
+
+    @Override
+    public Observable<BaseEntity<InfoEditEntity>> infoForEdit(String shop_id) {
+        return mRepositoryManager.obtainRetrofitService(ApiService.class).infoForEdit(shop_id);
+    }
+
+    @Override
+    public Observable<BaseEntity> applyForEdit(MultipartBody shortVoice) {
+        return mRepositoryManager.obtainRetrofitService(ApiService.class).applyForEdit(shortVoice);
     }
 }

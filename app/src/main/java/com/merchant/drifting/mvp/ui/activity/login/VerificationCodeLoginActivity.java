@@ -25,6 +25,7 @@ import com.merchant.drifting.mvp.presenter.VerificationCodeLoginPresenter;
 import com.merchant.drifting.mvp.ui.activity.home.HomeActivity;
 import com.merchant.drifting.mvp.ui.activity.index.SwitchMerchantsActivity;
 import com.merchant.drifting.mvp.ui.activity.merchant.NewsActivity;
+import com.merchant.drifting.storageinfo.Preferences;
 import com.merchant.drifting.util.ClickUtil;
 import com.merchant.drifting.util.StringUtil;
 import com.merchant.drifting.util.ToastUtil;
@@ -115,6 +116,8 @@ public class VerificationCodeLoginActivity extends BaseActivity<VerificationCode
         RequestUtil.create().haveshop(entity1 -> {
             if (entity1 != null && entity1.getCode() == 200) {
                 if (entity1.getData().getTotal() > 0) {
+                    Preferences.saveShopId(entity1.getData().getShops().get(0).getShop_id() + "");
+                    Preferences.saveShopName(entity1.getData().getShops().get(0).getShop_name() + "");
                     HomeActivity.start(this, true);
                 } else {
                     SwitchMerchantsActivity.start(this, 1, true);

@@ -178,11 +178,7 @@ public class Preferences {
      * 退出登录清除用户数据
      */
     public static void clearUserLoginData() {
-        String phone = getPhone();
-        String password=getPassword();
         clear();
-        savePhone(phone);
-        savePassword(password);
     }
 
     /**

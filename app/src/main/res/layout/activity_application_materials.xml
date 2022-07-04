@@ -22,7 +22,6 @@
             android:orientation="vertical"
             android:paddingHorizontal="14dp">
 
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -75,7 +74,7 @@
                         android:background="@null"
                         android:hint="请输入姓名"
                         android:paddingStart="22dp"
-                        android:text=""
+
                         android:textColor="@color/color_33"
                         android:textColorHint="@color/color_d4"
                         android:textCursorDrawable="@drawable/edit_cursor_color"
@@ -105,6 +104,7 @@
                         android:layout_height="match_parent"
                         android:background="@null"
                         android:hint="请输入手机号"
+                        android:inputType="number"
                         android:paddingStart="22dp"
                         android:text=""
                         android:textColor="@color/color_33"
@@ -172,8 +172,8 @@
                 <include layout="@layout/gray_view_line" />
 
 
-
                 <LinearLayout
+                    android:id="@+id/ll_location"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_marginTop="15dp">
@@ -192,11 +192,11 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@null"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
                         android:hint="例如：西罗园街道"
                         android:paddingStart="22dp"
                         android:singleLine="true"
-                        android:ellipsize="end"
-                        android:gravity="center_vertical"
                         android:text=""
                         android:textColor="@color/color_33"
                         android:textColorHint="@color/color_d4"
@@ -209,7 +209,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
-                        android:src="@drawable/location"/>
+                        android:src="@drawable/location" />
 
 
                 </LinearLayout>
@@ -365,10 +365,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"
+                        android:gravity="center_vertical"
                         android:hint="请选择"
                         android:paddingStart="22dp"
                         android:text=""
-                        android:gravity="center_vertical"
                         android:textColor="@color/color_33"
                         android:textColorHint="@color/color_d4"
                         android:textCursorDrawable="@drawable/edit_cursor_color"
@@ -403,10 +403,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"
+                        android:gravity="center_vertical"
                         android:hint="请选择"
                         android:paddingStart="22dp"
                         android:text=""
-                        android:gravity="center_vertical"
                         android:textColor="@color/color_33"
                         android:textColorHint="@color/color_d4"
                         android:textCursorDrawable="@drawable/edit_cursor_color"

@@ -1,11 +1,19 @@
 package com.merchant.drifting.mvp.model;
 import android.app.Application;
 import com.google.gson.Gson;
+import com.jess.arms.base.BaseEntity;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
 import com.jess.arms.di.scope.ActivityScope;
 import javax.inject.Inject;
+
+import com.merchant.drifting.app.api.ApiService;
 import com.merchant.drifting.mvp.contract.ApplicationRecordContract;
+import com.merchant.drifting.mvp.model.entity.ShopApplyLogEntity;
+
+import java.util.List;
+
+import io.reactivex.Observable;
 
 /**
  * ================================================
@@ -36,5 +44,10 @@ public class ApplicationRecordModel extends BaseModel implements ApplicationReco
         super.onDestroy();
         this.mGson = null;
         this.mApplication = null;
+    }
+
+    @Override
+    public Observable<BaseEntity<List<ShopApplyLogEntity>>> shopapplyLog(int status) {
+        return mRepositoryManager.obtainRetrofitService(ApiService.class).shopapplyLog(status);
     }
 }

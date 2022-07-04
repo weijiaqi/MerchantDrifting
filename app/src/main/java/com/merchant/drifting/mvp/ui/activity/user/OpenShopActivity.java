@@ -107,7 +107,7 @@ public class OpenShopActivity extends BaseActivity {
                     finish();
                     break;
                 case R.id.tv_be_ready:
-                    ApplicationMaterialsActivity.start(this,false);
+                    ApplicationMaterialsActivity.start(this,1,"",false);
                     break;
             }
         }

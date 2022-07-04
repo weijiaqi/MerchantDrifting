@@ -1,5 +1,7 @@
 package com.merchant.drifting.mvp.ui.fragment;
 
+import static android.app.Activity.RESULT_OK;
+
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,8 +38,10 @@ import com.merchant.drifting.mvp.ui.activity.index.SwitchMerchantsActivity;
 import com.merchant.drifting.mvp.ui.activity.merchant.NewsActivity;
 import com.merchant.drifting.mvp.ui.adapter.OderRecordPagerAdapter;
 import com.merchant.drifting.mvp.ui.adapter.TransactionAdapter;
+import com.merchant.drifting.storageinfo.Preferences;
 import com.merchant.drifting.util.ClickUtil;
 import com.merchant.drifting.util.StringUtil;
+import com.merchant.drifting.util.ToastUtil;
 import com.merchant.drifting.util.callback.BaseDataCallBack;
 import com.merchant.drifting.util.request.RequestUtil;
 import com.merchant.drifting.view.ThickLineTextSpan;
@@ -78,6 +82,9 @@ public class IndexFragment extends BaseFragment<IndexPresenter> implements Index
     TextView mTvTodayOrderNum;
     @BindView(R.id.tv_turnover)
     TextView mTvTrunOver;
+    @BindView(R.id.tv_switch_merchants)
+    TextView mTvSwitch;
+
     @BindView(R.id.indicator_tablayout)
     ScrollIndicatorView mIndicatorTablayout;
     @BindView(R.id.viewpager)
@@ -112,10 +119,10 @@ public class IndexFragment extends BaseFragment<IndexPresenter> implements Index
      */
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        setStatusBar(true);
+        setStatusBar(false);
         setStatusBarHeight(mTvBar);
+        mTvSwitch.setText(Preferences.getShopName());
         initListener();
-
     }
 
     @Override
@@ -153,7 +160,7 @@ public class IndexFragment extends BaseFragment<IndexPresenter> implements Index
         });
 
         if (mPresenter != null) {
-            mPresenter.statistictoday("");
+            mPresenter.statistictoday(Preferences.getShopId());
         }
     }
 
@@ -182,7 +189,7 @@ public class IndexFragment extends BaseFragment<IndexPresenter> implements Index
 
     @Override
     public void showMessage(@NonNull String message) {
-
+        ToastUtil.showToast(message);
     }
 
     @OnClick({R.id.iv_message, R.id.tv_switch_merchants, R.id.iv_scan})
@@ -231,10 +238,6 @@ public class IndexFragment extends BaseFragment<IndexPresenter> implements Index
         }
     }
 
-    @Override
-    public void onNetError() {
-
-    }
 
     @Override
     public void PermissionVoiceSuccess() {
@@ -244,6 +247,27 @@ public class IndexFragment extends BaseFragment<IndexPresenter> implements Index
     }
 
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == MDConstant.REQ_QR_CODE && resultCode == RESULT_OK) {
+            Bundle bundle = data.getExtras();
+            String token = bundle.getString(MDConstant.INTENT_EXTRA_KEY_QR_SCAN);
+            if (mPresenter!=null){
+                mPresenter.shopwriteOff(token, Preferences.getShopId());
+            }
+        }
+}
+
+    @Override
+    public void OnShopWriteOff() {
+          showMessage("核销成功");
+    }
+
+    @Override
+    public void onNetError() {
+
+    }
 
     /**
      * 删除Event

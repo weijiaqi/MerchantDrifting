@@ -20,6 +20,7 @@ import com.merchant.drifting.mvp.contract.OrderRecordContract;
 import com.merchant.drifting.mvp.model.entity.OrderRecordEntity;
 import com.merchant.drifting.mvp.presenter.OrderRecordPresenter;
 import com.merchant.drifting.mvp.ui.adapter.OrderRecordAdapter;
+import com.merchant.drifting.storageinfo.Preferences;
 import com.merchant.drifting.util.ViewUtil;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ import butterknife.BindView;
 /**
  * Created on 2022/06/29 15:25
  *
- * @author 谢况
+ * @author
  * module name is OrderRecordFragment
  */
 public class OrderRecordFragment extends BaseFragment<OrderRecordPresenter> implements OrderRecordContract.View {
@@ -110,7 +111,7 @@ public class OrderRecordFragment extends BaseFragment<OrderRecordPresenter> impl
         orderRecordAdapter = new OrderRecordAdapter(new ArrayList<>());
         mRcyOrderRecord.setAdapter(orderRecordAdapter);
         if (mPresenter != null) {
-            mPresenter.salesranking("", days);
+            mPresenter.salesranking(Preferences.getShopId(), days);
         }
     }
 

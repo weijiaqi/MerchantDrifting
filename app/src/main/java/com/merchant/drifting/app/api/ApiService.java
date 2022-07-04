@@ -4,6 +4,7 @@ import com.jess.arms.base.BaseEntity;
 import com.merchant.drifting.data.entity.ApplicationMaterialsEntity;
 import com.merchant.drifting.mvp.model.entity.BusinessBillEntity;
 import com.merchant.drifting.mvp.model.entity.HaveShopEntity;
+import com.merchant.drifting.mvp.model.entity.InfoEditEntity;
 import com.merchant.drifting.mvp.model.entity.LoginEntity;
 import com.merchant.drifting.mvp.model.entity.MessageUnreadEntity;
 import com.merchant.drifting.mvp.model.entity.OrderRecordEntity;
@@ -11,6 +12,8 @@ import com.merchant.drifting.mvp.model.entity.ShopApplyLogEntity;
 import com.merchant.drifting.mvp.model.entity.ShopListEntity;
 import com.merchant.drifting.mvp.model.entity.SystemNotificationEntity;
 import com.merchant.drifting.mvp.model.entity.TodayOrderEntity;
+import com.merchant.drifting.mvp.model.entity.WriteOffDetailEntity;
+import com.merchant.drifting.mvp.model.entity.WriteOffListEntity;
 
 import java.util.List;
 
@@ -75,6 +78,13 @@ public interface ApiService {
 
 
     /**
+     * 编辑店铺资料
+     */
+    @POST("v/shop/applyForEdit")
+    Observable<BaseEntity> applyForEdit(@Body MultipartBody body);
+
+
+    /**
      * 申请记录
      */
     @FormUrlEncoded
@@ -83,10 +93,18 @@ public interface ApiService {
 
 
     /**
+     * 读取店铺信息（编辑时使用）
+     */
+    @FormUrlEncoded
+    @POST("v/shop/infoForEdit")
+    Observable<BaseEntity<InfoEditEntity>> infoForEdit(@Field("shop_id") String shop_id);
+
+
+    /**
      * 余额、今日订单量、营业额（首页）
      */
     @FormUrlEncoded
-    @POST("v/shop/applyLog")
+    @POST("v/shop/statistic/today")
     Observable<BaseEntity<TodayOrderEntity>> statistictoday(@Field("shop_id") String shop_id);
 
 
@@ -131,5 +149,41 @@ public interface ApiService {
     @POST("v/business/bill")
     Observable<BaseEntity<BusinessBillEntity>> businessbill(@Field("search_type") int search_type, @Field("date") String date, @Field("page") int page, @Field("limit") int limit);
 
+
+    /**
+     * 核销
+     */
+    @FormUrlEncoded
+    @POST("v/shop/writeOff")
+    Observable<BaseEntity> shopwriteOff(@Field("token") String token, @Field("shop_id") String shop_id);
+
+
+    /**
+     * 核销过的订单
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("v/shop/writeOffList")
+    Observable<BaseEntity<WriteOffListEntity>> writeOffList(@Field("shop_id") String shop_id, @Field("page") int page, @Field("limit") int limit);
+
+    /**
+     * 订单详情（被核销订单）
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("v/shop/writeOffDetail")
+    Observable<BaseEntity<WriteOffDetailEntity>> writeOffDetail(@Field("write_off_id") int write_off_id, @Field("shop_id") String shop_id);
+
+
+    /**
+     * 订单数据
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("v/shop/statistic/order")
+    Observable<BaseEntity<WriteOffDetailEntity>> shopstatisticorder(@Field("write_off_id") int write_off_id, @Field("shop_id") String shop_id);
 
 }

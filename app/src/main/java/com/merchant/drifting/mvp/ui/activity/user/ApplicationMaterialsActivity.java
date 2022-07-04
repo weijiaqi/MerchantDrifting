@@ -16,6 +16,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.baidu.mapapi.PermissionUtils;
@@ -45,6 +46,7 @@ import com.merchant.drifting.data.entity.ApplicationMaterialsEntity;
 import com.merchant.drifting.di.component.DaggerApplicationMaterialsComponent;
 import com.merchant.drifting.location.SelectAddressByMapActivity;
 import com.merchant.drifting.mvp.contract.ApplicationMaterialsContract;
+import com.merchant.drifting.mvp.model.entity.InfoEditEntity;
 import com.merchant.drifting.mvp.presenter.ApplicationMaterialsPresenter;
 import com.merchant.drifting.mvp.ui.activity.home.HomeActivity;
 import com.merchant.drifting.mvp.ui.dialog.DocumentTypeDialog;
@@ -56,6 +58,8 @@ import com.merchant.drifting.util.PermissionDialog;
 import com.merchant.drifting.util.SpannableUtil;
 import com.merchant.drifting.util.StringUtil;
 import com.merchant.drifting.util.ToastUtil;
+import com.merchant.drifting.util.ViewUtil;
+import com.merchant.drifting.view.ClearEditText;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -106,7 +110,6 @@ public class ApplicationMaterialsActivity extends BaseActivity<ApplicationMateri
     EditText mEtPhone;
     @BindView(R.id.et_store_name)
     EditText mEtStoreName;
-
     @BindView(R.id.et_legal_name)
     EditText mEtLegalName;
     @BindView(R.id.et_certificate_no)
@@ -119,7 +122,10 @@ public class ApplicationMaterialsActivity extends BaseActivity<ApplicationMateri
     ImageView mIvBusinessLicense;
     @BindView(R.id.iv_licence)
     ImageView mIvLicence;
-
+    @BindView(R.id.tv_submit)
+    TextView mTvSubmit;
+    @BindView(R.id.ll_location)
+    LinearLayout mLlLocation;
     private String address;
     private SpannableStringBuilder passer1, passer2, passer3, passer4;
     private static final int FACADE = 1, ENVIRONMENT = 2, IDCARD = 3, IDCARD_BACK = 4, BUSINESS_LICENSE = 5, LICENSE = 6;
@@ -128,9 +134,15 @@ public class ApplicationMaterialsActivity extends BaseActivity<ApplicationMateri
     private PictureSelectorStyle selectorStyle;
     private SelectSexDialog selectSexDialog;
     private DocumentTypeDialog documentTypeDialog;
+    private static String EXTRA_TYPE = "extra_type";
+    private static String EXTRA_SHOP_ID = "extra_shop_id";
+    private int type;
+    private String shop_id;
 
-    public static void start(Context context, boolean closePage) {
+    public static void start(Context context, int type, String shop_id, boolean closePage) {
         Intent intent = new Intent(context, ApplicationMaterialsActivity.class);
+        intent.putExtra(EXTRA_TYPE, type);
+        intent.putExtra(EXTRA_SHOP_ID, shop_id);
         context.startActivity(intent);
         if (closePage) ((Activity) context).finish();
     }
@@ -153,8 +165,17 @@ public class ApplicationMaterialsActivity extends BaseActivity<ApplicationMateri
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         setStatusBar(false);
-        mToolbarTitle.setText("提交资料");
+        if (getIntent() != null) {
+            shop_id = getIntent().getExtras().getString(EXTRA_SHOP_ID);
+            type = getIntent().getExtras().getInt(EXTRA_TYPE);
+        }
+        mToolbarTitle.setText(type == 1 ? "提交资料" : "查看资料");
         initListener();
+        if (type != 1) {
+            if (mPresenter != null) {
+                mPresenter.infoForEdit(shop_id);
+            }
+        }
     }
 
     public void initListener() {
@@ -186,7 +207,7 @@ public class ApplicationMaterialsActivity extends BaseActivity<ApplicationMateri
         return this;
     }
 
-    @OnClick({R.id.toolbar_back, R.id.iv_facade, R.id.iv_environment, R.id.iv_id_photo, R.id.iv_id_photo_back, R.id.iv_business_license, R.id.iv_licence, R.id.iv_location, R.id.tv_sex, R.id.tv_document_type, R.id.tv_submit})
+    @OnClick({R.id.toolbar_back, R.id.iv_facade, R.id.iv_environment, R.id.iv_id_photo, R.id.iv_id_photo_back, R.id.iv_business_license, R.id.iv_licence, R.id.ll_location, R.id.tv_sex, R.id.tv_document_type, R.id.tv_submit})
     public void onClick(View view) {
         if (!ClickUtil.isFastClick(view.getId())) {
             switch (view.getId()) {
@@ -211,7 +232,7 @@ public class ApplicationMaterialsActivity extends BaseActivity<ApplicationMateri
                 case R.id.iv_licence://许可证
                     goToSelectPic(LICENSE);
                     break;
-                case R.id.iv_location:
+                case R.id.ll_location:
                     // 申请动态权限
                     requestPermission();
                     break;
@@ -269,10 +290,7 @@ public class ApplicationMaterialsActivity extends BaseActivity<ApplicationMateri
                         showMessage("请上传店内真实环境");
                         return;
                     }
-                    if (TextUtils.isEmpty(environment)) {
-                        showMessage("请上传店内真实环境");
-                        return;
-                    }
+
                     if (StringUtil.isEmpty(mEtLegalName.getText().toString())) {
                         showMessage("请输入法人姓名");
                         return;
@@ -307,8 +325,13 @@ public class ApplicationMaterialsActivity extends BaseActivity<ApplicationMateri
                         showMessage("请上传许可证");
                         return;
                     }
+                    showLoading();
                     if (mPresenter != null) {
-                        mPresenter.shopapply(mEtStoreName.getText().toString(), mEtPhone.getText().toString(), mEtName.getText().toString(), province, mTvAddress.getText().toString(), new File(facade), new File(environment), mEtLegalName.getText().toString(), mSex, document_type, mEtCertificateNo.getText().toString(), new File(IdPhoto), new File(IdPhotoBack), new File(BusinessLicense), new File(Licence), lng, lat);
+                        if (type == 1) {   //第一次提交
+                            mPresenter.shopapply(mEtStoreName.getText().toString(), mEtPhone.getText().toString(), mEtName.getText().toString(), province, mTvAddress.getText().toString(), new File(facade), new File(environment), mEtLegalName.getText().toString(), mSex, document_type, mEtCertificateNo.getText().toString(), new File(IdPhoto), new File(IdPhotoBack), new File(BusinessLicense), new File(Licence), lng, lat);
+                        } else {
+                            mPresenter.applyForEdit(shop_id, mEtStoreName.getText().toString(), mEtPhone.getText().toString(), mEtName.getText().toString(), province, mTvAddress.getText().toString(), facade, environment, mEtLegalName.getText().toString(), mSex, document_type, mEtCertificateNo.getText().toString(), IdPhoto, IdPhotoBack, BusinessLicense, Licence, lng, lat);
+                        }
                     }
                     break;
             }
@@ -317,10 +340,80 @@ public class ApplicationMaterialsActivity extends BaseActivity<ApplicationMateri
 
 
     @Override
+    public void showLoading() {
+        ViewUtil.create().show(this);
+    }
+
+    @Override
+    public void hideLoading() {
+        ViewUtil.create().dismiss();
+    }
+
+
+    @Override
     public void OnShopApplySuccess(ApplicationMaterialsEntity entity) {
+        StartActivity();
+    }
+
+    @Override
+    public void OnInfoEditSuccess(InfoEditEntity entity) {
         if (entity != null) {
-            ApplicationCompletedActivity.start(this, mEtName.getText().toString(), mEtStoreName.getText().toString(), mEtPhone.getText().toString(), false);
+            if (entity.getStatus() == 0) {  //审核中
+                mTvSubmit.setVisibility(View.GONE);
+                mEtName.setEnabled(false);
+                mEtPhone.setEnabled(false);
+                mEtStoreName.setEnabled(false);
+                mEtLegalName.setEnabled(false);
+                mEtCertificateNo.setEnabled(false);
+                mTvSex.setClickable(false);
+                mTvDocumentType.setClickable(false);
+                mLlLocation.setClickable(false);
+                mIvFacade.setClickable(false);
+                mIvEnvironment.setClickable(false);
+                mIvIdPhoto.setClickable(false);
+                mIvIdPhotoBack.setClickable(false);
+                mIvBusinessLicense.setClickable(false);
+                mIvLicence.setClickable(false);
+            } else if (entity.getStatus() == 2) {  //审核失败
+                mToolbarTitle.setText("编辑资料");
+            }
+            mEtName.setText(entity.getContact_name());
+            mEtPhone.setText(entity.getMobile());
+            mEtStoreName.setText(entity.getShop_name());
+
+            province = entity.getLocation();
+
+            mTvAddress.setText(entity.getAddress());
+            facade = entity.getFacade_image();
+            GlideUtil.create().loadLongImage(this, entity.getFacade_image(), mIvFacade);//门面图
+            environment = entity.getInterior_image();
+            GlideUtil.create().loadLongImage(this, entity.getInterior_image(), mIvEnvironment);//店内图片
+            mEtLegalName.setText(entity.getCorporation());
+            mSex = entity.getGender();
+            mTvSex.setText(entity.getGender() == 0 ? "男" : "女");
+            document_type = entity.getCertificate_type();
+            mTvDocumentType.setText(entity.getCertificate_type() == 1 ? "身份证" : "");
+            mEtCertificateNo.setText(entity.getCertificate_no());
+            IdPhoto = entity.getCertificate_image1();
+            GlideUtil.create().loadLongImage(this, entity.getCertificate_image1(), mIvIdPhoto);//身份证正面
+            IdPhotoBack = entity.getCertificate_image2();
+            GlideUtil.create().loadLongImage(this, entity.getCertificate_image2(), mIvIdPhotoBack);//身份证正面
+            BusinessLicense = entity.getBusiness_license();
+            GlideUtil.create().loadLongImage(this, entity.getBusiness_license(), mIvBusinessLicense);//营业执照
+            Licence = entity.getPermit();
+            GlideUtil.create().loadLongImage(this, entity.getPermit(), mIvLicence);//许可证
+            lng = entity.getLng();
+            lat = entity.getLat();
         }
+    }
+
+    @Override
+    public void OnShopapplyForEditSuccess() {
+        StartActivity();
+    }
+
+    public void StartActivity() {
+        ApplicationCompletedActivity.start(this, mEtName.getText().toString(), mEtStoreName.getText().toString(), mEtPhone.getText().toString(), true);
     }
 
     @Override

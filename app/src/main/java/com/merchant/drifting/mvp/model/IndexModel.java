@@ -51,4 +51,9 @@ public class IndexModel extends BaseModel implements IndexContract.Model {
     public Observable<BaseEntity<TodayOrderEntity>> statistictoday(String shop_id) {
         return mRepositoryManager.obtainRetrofitService(ApiService.class).statistictoday(shop_id);
     }
+
+    @Override
+    public Observable<BaseEntity> shopwriteOff(String token, String shop_id) {
+        return mRepositoryManager.obtainRetrofitService(ApiService.class).shopwriteOff(token,shop_id);
+    }
 }
