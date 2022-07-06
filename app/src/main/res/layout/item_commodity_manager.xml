@@ -26,9 +26,10 @@
 
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/demo" />
+            android:id="@+id/iv_pic"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:src="@drawable/icon_home_page" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -36,19 +37,21 @@
             android:layout_marginTop="18dp">
 
             <TextView
+                android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="杨枝甘露"
+                android:text=""
                 android:textColor="@color/color_17"
                 android:textSize="16sp" />
 
 
             <TextView
+                android:id="@+id/tv_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:text="¥22"
                 android:layout_centerVertical="true"
+                android:text=""
                 android:textColor="@color/color_42"
                 android:textSize="14sp" />
 
@@ -57,11 +60,14 @@
 
 
         <TextView
+            android:id="@+id/tv_intro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="9dp"
             android:layout_marginBottom="17dp"
-            android:text="规格标签规格标签"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:text=""
             android:textColor="@color/color_97"
             android:textSize="12sp" />
 

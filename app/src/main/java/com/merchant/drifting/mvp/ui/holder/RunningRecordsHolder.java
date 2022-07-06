@@ -15,7 +15,6 @@ import java.util.List;
 import butterknife.BindView;
 
 public class RunningRecordsHolder extends BaseRecyclerHolder {
-
     @BindView(R.id.iv_pic)
     ImageView mIvPic;
     @BindView(R.id.tv_title)
@@ -31,5 +30,14 @@ public class RunningRecordsHolder extends BaseRecyclerHolder {
 
     public void setData(List<BusinessBillEntity.ListBean> list, int postion) {
         TextUtil.setText(mTvTime, DateUtil.unixToDateMDH(list.get(postion).getCreated_at_int() + ""));
+        if (list.get(postion).getBill_type() == 1) {
+            mTvTitle.setText("提现");
+            TextUtil.setText(mTvPrice, "-" + list.get(postion).getMoney());
+        } else {
+            mTvTitle.setText("订单收入");
+            TextUtil.setText(mTvPrice, "+" + list.get(postion).getMoney());
+        }
+
+
     }
 }

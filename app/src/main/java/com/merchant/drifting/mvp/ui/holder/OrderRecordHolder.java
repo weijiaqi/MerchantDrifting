@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import com.jess.arms.base.BaseRecyclerHolder;
 import com.merchant.drifting.R;
 import com.merchant.drifting.mvp.model.entity.OrderRecordEntity;
+import com.merchant.drifting.storageinfo.Preferences;
+import com.merchant.drifting.util.GlideUtil;
 import com.merchant.drifting.util.StringUtil;
 import com.merchant.drifting.util.TextUtil;
 
@@ -36,8 +38,9 @@ public class OrderRecordHolder extends BaseRecyclerHolder {
 
 
     public void setData(@NonNull List<OrderRecordEntity> listBeanList, int position) {
+        GlideUtil.create().loadHeadCirclePic(context, listBeanList.get(position).getSmall_image(), mIvPic);
         TextUtil.setText(mTvTitle, listBeanList.get(position).getSku_name());
-        TextUtil.setText(mTvSalesVolume, "今日销售额：" + listBeanList.get(position).getSales_volume());
+        TextUtil.setText(mTvSalesVolume, "今日销售额：¥" + listBeanList.get(position).getSales_volume());
         TextUtil.setText(mTvPrice, "¥" + StringUtil.frontCDecimalValue(listBeanList.get(position).getPrice()));
     }
 }

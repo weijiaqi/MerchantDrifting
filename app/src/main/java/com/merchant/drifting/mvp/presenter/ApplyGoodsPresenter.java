@@ -1,12 +1,25 @@
 package com.merchant.drifting.mvp.presenter;
 import android.app.Application;
+
+import com.jess.arms.base.BaseEntity;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.http.imageloader.ImageLoader;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
+
 import javax.inject.Inject;
+
+import com.jess.arms.utils.RxLifecycleUtils;
 import com.merchant.drifting.mvp.contract.ApplyGoodsContract;
+import com.merchant.drifting.mvp.model.entity.AvailableAllEntity;
+import com.merchant.drifting.mvp.model.entity.BankListEntity;
+
+import java.util.List;
 
 /**
  * ================================================
@@ -35,6 +48,35 @@ public class ApplyGoodsPresenter extends BasePresenter<ApplyGoodsContract.Model,
     public ApplyGoodsPresenter (ApplyGoodsContract.Model model, ApplyGoodsContract.View rootView) {
         super(model, rootView);
     }
+
+
+
+    /**
+     *全部可用杯（申请商品）
+     */
+    public void availableAll(String shop_id) {
+        mModel.availableAll(shop_id).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseEntity<List<AvailableAllEntity>>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseEntity<List<AvailableAllEntity>> baseEntity) {
+                        if (mRootView != null) {
+                            if (baseEntity.getCode() == 200) {
+                                mRootView.OnAvailableAllSuccess(baseEntity.getData());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        if (mRootView != null) {
+                            mRootView.onNetError();
+                        }
+                    }
+                });
+    }
+
 
     @Override
     public void onDestroy() {

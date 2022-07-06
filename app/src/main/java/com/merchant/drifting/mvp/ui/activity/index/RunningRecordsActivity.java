@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 
+import com.jess.arms.utils.SystemUtil;
 import com.merchant.drifting.R;
 import com.merchant.drifting.di.component.DaggerRunningRecordsComponent;
 import com.merchant.drifting.mvp.contract.RunningRecordsContract;
@@ -32,9 +33,13 @@ import com.merchant.drifting.picker.dialog.DialogColor;
 import com.merchant.drifting.picker.dialog.DialogConfig;
 import com.merchant.drifting.picker.dialog.DialogStyle;
 import com.merchant.drifting.picker.widget.DateWheelLayout;
+import com.merchant.drifting.storageinfo.Preferences;
 import com.merchant.drifting.util.ClickUtil;
+import com.merchant.drifting.util.DateUtil;
+import com.merchant.drifting.util.StringUtil;
 import com.merchant.drifting.util.ToastUtil;
 import com.merchant.drifting.util.ViewUtil;
+import com.merchant.drifting.util.request.RequestUtil;
 import com.rb.core.xrecycleview.XRecyclerView;
 
 import java.util.ArrayList;
@@ -60,6 +65,8 @@ public class RunningRecordsActivity extends BaseActivity<RunningRecordsPresenter
     XRecyclerView mRcyFlowingWater;
     @BindView(R.id.fl_container)
     FrameLayout mFlState;
+    @BindView(R.id.tv_balance)
+    TextView mTvBalance;
     private int status = 3;
     private DatePicker picker;
     private DateWheelLayout wheelLayout;
@@ -99,19 +106,30 @@ public class RunningRecordsActivity extends BaseActivity<RunningRecordsPresenter
     }
 
     public void initListener() {
-        DialogConfig.setDialogStyle(DialogStyle.Default);
-        DialogConfig.setDialogColor(new DialogColor()
-                .cancelTextColor(0xFF0099CC)
-                .okTextColor(0xFF0099CC));
+        RequestUtil.create().balance(Preferences.getShopId(),entity -> {
+            if (entity != null & entity.getCode() == 200) {
+                mTvBalance.setText("¥ " + StringUtil.frontCDecimalValue(entity.getData().getBalance()));
+            }
+        });
+
+        DialogConfig.setDialogStyle(DialogStyle.One);
+
         mRcyFlowingWater.setLayoutManager(new LinearLayoutManager(this));
+        mRcyFlowingWater.setLoadingListener(this);
         adapter = new RunningRecordsAdapter(new ArrayList<>());
         mRcyFlowingWater.setAdapter(adapter);
+        setDate(DateUtil.unxiToDateYMDMD());
+    }
+
+
+    public void setDate(String date) {
+        mTvTime.setText(date);
         getData(status, date, mPage, true);
     }
 
-    public void getData(int status, String date, int mPage, boolean loadType) {
+    public void getData(  int status, String date, int mPage, boolean loadType) {
         if (mPresenter != null) {
-            mPresenter.businessbill(status, date, mPage, limit, loadType);
+            mPresenter.businessbill( Preferences.getShopId(),  status, date, mPage, limit, loadType);
         }
     }
 
@@ -200,29 +218,16 @@ public class RunningRecordsActivity extends BaseActivity<RunningRecordsPresenter
         ToastUtil.showToast(message);
     }
 
-    @Override
-    public void onDatePicked(int year, int month, int day) {
-        if (status == 3) {
-            date = year + "/" + month + "/" + day;
-        } else {
-            date = year + "/" + month;
-        }
-        mTvTime.setText(date);
-    }
 
-    @Override
-    public void onDatePicked(int type) {
-        status = type;
-        wheelLayout.setDateMode(status == 3 ? DateMode.YEAR_MONTH_DAY : DateMode.YEAR_MONTH);
-    }
 
 
     public void setSelectPiker() {
+        DialogConfig.setDialogType(status);
         picker = new DatePicker(this);
         wheelLayout = picker.getWheelLayout();
-        wheelLayout.setDateMode(DateMode.YEAR_MONTH_DAY);
+        wheelLayout.setDateMode(status==3?DateMode.YEAR_MONTH_DAY:DateMode.YEAR_MONTH);
         wheelLayout.setDateFormatter(new UnitDateFormatter());
-        wheelLayout.setRange(DateEntity.target(2021, 1, 1), DateEntity.target(2050, 12, 31), DateEntity.today());
+        wheelLayout.setRange(DateEntity.target(2021, 01, 01), DateEntity.target(2050, 12, 31), DateEntity.today());
         wheelLayout.setCurtainEnabled(true);
         wheelLayout.setIndicatorEnabled(true);
         wheelLayout.setSelectedTextSize(14 * getResources().getDisplayMetrics().scaledDensity);
@@ -232,5 +237,26 @@ public class RunningRecordsActivity extends BaseActivity<RunningRecordsPresenter
         picker.show();
     }
 
+
+    @Override
+    public void onDatePicked(String year, String month, String day) {
+        if (status == 3) {
+            date = year + "/" + month + "/" + day;
+        } else {
+            date = year + "/" + month;
+        }
+        if (adapter != null) {
+            adapter.clearData();
+            mPage = 1;
+            setDate(date);
+        }
+    }
+
+
+    @Override
+    public void onDatePicked(int type) {
+        status = type;
+        wheelLayout.setDateMode(status == 3 ? DateMode.YEAR_MONTH_DAY : DateMode.YEAR_MONTH);
+    }
 
 }

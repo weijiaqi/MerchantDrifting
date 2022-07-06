@@ -22,17 +22,17 @@ package com.merchant.drifting.picker;
 public class UnitDateFormatter implements DateFormatter {
 
     @Override
-    public String formatYear(int year) {
+    public String formatYear(String year) {
         return year + "年";
     }
 
     @Override
-    public String formatMonth(int month) {
+    public String formatMonth(String month) {
         return month + "月";
     }
 
     @Override
-    public String formatDay(int day) {
+    public String formatDay(String day) {
         return day + "日";
     }
 

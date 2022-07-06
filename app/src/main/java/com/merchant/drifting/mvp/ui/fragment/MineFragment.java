@@ -18,9 +18,14 @@ import com.jess.arms.di.component.AppComponent;
 import com.merchant.drifting.R;
 import com.merchant.drifting.di.component.DaggerMineComponent;
 import com.merchant.drifting.mvp.contract.MineContract;
+import com.merchant.drifting.mvp.model.entity.ShopInfoEntity;
 import com.merchant.drifting.mvp.presenter.MinePresenter;
+import com.merchant.drifting.mvp.ui.activity.index.StoreManagementActivity;
+import com.merchant.drifting.mvp.ui.activity.user.ApplicationMaterialsActivity;
 import com.merchant.drifting.mvp.ui.activity.user.SetUpActivity;
+import com.merchant.drifting.storageinfo.Preferences;
 import com.merchant.drifting.util.ClickUtil;
+import com.merchant.drifting.util.GlideUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -42,6 +47,12 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     TextView mTvBar;
     @BindView(R.id.iv_right)
     ImageView mIvRight;
+    @BindView(R.id.iv_head)
+    ImageView mIvHead;
+    @BindView(R.id.tv_name)
+    TextView mTvName;
+    @BindView(R.id.tv_phone)
+    TextView mTvPhone;
 
     public static MineFragment newInstance() {
         MineFragment fragment = new MineFragment();
@@ -82,20 +93,42 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     private void initListener() {
-
+        if (mPresenter != null) {
+            mPresenter.shopinfo(Preferences.getShopId());
+        }
     }
 
-    @OnClick({R.id.iv_right})
+    @OnClick({R.id.iv_right, R.id.rl_store_management, R.id.rl_qualification_information})
     public void onClick(View view) {
         if (!ClickUtil.isFastClick(view.getId())) {
             switch (view.getId()) {
                 case R.id.iv_right:
-                    SetUpActivity.start(mContext,false);
+                    SetUpActivity.start(mContext, false);
+                    break;
+                case R.id.rl_store_management:
+                    StoreManagementActivity.start(mContext, false);
+                    break;
+                case R.id.rl_qualification_information:
+                    ApplicationMaterialsActivity.start(mContext, 2, Preferences.getShopId(), false);
                     break;
             }
         }
     }
 
+
+    @Override
+    public void OnShopInfoSuccess(ShopInfoEntity entity) {
+        if (entity != null) {
+            GlideUtil.create().loadHeadCirclePic(mContext, entity.getImage(), mIvHead);
+            mTvPhone.setText("+86 " + entity.getMobile());
+            mTvName.setText(entity.getShop_name());
+        }
+    }
+
+    @Override
+    public void onNetError() {
+
+    }
 
     public Fragment getFragment() {
         return this;

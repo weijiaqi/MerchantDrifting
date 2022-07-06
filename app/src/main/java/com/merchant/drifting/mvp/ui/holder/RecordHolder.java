@@ -39,7 +39,6 @@ public class RecordHolder extends BaseRecyclerHolder {
     TextView mTvStatus;
     @BindView(R.id.tv_application_time)
     TextView mTvApplicationTime;
-
     @BindView(R.id.rl_error)
     RelativeLayout mRlError;
     @BindView(R.id.tv_continue_apply)

@@ -34,6 +34,7 @@
 
 
         <EditText
+            android:id="@+id/et_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -42,9 +43,9 @@
             android:hint="请输入姓名"
             android:paddingVertical="19dp"
             android:textColor="@color/color_17"
-            android:textColorHint="@color/color_d4"
+            android:textColorHint="@color/color_cc_d4"
             android:textCursorDrawable="@drawable/edit_cursor_color"
-            android:textSize="15sp" />
+            android:textSize="14sp" />
     </LinearLayout>
 
 
@@ -66,17 +67,19 @@
 
 
         <EditText
+            android:id="@+id/et_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:background="@null"
             android:drawablePadding="16dp"
             android:hint="请输入银行卡号"
+            android:inputType="number"
             android:paddingVertical="19dp"
             android:textColor="@color/color_17"
-            android:textColorHint="@color/color_d4"
+            android:textColorHint="@color/color_cc_d4"
             android:textCursorDrawable="@drawable/edit_cursor_color"
-            android:textSize="15sp" />
+            android:textSize="14sp" />
     </LinearLayout>
 
 
@@ -98,6 +101,7 @@
 
 
         <EditText
+            android:id="@+id/et_bank_deposit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -106,9 +110,9 @@
             android:hint="请输入开户行"
             android:paddingVertical="19dp"
             android:textColor="@color/color_17"
-            android:textColorHint="@color/color_d4"
+            android:textColorHint="@color/color_cc_d4"
             android:textCursorDrawable="@drawable/edit_cursor_color"
-            android:textSize="15sp" />
+            android:textSize="14sp" />
     </LinearLayout>
 
 
@@ -130,6 +134,7 @@
 
 
         <EditText
+            android:id="@+id/et_sub_branch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -138,9 +143,9 @@
             android:hint="请输入开户支行"
             android:paddingVertical="19dp"
             android:textColor="@color/color_17"
-            android:textColorHint="@color/color_d4"
+            android:textColorHint="@color/color_cc_d4"
             android:textCursorDrawable="@drawable/edit_cursor_color"
-            android:textSize="15sp" />
+            android:textSize="14sp" />
     </LinearLayout>
 
 
@@ -172,13 +177,14 @@
 
 
         <TextView
+            android:id="@+id/tv_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:background="@null"
             android:drawablePadding="16dp"
             android:paddingVertical="19dp"
-            android:text="18235107237"
+            android:text=""
             android:textColor="@color/color_42"
             android:textSize="15sp" />
     </LinearLayout>
@@ -202,6 +208,7 @@
 
 
         <EditText
+            android:id="@+id/et_code"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -239,6 +246,7 @@
         android:background="@color/color_f0">
 
         <com.hjq.shape.view.ShapeTextView
+            android:id="@+id/tv_verification"
             android:layout_width="match_parent"
             android:layout_height="38dp"
             android:layout_marginHorizontal="46dp"

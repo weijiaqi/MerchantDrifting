@@ -82,6 +82,24 @@ public class DateUtil {
     }
 
     /**
+     * 获取当前时间yyyy/MM/dd
+     *
+     * @param unixTime
+     * @return
+     */
+
+    public static String unxiToDateYMDMD() {
+
+        String res;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        Date date = new Date(System.currentTimeMillis());
+        res = simpleDateFormat.format(date);
+        return res;
+
+    }
+
+
+    /**
      * unix时间戳转换成yyyy-MM-dd HH:mm:ss
      *
      * @param unixTime
@@ -103,7 +121,6 @@ public class DateUtil {
             return unixTime;
         }
     }
-
 
 
     /**
@@ -128,10 +145,6 @@ public class DateUtil {
             return unixTime;
         }
     }
-
-
-
-
 
 
     /**
@@ -316,11 +329,11 @@ public class DateUtil {
         if (second < 60) {
             return "1分钟";
         }
-        if (second<3600){
+        if (second < 3600) {
             int minute = second / 60;
-            return minute+"分钟";
+            return minute + "分钟";
         }
         int hour = second / 3600;
-        return hour+"小时";
+        return hour + "小时";
     }
 }

@@ -8,11 +8,15 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="color_42">#424FC2</color>
+    <color name="color_ccd_42">#cc424FC2</color><!--80% -->
 
     <color name="color_fb">#F4F5FB</color>
     <color name="color_f9">#F9AB2E</color>
     <color name="color_ff">#FFBF87</color>
     <color name="color_d4">#D4D7DE</color>
+
+    <color name="color_cc_d4">#ccD4D7DE</color><!--80% -->
+
     <color name="color_33">#333333</color>
     <color name="color_17">#172B4D</color>
     <color name="color_e9">#E9E9E9</color>

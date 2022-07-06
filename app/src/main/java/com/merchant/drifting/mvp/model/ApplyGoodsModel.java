@@ -1,11 +1,19 @@
 package com.merchant.drifting.mvp.model;
 import android.app.Application;
 import com.google.gson.Gson;
+import com.jess.arms.base.BaseEntity;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
 import com.jess.arms.di.scope.ActivityScope;
 import javax.inject.Inject;
+
+import com.merchant.drifting.app.api.ApiService;
 import com.merchant.drifting.mvp.contract.ApplyGoodsContract;
+import com.merchant.drifting.mvp.model.entity.AvailableAllEntity;
+
+import java.util.List;
+
+import io.reactivex.Observable;
 
 /**
  * ================================================
@@ -36,5 +44,10 @@ public class ApplyGoodsModel extends BaseModel implements ApplyGoodsContract.Mod
         super.onDestroy();
         this.mGson = null;
         this.mApplication = null;
+    }
+
+    @Override
+    public Observable<BaseEntity<List<AvailableAllEntity>>> availableAll(String shop_id) {
+        return mRepositoryManager.obtainRetrofitService(ApiService.class).availableAll(shop_id);
     }
 }

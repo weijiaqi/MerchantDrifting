@@ -35,6 +35,7 @@ public interface BusinessOpeningContract {
         void showMessage(String content);
 
         void onNetError();
+
         Activity getActivity();
 
     }

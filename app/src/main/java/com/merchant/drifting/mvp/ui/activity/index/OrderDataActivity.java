@@ -30,14 +30,20 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.hjq.shape.view.ShapeTextView;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.merchant.drifting.R;
 import com.merchant.drifting.di.component.DaggerOrderDataComponent;
 import com.merchant.drifting.mvp.contract.OrderDataContract;
 import com.merchant.drifting.mvp.model.entity.OrderDataEntity;
+import com.merchant.drifting.mvp.model.entity.ShopStaticOrderEntity;
 import com.merchant.drifting.mvp.presenter.OrderDataPresenter;
 import com.merchant.drifting.mvp.ui.adapter.OrderDataAdapter;
+import com.merchant.drifting.storageinfo.Preferences;
 import com.merchant.drifting.util.ClickUtil;
 import com.merchant.drifting.util.SpannableUtil;
 import com.merchant.drifting.util.StringUtil;
@@ -76,7 +82,14 @@ public class OrderDataActivity extends BaseActivity<OrderDataPresenter> implemen
     TextView mTvWeekNum;
     @BindView(R.id.lineChart1)
     LineChart chart;
-
+    @BindView(R.id.tv_today_up_down)
+    ShapeTextView mTvTodayUpDown;
+    @BindView(R.id.tv_week_up_down)
+    ShapeTextView mTvWeekUpDown;
+    @BindView(R.id.tv_turnover)
+    TextView mTvtrunover;
+    @BindView(R.id.tv_week)
+    TextView mTvWeek;
     private SpannableStringBuilder passer;
     private OrderDataAdapter orderDataAdapter;
 
@@ -106,6 +119,7 @@ public class OrderDataActivity extends BaseActivity<OrderDataPresenter> implemen
         setStatusBar(true);
         setStatusBarHeight(mTvBar);
         mToolbarTitle.setText("订单数据");
+
         initListener();
     }
 
@@ -113,51 +127,89 @@ public class OrderDataActivity extends BaseActivity<OrderDataPresenter> implemen
     public void initListener() {
         initTextSpan(mTvOrderTrend, "订单实时走势 ");
         initTextSpan(mTvOrderRank, "茶饮销售排行 ");
-        passer = SpannableUtil.getBuilder(this, StringUtil.frontCommaValue(8076)).append("单").setTextSize(17).build();
-        mTvOrderNum.setText(passer);
-        mTvTodayNum.setText(StringUtil.frontCommaValue(8078));
-        mTvWeekNum.setText(StringUtil.frontCommaValue(18262));
-
-
-        initChart(chart);
-
-
         mRcyRank.setHasFixedSize(true);
         mRcyRank.setLayoutManager(new LinearLayoutManager(this));
         orderDataAdapter = new OrderDataAdapter(new ArrayList<>());
         mRcyRank.setAdapter(orderDataAdapter);
-        orderDataAdapter.setData(getData());
+
+        if (mPresenter != null) {
+            mPresenter.statisticorder(Preferences.getShopId());
+        }
+
+
+    }
+
+
+    @SuppressLint("ResourceType")
+    @Override
+    public void OnOrderDataSuccess(ShopStaticOrderEntity entity) {
+        if (entity != null) {
+            passer = SpannableUtil.getBuilder(this, StringUtil.frontCommaValue(entity.getToday_total())).append("单").setTextSize(17).build();
+            mTvOrderNum.setText(passer);
+            mTvTodayNum.setText(StringUtil.frontCommaValue(entity.getToday_total()));
+            mTvWeekNum.setText(StringUtil.frontCommaValue(entity.getThis_week_total()));
+            mTvtrunover.setText("今日营业额：¥" + StringUtil.frontCommaValue(entity.getTurnover()));
+            mTvWeek.setText("本周营业额：¥" + StringUtil.frontCommaValue(entity.getThis_week_turnover()));
+            if (entity.getToday_ratio() >= 0) {
+                mTvTodayUpDown.getShapeDrawableBuilder().setSolidColor(getColor(R.color.color_c2_19)).intoBackground();
+                mTvTodayUpDown.getTextColorBuilder().setTextColor(getColor(R.color.color_c2)).intoTextColor();
+                mTvTodayUpDown.setText("+" + entity.getToday_ratio() * 100 + "%");
+            } else {
+                mTvTodayUpDown.getShapeDrawableBuilder().setSolidColor(getColor(R.color.color_42_19)).intoBackground();
+                mTvTodayUpDown.getTextColorBuilder().setTextColor(getColor(R.color.color_42c)).intoTextColor();
+                mTvTodayUpDown.setText(entity.getToday_ratio() * 100 + "%");
+            }
+            if (entity.getThis_week_ratio() >=0) {
+                mTvWeekUpDown.getShapeDrawableBuilder().setSolidColor(getColor(R.color.color_c2_19)).intoBackground();
+                mTvWeekUpDown.getTextColorBuilder().setTextColor(getColor(R.color.color_c2)).intoTextColor();
+                mTvWeekUpDown.setText("+" + entity.getThis_week_ratio() * 100 + "%");
+            } else {
+                mTvWeekUpDown.getShapeDrawableBuilder().setSolidColor(getColor(R.color.color_42_19)).intoBackground();
+                mTvWeekUpDown.getTextColorBuilder().setTextColor(getColor(R.color.color_42c)).intoTextColor();
+                mTvWeekUpDown.setText(entity.getThis_week_ratio() * 100 + "%");
+            }
+
+            List<ShopStaticOrderEntity.TrendingBean> list = entity.getTrending();
+
+            initChart(chart, list);
+
+            List<ShopStaticOrderEntity.RankingBean> rankingBeanList = entity.getRanking();
+            orderDataAdapter.setData(rankingBeanList);
+        }
     }
 
 
     private XAxis xAxis;                //X轴
     private YAxis leftYAxis;            //左侧Y轴
     private YAxis rightYaxis;           //右侧Y轴
-    private Legend legend;              //图例
 
 
-    public void initChart(LineChart lineChart) {
+    public void initChart(LineChart lineChart, List<ShopStaticOrderEntity.TrendingBean> trendingBeanList) {
         /***图表设置***/
+
+        lineChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+
+            }
+
+            @Override
+            public void onNothingSelected() {
+
+            }
+        });
         //是否展示网格线
         lineChart.setDrawGridBackground(false);
-        //设置是否可以缩放
-        lineChart.setScaleEnabled(false);
-
-        Description description = new Description();
-//        description.setText("需要展示的内容");
-        description.setEnabled(false);
-        lineChart.setDescription(description);
-
-        lineChart.setBackgroundColor(Color.WHITE);
+        lineChart.getDescription().setEnabled(false);
         //是否显示边界
         lineChart.setDrawBorders(false);
+        //设置是否可以缩放
+        lineChart.setScaleEnabled(true);
+        lineChart.setBackgroundColor(Color.WHITE);
         //是否可以拖动
-        lineChart.setDragEnabled(false);
+        lineChart.setDragEnabled(true);
         //是否有触摸事件
         lineChart.setTouchEnabled(true);
-        //设置XY轴动画效果
-        lineChart.animateY(2500);
-        lineChart.animateX(1500);
 
 
         /***XY轴的设置***/
@@ -170,122 +222,85 @@ public class OrderDataActivity extends BaseActivity<OrderDataPresenter> implemen
 
         //X轴设置显示位置在底部
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setAxisMinimum(0f);
+        xAxis.setDrawAxisLine(false);
+        xAxis.setDrawGridLines(false);  //显示X轴线
         xAxis.setGranularity(1f);
-        List<String> dataList = new ArrayList<>();
-        dataList.add("10");
-        dataList.add("12");
-        dataList.add("14");
-        dataList.add("16");
-        dataList.add("18");
-        dataList.add("20");
-        dataList.add("22");
-        dataList.add("24");
-
-        xAxis.setValueFormatter(new IAxisValueFormatter() {
-            @Override
-            public String getFormattedValue(float value, AxisBase axis) {
-                String tradeDate = dataList.get((int) value % dataList.size()).toString();
-                return tradeDate;
-            }
-        });
-
-
-        xAxis.setLabelCount(8, true);
-
+        xAxis.setAxisMinimum(00);
+        xAxis.setAxisMaximum(trendingBeanList.size() - 1);
+        xAxis.setLabelCount(10, false);
         leftYAxis.setAxisMinimum(0);
-        leftYAxis.setAxisMaximum(100);
-        leftYAxis.setLabelCount(6, true);
-
+        leftYAxis.setGranularity(1f);
+        leftYAxis.setDrawGridLines(false);//显示Y轴线
+        leftYAxis.setDrawAxisLine(false);
         /***折线图例 标签 设置***/
 
         Typeface tf = Typeface.createFromAsset(getAssets(), "OpenSans-Bold.ttf");
 
-        legend = lineChart.getLegend();
-        //设置显示类型，LINE CIRCLE SQUARE EMPTY 等等 多种方式，查看LegendForm 即可
-        legend.setForm(Legend.LegendForm.LINE);
-        legend.setTextSize(12f);
-        legend.setTextColor(getColor(R.color.color_17));
-        legend.setTypeface(tf);
-        //显示位置 左下方
-        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
-        //是否绘制在图表里面
-        legend.setDrawInside(false);
 
-        List<String> list = new ArrayList<>();
-        list.add("20");
-        list.add("20");
-        list.add("30");
-        list.add("40");
-        list.add("50");
-        list.add("60");
-        list.add("70");
-        list.add("80");
-        List<String> list2 = new ArrayList<>();
-        list2.add("40");
-        list2.add("20");
-        list2.add("20");
-        list2.add("60");
-        list2.add("30");
-        list2.add("50");
-        list2.add("30");
-        list2.add("50");
-        showLineChart(list, "今日订单", getColor(R.color.color_f9));
-        addLine(list2, "昨日订单", getColor(R.color.color_42));
+        Legend l = lineChart.getLegend();
+        l.setTypeface(tf);
+        l.setTextColor(getColor(R.color.color_17));
+        l.setForm(Legend.LegendForm.LINE);
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+
+        l.setDrawInside(false);
+
         MyMarkerView mv = new MyMarkerView(this, R.layout.custom_marker_view);
         mv.setChartView(lineChart); // For bounds control
         lineChart.setMarker(mv); // Set the marker to the chart
+
+
+        setLineChartData(lineChart,trendingBeanList);
+
     }
 
 
-    /**
-     * 展示曲线
-     *
-     * @param dataList 数据集合
-     * @param name     曲线名称
-     * @param color    曲线颜色
-     */
-    public void showLineChart(List<String> dataList, String name, int color) {
-        List<Entry> entries = new ArrayList<>();
+    public void setLineChartData(LineChart lineChart, List<ShopStaticOrderEntity.TrendingBean> dataList) {
+        List<Entry> valsComp1  = new ArrayList<>();
+        List<Entry> valsComp2 = new ArrayList<>();
         for (int i = 0; i < dataList.size(); i++) {
-            float data = Float.parseFloat(dataList.get(i));
+            float data = Float.parseFloat(dataList.get(i).getSales_volume());
             /**
              * 在此可查看 Entry构造方法，可发现 可传入数值 Entry(float x, float y)
              * 也可传入Drawable， Entry(float x, float y, Drawable icon) 可在XY轴交点 设置Drawable图像展示
              */
             Entry entry = new Entry(i, data);
-            entries.add(entry);
+            valsComp1.add(entry);
         }
-        // 每一个LineDataSet代表一条线
-        LineDataSet lineDataSet = new LineDataSet(entries, name);
-        initLineDataSet(lineDataSet, color, LineDataSet.Mode.LINEAR);
-        LineData lineData = new LineData(lineDataSet);
-        chart.setData(lineData);
 
-    }
-
-    /**
-     * 添加曲线
-     */
-    private void addLine(List<String> dataList, String name, int color) {
-        List<Entry> entries = new ArrayList<>();
         for (int i = 0; i < dataList.size(); i++) {
-            float data = Float.parseFloat(dataList.get(i));
+            float data = Float.parseFloat(dataList.get(i).getYesterday_sales_volume());
             /**
              * 在此可查看 Entry构造方法，可发现 可传入数值 Entry(float x, float y)
              * 也可传入Drawable， Entry(float x, float y, Drawable icon) 可在XY轴交点 设置Drawable图像展示
              */
-            Entry entry = new Entry(i, (float) data);
-            entries.add(entry);
+            Entry entry = new Entry(i, data);
+            valsComp2.add(entry);
         }
-        // 每一个LineDataSet代表一条线
-        LineDataSet lineDataSet = new LineDataSet(entries, name);
-        initLineDataSet(lineDataSet, color, LineDataSet.Mode.LINEAR);
-        chart.getLineData().addDataSet(lineDataSet);
-        chart.invalidate();
+
+
+        LineDataSet setComp1 = new LineDataSet(valsComp1, "今日订单");
+        setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);
+        setComp1.setColor(getResources().getColor(R.color.color_f9));
+        setComp1.setDrawCircles(false);
+        setComp1.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
+        LineDataSet setComp2 = new LineDataSet(valsComp2, "昨日订单");
+        setComp2.setAxisDependency(YAxis.AxisDependency.LEFT);
+        setComp2.setDrawCircles(true);
+        setComp2.setColor(getResources().getColor(R.color.color_42));
+        setComp2.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
+
+        List<ILineDataSet> dataSets = new ArrayList<>();
+        dataSets.add(setComp1);
+        dataSets.add(setComp2);
+        LineData lineData = new LineData(dataSets);
+        lineChart.setData(lineData);
+        lineChart.invalidate();
+
     }
+
+
 
     /**
      * 曲线初始化设置 一个LineDataSet 代表一条曲线
@@ -313,16 +328,10 @@ public class OrderDataActivity extends BaseActivity<OrderDataPresenter> implemen
     }
 
 
-    public List<OrderDataEntity> getData() {
-        List<OrderDataEntity> list = new ArrayList<>();
-        list.add(new OrderDataEntity("1"));
-        list.add(new OrderDataEntity("2"));
-        list.add(new OrderDataEntity("3"));
-        list.add(new OrderDataEntity("4"));
-        list.add(new OrderDataEntity("5"));
-        return list;
-    }
+    @Override
+    public void onNetError() {
 
+    }
 
     public Activity getActivity() {
         return this;

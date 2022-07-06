@@ -9,6 +9,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -18,7 +19,10 @@ import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.merchant.drifting.R;
 import com.merchant.drifting.data.entity.ApplicationRecordEntity;
+import com.merchant.drifting.data.event.GoodsAllEvent;
 import com.merchant.drifting.data.event.GoodsOnOffEvent;
+import com.merchant.drifting.data.event.GoodsShelfEvent;
+import com.merchant.drifting.data.event.SelectAllEvent;
 import com.merchant.drifting.di.component.DaggerCommodityManagementComponent;
 import com.merchant.drifting.mvp.contract.CommodityManagementContract;
 import com.merchant.drifting.mvp.presenter.CommodityManagementPresenter;
@@ -33,6 +37,8 @@ import com.rb.core.tab.view.indicator.transition.OnTransitionTextListener;
 import com.rb.core.tab.view.viewpager.SViewPager;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,12 +67,12 @@ public class CommodityManagementActivity extends BaseActivity<CommodityManagemen
     RelativeLayout mRlTab;
     @BindView(R.id.rl_tab2)
     RelativeLayout mRlTab2;
-    @BindView(R.id.rl_bottoms)
-    RelativeLayout mRlBottom;
-
+    @BindView(R.id.tv_all)
+    TextView mTvAll;
     private IndicatorViewPager indicatorViewPager;
     private CommodityManagementAdapter adapter;
     private List<ApplicationRecordEntity> mTabTitle;
+    private boolean isEdit = true;
 
     public static void start(Context context, boolean closePage) {
         Intent intent = new Intent(context, CommodityManagementActivity.class);
@@ -110,10 +116,13 @@ public class CommodityManagementActivity extends BaseActivity<CommodityManagemen
         adapter.setData(mTabTitle);
         if (indicatorViewPager != null) {
             indicatorViewPager.setAdapter(adapter);
+            viewPager.setOffscreenPageLimit(mTabTitle.size() - 1);
             if (adapter != null && adapter.getCount() > 0) {
                 indicatorViewPager.setCurrentItem(0, false);
             }
         }
+
+
     }
 
 
@@ -121,7 +130,7 @@ public class CommodityManagementActivity extends BaseActivity<CommodityManagemen
         mTabTitle = new ArrayList();
         mTabTitle.clear();
         mTabTitle.add(new ApplicationRecordEntity("在售中", 1));
-        mTabTitle.add(new ApplicationRecordEntity("已下架", 2));
+        mTabTitle.add(new ApplicationRecordEntity("已下架", 0));
     }
 
 
@@ -130,7 +139,7 @@ public class CommodityManagementActivity extends BaseActivity<CommodityManagemen
     }
 
 
-    @OnClick({R.id.toolbar_back, R.id.tv_choice, R.id.tv_cancel, R.id.iv_right})
+    @OnClick({R.id.toolbar_back, R.id.tv_choice, R.id.tv_cancel, R.id.iv_right, R.id.tv_all})
     public void onClick(View view) {
         if (!ClickUtil.isFastClick(view.getId())) {
             switch (view.getId()) {
@@ -143,8 +152,13 @@ public class CommodityManagementActivity extends BaseActivity<CommodityManagemen
                 case R.id.tv_cancel:  //取消
                     setTab(false);
                     break;
+                case R.id.tv_all:  //全选
+                    GoodsAllEvent goodsAllEvent = new GoodsAllEvent();
+                    goodsAllEvent.setSelected(true);
+                    EventBus.getDefault().post(goodsAllEvent);
+                    break;
                 case R.id.iv_right:  //申请商品
-                    ApplyGoodsActivity.start(this,false);
+                    ApplyGoodsActivity.start(this, false);
                     break;
             }
         }
@@ -155,15 +169,46 @@ public class CommodityManagementActivity extends BaseActivity<CommodityManagemen
         for (int i = 0; i < tabLayout.getChildCount(); i++) {
             tabLayout.getChildAt(i).setClickable(status ? false : true);
         }
-
         mRlTab.setVisibility(status ? View.GONE : View.VISIBLE);
         mRlTab2.setVisibility(status ? View.VISIBLE : View.GONE);
-        mRlBottom.setVisibility(status ? View.VISIBLE : View.GONE);
         GoodsOnOffEvent goodsOnOffEvent = new GoodsOnOffEvent();
         goodsOnOffEvent.setEdit(status);
         EventBus.getDefault().post(goodsOnOffEvent);
     }
 
+
+    /**
+     * 删除Event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void GoodsShelfEvent(GoodsShelfEvent event) {
+        if (event != null) {
+            viewPager.setCanScroll(true);
+            for (int i = 0; i < tabLayout.getChildCount(); i++) {
+                tabLayout.getChildAt(i).setClickable(true);
+            }
+            mRlTab.setVisibility(View.VISIBLE);
+            mRlTab2.setVisibility(View.GONE);
+        }
+    }
+
+
+    /**
+     * 选中
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void SelectAllEvent(SelectAllEvent event) {
+        if (event != null) {
+            boolean selectedall=event.isSelectedall();
+            if (selectedall){
+                isEdit=true;
+                mTvAll.setText("全选");
+            }else {
+                isEdit=false;
+                mTvAll.setText("取消全选");
+            }
+        }
+    }
 
     @Override
     public void showMessage(@NonNull String message) {

@@ -1,12 +1,22 @@
 package com.merchant.drifting.mvp.presenter;
 import android.app.Application;
+
+import com.jess.arms.base.BaseEntity;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.http.imageloader.ImageLoader;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
+
 import javax.inject.Inject;
+
+import com.jess.arms.utils.RxLifecycleUtils;
 import com.merchant.drifting.mvp.contract.OrderDataContract;
+import com.merchant.drifting.mvp.model.entity.ShopStaticOrderEntity;
 
 /**
  * ================================================
@@ -35,6 +45,35 @@ public class OrderDataPresenter extends BasePresenter<OrderDataContract.Model, O
     public OrderDataPresenter (OrderDataContract.Model model, OrderDataContract.View rootView) {
         super(model, rootView);
     }
+
+    /**
+     *订单数据
+     */
+    public void statisticorder(String shop_id) {
+        mModel.statisticorder(shop_id).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseEntity<ShopStaticOrderEntity>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseEntity<ShopStaticOrderEntity> baseEntity) {
+                        if (mRootView != null) {
+                            if (baseEntity.getCode() == 200) {
+                                mRootView.OnOrderDataSuccess(baseEntity.getData());
+                            }else {
+                                mRootView.showMessage(baseEntity.getMsg());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        if (mRootView != null) {
+                            mRootView.onNetError();
+                        }
+                    }
+                });
+    }
+
 
     @Override
     public void onDestroy() {

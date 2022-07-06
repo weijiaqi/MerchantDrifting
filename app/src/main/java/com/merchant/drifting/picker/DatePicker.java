@@ -58,9 +58,9 @@ public class DatePicker extends ModalDialog {
     @Override
     protected void onOk() {
         if (onDatePickedListener != null) {
-            int year = wheelLayout.getSelectedYear();
-            int month = wheelLayout.getSelectedMonth();
-            int day = wheelLayout.getSelectedDay();
+            String year = wheelLayout.getSelectedYear()+"";
+            String month = wheelLayout.getSelectedMonth()<10?"0"+wheelLayout.getSelectedMonth():wheelLayout.getSelectedMonth()+"";
+            String day = wheelLayout.getSelectedDay()<10?"0"+wheelLayout.getSelectedDay():wheelLayout.getSelectedDay()+"";
             onDatePickedListener.onDatePicked(year, month, day);
         }
     }

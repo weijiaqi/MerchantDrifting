@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import com.jess.arms.base.BaseRecyclerHolder;
 import com.merchant.drifting.R;
 import com.merchant.drifting.mvp.model.entity.OrderDataEntity;
+import com.merchant.drifting.mvp.model.entity.ShopStaticOrderEntity;
+import com.merchant.drifting.util.TextUtil;
 import com.merchant.drifting.view.ZzHorizontalProgressBar;
 
 
@@ -23,6 +25,12 @@ public class OrderDataHolder extends BaseRecyclerHolder {
     ZzHorizontalProgressBar progressBar;
     @BindView(R.id.tv_rank)
     TextView mTvRank;
+    @BindView(R.id.tv_title)
+    TextView nTvTitle;
+    @BindView(R.id.tv_num)
+     TextView mTvNum;
+
+
     private Context context;
 
     public OrderDataHolder(View itemView) {
@@ -31,7 +39,7 @@ public class OrderDataHolder extends BaseRecyclerHolder {
     }
 
 
-    public void setData(@NonNull List<OrderDataEntity> listBeanList, int position) {
+    public void setData(@NonNull List<ShopStaticOrderEntity.RankingBean> listBeanList, int position) {
         if (position == 0) {
             mTvRank.setText("TOP1");
             mTvRank.setTextColor(context.getColor(R.color.color_c2));
@@ -53,6 +61,9 @@ public class OrderDataHolder extends BaseRecyclerHolder {
             mTvRank.setTextColor(context.getColor(R.color.color_17));
             progressBar.setGradientColor(context.getColor(R.color.color_42_99), context.getColor(R.color.color_42_99));
         }
-        progressBar.setProgress(80);
+        progressBar.setMax(listBeanList.get(0).getSales_volume());
+        progressBar.setProgress(listBeanList.get(position).getSales_volume());
+        TextUtil.setText(mTvNum,listBeanList.get(position).getSales_volume()+"");
+        TextUtil.setText(nTvTitle,listBeanList.get(position).getSku_name());
     }
 }

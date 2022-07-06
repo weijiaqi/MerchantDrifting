@@ -94,7 +94,7 @@ dependencies {
     implementation rootProject.ext.dependencies["autosize"]
     //图片选择器
     implementation 'io.github.lucksiege:pictureselector:v3.10.2'
-
+    implementation 'io.github.lucksiege:ucrop:v3.10.2'
     //view
     annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
         exclude module: 'annotation'
@@ -106,6 +106,6 @@ dependencies {
     //Google
     implementation rootProject.ext.dependencies["zxing"]
     //曲线图
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation(name: 'BaiduLBS_AndroidSDK_Lib', ext: 'aar')
 }

@@ -1,4 +1,5 @@
 package com.merchant.drifting.mvp.presenter;
+
 import android.app.Application;
 
 import com.jess.arms.base.BaseEntity;
@@ -32,7 +33,7 @@ import com.merchant.drifting.util.ViewUtil;
  * ================================================
  */
 @ActivityScope
-public class SystemNotificationPresenter extends BasePresenter<SystemNotificationContract.Model, SystemNotificationContract.View>{
+public class SystemNotificationPresenter extends BasePresenter<SystemNotificationContract.Model, SystemNotificationContract.View> {
     @Inject
     RxErrorHandler mErrorHandler;
     @Inject
@@ -43,7 +44,7 @@ public class SystemNotificationPresenter extends BasePresenter<SystemNotificatio
     AppManager mAppManager;
 
     @Inject
-    public SystemNotificationPresenter (SystemNotificationContract.Model model, SystemNotificationContract.View rootView) {
+    public SystemNotificationPresenter(SystemNotificationContract.Model model, SystemNotificationContract.View rootView) {
         super(model, rootView);
     }
 
@@ -63,7 +64,7 @@ public class SystemNotificationPresenter extends BasePresenter<SystemNotificatio
                     public void onNext(BaseEntity<SystemNotificationEntity> baseEntity) {
                         if (mRootView != null) {
                             if (baseEntity.getCode() == 200) {
-                                if (baseEntity.getData()== null ) {
+                                if (baseEntity.getData() == null || baseEntity.getData().getList().size() == 0) {
                                     mRootView.loadState(ViewUtil.NOT_DATA);
                                     mRootView.loadFinish(loadType, true);
                                 } else {

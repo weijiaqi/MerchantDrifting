@@ -7,6 +7,15 @@ public class OrderRecordEntity {
     private String sku_name;
     private String sales_volume;
     private double price;
+     private String small_image;
+
+    public String getSmall_image() {
+        return small_image;
+    }
+
+    public void setSmall_image(String small_image) {
+        this.small_image = small_image;
+    }
 
     public Integer getSku_id() {
         return sku_id;

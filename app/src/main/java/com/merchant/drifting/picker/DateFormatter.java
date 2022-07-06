@@ -27,7 +27,7 @@ public interface DateFormatter {
      * @param year 年份数字
      * @return 格式化后最终显示的年份字符串
      */
-    String formatYear(int year);
+    String formatYear(String year);
 
     /**
      * 格式化月份
@@ -35,7 +35,7 @@ public interface DateFormatter {
      * @param month 月份数字
      * @return 格式化后最终显示的月份字符串
      */
-    String formatMonth(int month);
+    String formatMonth(String month);
 
     /**
      * 格式化日子
@@ -43,7 +43,7 @@ public interface DateFormatter {
      * @param day 日子数字
      * @return 格式化后最终显示的日子字符串
      */
-    String formatDay(int day);
+    String formatDay(String day);
 
 }
 

@@ -358,7 +358,7 @@ public class ApplicationMaterialsActivity extends BaseActivity<ApplicationMateri
     @Override
     public void OnInfoEditSuccess(InfoEditEntity entity) {
         if (entity != null) {
-            if (entity.getStatus() == 0) {  //审核中
+            if (entity.getStatus() == 0 ||entity.getStatus() ==1) {  //审核中
                 mTvSubmit.setVisibility(View.GONE);
                 mEtName.setEnabled(false);
                 mEtPhone.setEnabled(false);

@@ -5,9 +5,8 @@ import com.jess.arms.di.component.AppComponent;
 import com.merchant.drifting.di.module.AddBankCardActivityModule;
 
 import com.jess.arms.di.scope.ActivityScope;
-import com.merchant.drifting.mvp.contract.AccountBalanceContract;
 import com.merchant.drifting.mvp.contract.AddBankCardActivityContract;
-import com.merchant.drifting.mvp.ui.activity.index.AddBankCardActivityActivity;
+import com.merchant.drifting.mvp.ui.activity.index.AddBankCardActivity;
 
 /**
  * ================================================
@@ -25,7 +24,7 @@ import com.merchant.drifting.mvp.ui.activity.index.AddBankCardActivityActivity;
 @Component(modules = AddBankCardActivityModule.class,dependencies = AppComponent.class)
 public interface AddBankCardActivityComponent {
 
-    void inject(AddBankCardActivityActivity activity);
+    void inject(AddBankCardActivity activity);
 
     @Component.Builder
     interface Builder {

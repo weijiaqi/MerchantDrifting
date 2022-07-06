@@ -23,7 +23,7 @@ import com.merchant.drifting.picker.dialog.DialogStyle;
 public final class DialogConfig {
     private static int dialogStyle = DialogStyle.Default;
     private static DialogColor dialogColor = new DialogColor();
-
+    private static int type;
     private DialogConfig() {
         super();
     }
@@ -40,6 +40,16 @@ public final class DialogConfig {
     public static void setDialogColor(DialogColor color) {
         dialogColor = color;
     }
+
+
+    public static void setDialogType(int types) {
+        type = types;
+    }
+
+    public static int getDialogType() {
+        return type;
+    }
+
 
     public static DialogColor getDialogColor() {
         if (dialogColor == null) {

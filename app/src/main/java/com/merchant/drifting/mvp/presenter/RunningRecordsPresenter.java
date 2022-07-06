@@ -51,11 +51,11 @@ public class RunningRecordsPresenter extends BasePresenter<RunningRecordsContrac
     /**
      * 流水记录
      */
-    public void businessbill(int search_type, String date, int page, int limit,boolean loadType) {
+    public void businessbill( String shopid, int search_type, String date, int page, int limit,boolean loadType) {
         if (mRootView != null) {
             mRootView.onloadStart();
         }
-        mModel.businessbill(search_type, date,page, limit).subscribeOn(Schedulers.io())
+        mModel.businessbill(shopid,search_type, date,page, limit).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
                 .subscribe(new ErrorHandleSubscriber<BaseEntity<BusinessBillEntity>>(mErrorHandler) {
@@ -63,7 +63,7 @@ public class RunningRecordsPresenter extends BasePresenter<RunningRecordsContrac
                     public void onNext(BaseEntity<BusinessBillEntity> baseEntity) {
                         if (mRootView != null) {
                             if (baseEntity.getCode() == 200) {
-                                if (baseEntity.getData() == null) {
+                                if (baseEntity.getData() == null || baseEntity.getData().getList().size()==0) {
                                     mRootView.loadState(ViewUtil.NOT_DATA);
                                     mRootView.loadFinish(loadType, true);
                                 } else {

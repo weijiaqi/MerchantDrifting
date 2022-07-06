@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true">
+
+    <include layout="@layout/include_title" />
+
+
+    <com.merchant.drifting.view.CustomScrollVIew
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:fadingEdge="none"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="360dp"
+
+                android:background="@color/color_f4">
+
+                <TextView
+                    android:id="@+id/tv_add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="+添加商品图片"
+                    android:textColor="@color/color_97"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:id="@+id/iv_pic"
+                    android:scaleType="fitXY"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </FrameLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="@color/color_f0" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="15dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="名称"
+                        android:textColor="@color/color_17"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/et_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="18dp"
+                        android:layout_toRightOf="@+id/tv_name"
+                        android:background="@null"
+                        android:hint="杨枝甘露"
+                        android:textColor="@color/color_17"
+                        android:textColorHint="@color/color_cc_d4"
+                        android:textCursorDrawable="@drawable/edit_cursor_color"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/tv_introduce"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="介绍"
+                        android:textColor="@color/color_17"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/et_introduce"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="18dp"
+                        android:layout_toRightOf="@+id/tv_introduce"
+                        android:background="@null"
+                        android:hint="介绍"
+                        android:textColor="@color/color_17"
+                        android:textColorHint="@color/color_cc_d4"
+                        android:textCursorDrawable="@drawable/edit_cursor_color"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/tv_weight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="份量"
+                        android:textColor="@color/color_17"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+
+                    <EditText
+                        android:id="@+id/et_weight"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="18dp"
+                        android:layout_marginEnd="100dp"
+                        android:layout_toRightOf="@+id/tv_weight"
+                        android:background="@null"
+                        android:hint="100"
+                        android:inputType="number"
+                        android:textColor="@color/color_17"
+                        android:textColorHint="@color/color_cc_d4"
+                        android:textCursorDrawable="@drawable/edit_cursor_color"
+                        android:textSize="14sp" />
+
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:text="ml"
+                        android:textColor="@color/color_17"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="小料"
+                        android:textColor="@color/color_17"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+
+                    <TextView
+                        android:id="@+id/add_scrap"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:text="+添加标签"
+                        android:textColor="@color/color_42"
+                        android:textSize="14sp" />
+
+                </RelativeLayout>
+
+
+                <com.merchant.drifting.view.flowlayout.TagFlowLayout
+                    android:id="@+id/scrap_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="50dp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="温度"
+                        android:textColor="@color/color_17"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+
+                    <TextView
+                        android:id="@+id/tv_temperature"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:text="+添加标签"
+                        android:textColor="@color/color_42"
+                        android:textSize="14sp" />
+
+                </RelativeLayout>
+
+
+                <com.merchant.drifting.view.flowlayout.TagFlowLayout
+                    android:id="@+id/temperature_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="50dp" />
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="甜度"
+                        android:textColor="@color/color_17"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+
+                    <TextView
+                        android:id="@+id/tv_sweetness"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:text="+添加标签"
+                        android:textColor="@color/color_42"
+                        android:textSize="14sp" />
+
+                </RelativeLayout>
+
+
+                <com.merchant.drifting.view.flowlayout.TagFlowLayout
+                    android:id="@+id/sweetness_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="50dp" />
+
+                <RelativeLayout
+                    android:layout_marginBottom="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/tv_offer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="报价"
+                        android:textColor="@color/color_17"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+
+                    <EditText
+                        android:id="@+id/et_offer"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="18dp"
+                        android:layout_marginEnd="100dp"
+                        android:layout_toRightOf="@+id/tv_offer"
+                        android:background="@null"
+                        android:hint="10"
+                        android:inputType="number|numberDecimal"
+                        android:textColor="@color/color_17"
+                        android:textColorHint="@color/color_cc_d4"
+                        android:textCursorDrawable="@drawable/edit_cursor_color"
+                        android:textSize="14sp" />
+
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:text="元"
+                        android:textColor="@color/color_17"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+
+                <com.hjq.shape.view.ShapeTextView
+                    android:id="@+id/tv_cofim_the_application"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:layout_marginHorizontal="46dp"
+                    android:layout_marginTop="70dp"
+                    android:layout_marginBottom="24dp"
+                    android:gravity="center"
+                    android:text="确 认 申 请"
+                    android:textColor="@color/white"
+                    app:shape_angle="270"
+                    app:shape_endColor="@color/color_ff"
+                    app:shape_radius="100dp"
+                    app:shape_startColor="@color/color_f9" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </com.merchant.drifting.view.CustomScrollVIew>
+
+</RelativeLayout>

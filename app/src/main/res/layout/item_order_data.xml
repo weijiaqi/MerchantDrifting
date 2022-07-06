@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
         android:layout_toRightOf="@+id/tv_rank"
-        android:text="杨枝甘露"
+        android:text=""
         android:textColor="@color/color_17"
         android:textSize="13sp" />
 

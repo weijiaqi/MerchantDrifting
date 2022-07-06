@@ -1,6 +1,8 @@
 package com.merchant.drifting.util;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
@@ -72,8 +74,8 @@ public class GlideUtil {
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)//关键代码，加载原始大小
                     .format(DecodeFormat.PREFER_RGB_565)//设置为这种格式去掉透明度通道，可以减少内存占有
-                    .placeholder(R.color.transparent)
-                    .error(R.color.transparent);
+                    .placeholder(R.drawable.icon_home_page)
+                    .error(R.drawable.icon_home_page);
             Glide.with(context)
                     .load(url)
                     .apply(options)
@@ -84,10 +86,10 @@ public class GlideUtil {
     }
 
 
-
     /**
      * 3d图片保存
-     *  添加disallowHardwareConfig 解决保存图片闪退问题
+     * 添加disallowHardwareConfig 解决保存图片闪退问题
+     *
      * @param context
      * @param url
      * @param imageView
@@ -138,8 +140,6 @@ public class GlideUtil {
     }
 
 
-
-
     /**
      * 加载drawable-gif
      *
@@ -180,7 +180,6 @@ public class GlideUtil {
     }
 
 
-
     /**
      * 加载圆形头像
      *
@@ -195,7 +194,7 @@ public class GlideUtil {
                     .circleCropTransform()
                     .placeholder(R.drawable.icon_head)
                     .error(R.drawable.icon_head)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .skipMemoryCache(false)
                     .dontAnimate();
 
@@ -208,7 +207,6 @@ public class GlideUtil {
             imageView.setImageResource(R.drawable.icon_head);
         }
     }
-
 
 
     /**
@@ -237,6 +235,28 @@ public class GlideUtil {
         } else {
             imageView.setImageResource(R.drawable.icon_pic);
         }
+    }
+
+
+    public static boolean assertValidRequest(Context context) {
+        if (context instanceof Activity) {
+            Activity activity = (Activity) context;
+            return !isDestroy(activity);
+        } else if (context instanceof ContextWrapper) {
+            ContextWrapper contextWrapper = (ContextWrapper) context;
+            if (contextWrapper.getBaseContext() instanceof Activity) {
+                Activity activity = (Activity) contextWrapper.getBaseContext();
+                return !isDestroy(activity);
+            }
+        }
+        return true;
+    }
+
+    private static boolean isDestroy(Activity activity) {
+        if (activity == null) {
+            return true;
+        }
+        return activity.isFinishing() || activity.isDestroyed();
     }
 
 }

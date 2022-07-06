@@ -246,19 +246,26 @@ public class DateWheelLayout extends BaseWheelLayout {
         yearWheelView.setFormatter(new WheelFormatter() {
             @Override
             public String formatItem(@NonNull Object value) {
-                return dateFormatter.formatYear((Integer) value);
+
+                return dateFormatter.formatYear(String.valueOf(value));
             }
         });
         monthWheelView.setFormatter(new WheelFormatter() {
             @Override
             public String formatItem(@NonNull Object value) {
-                return dateFormatter.formatMonth((Integer) value);
+                if (Integer.parseInt(String.valueOf(value)) < 10) {
+                    value = "0" + value;
+                }
+                return dateFormatter.formatMonth(String.valueOf(value));
             }
         });
         dayWheelView.setFormatter(new WheelFormatter() {
             @Override
             public String formatItem(@NonNull Object value) {
-                return dateFormatter.formatDay((Integer) value);
+                if (Integer.parseInt(String.valueOf(value)) < 10) {
+                    value = "0" + value;
+                }
+                return dateFormatter.formatDay(String.valueOf(value));
             }
         });
     }

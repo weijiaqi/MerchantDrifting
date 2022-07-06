@@ -22,6 +22,7 @@ import com.merchant.drifting.R;
 import com.merchant.drifting.data.event.MessageReadEvent;
 import com.merchant.drifting.di.component.DaggerNewsComponent;
 import com.merchant.drifting.mvp.contract.NewsContract;
+import com.merchant.drifting.mvp.model.entity.MessageUnreadEntity;
 import com.merchant.drifting.mvp.presenter.NewsPresenter;
 import com.merchant.drifting.mvp.ui.activity.index.ApplicationRecordActivity;
 import com.merchant.drifting.mvp.ui.activity.index.SystemNotificationActivity;
@@ -63,6 +64,8 @@ public class NewsActivity extends BaseActivity<NewsPresenter> implements NewsCon
     TextView mTvOrderTime;
     private MessageDialog messageDialog;
 
+    private MessageUnreadEntity messageUnreadEntity;
+
     public static void start(Context context, boolean closePage) {
         Intent intent = new Intent(context, NewsActivity.class);
         context.startActivity(intent);
@@ -95,22 +98,23 @@ public class NewsActivity extends BaseActivity<NewsPresenter> implements NewsCon
     public void initListener() {
         RequestUtil.create().messageunread(entity -> {
             if (entity.getCode() == 200) {
-                mIvSystemUnread.setVisibility(entity.getData().getSys_msg() != 0 ? View.VISIBLE : View.GONE);
-                mIvOrderUnread.setVisibility(entity.getData().getOrder_msg() != 0 ? View.VISIBLE : View.GONE);
-                if (!TextUtils.isEmpty(entity.getData().getSys_title())) {
-                    mTvSystemDsec.setText(entity.getData().getSys_title());
+                messageUnreadEntity = entity.getData();
+                mIvSystemUnread.setVisibility(messageUnreadEntity.getSys_msg() != 0 ? View.VISIBLE : View.GONE);
+                mIvOrderUnread.setVisibility(messageUnreadEntity.getOrder_msg() != 0 ? View.VISIBLE : View.GONE);
+                if (!TextUtils.isEmpty(messageUnreadEntity.getSys_title())) {
+                    mTvSystemDsec.setText(messageUnreadEntity.getSys_title());
                 }
-                if (!TextUtils.isEmpty(entity.getData().getOrder_title())) {
-                    mTvOrderDsec.setText(entity.getData().getOrder_title());
+                if (!TextUtils.isEmpty(messageUnreadEntity.getOrder_title())) {
+                    mTvOrderDsec.setText(messageUnreadEntity.getOrder_title());
                 }
-                if (entity.getData().getSys_created_at() != 0 || entity.getData().getOrder_created_at() != 0) {
+                if (messageUnreadEntity.getSys_created_at() != 0 || messageUnreadEntity.getOrder_created_at() != 0) {
                     mIvRight.setImageResource(R.drawable.edit_message);
                     mIvRight.setVisibility(View.VISIBLE);
-                    if (entity.getData().getSys_created_at() != 0) {
-                        mTvSystemTime.setText(DateUtil.getShortTime(entity.getData().getSys_created_at() + ""));
+                    if (messageUnreadEntity.getSys_created_at() != 0) {
+                        mTvSystemTime.setText(DateUtil.getShortTime(messageUnreadEntity.getSys_created_at() + ""));
                     }
-                    if (entity.getData().getOrder_created_at() != 0) {
-                        mTvOrderTime.setText(DateUtil.getShortTime(entity.getData().getOrder_created_at() + ""));
+                    if (messageUnreadEntity.getOrder_created_at() != 0) {
+                        mTvOrderTime.setText(DateUtil.getShortTime(messageUnreadEntity.getOrder_created_at() + ""));
                     }
                 }
             }
@@ -149,10 +153,22 @@ public class NewsActivity extends BaseActivity<NewsPresenter> implements NewsCon
                     });
                     break;
                 case R.id.rl_system:
-                    SystemNotificationActivity.start(this, 1, false);
+                    if (messageUnreadEntity != null) {
+                        if (messageUnreadEntity.getSys_msg() != 0) {
+                            mIvSystemUnread.setVisibility(View.GONE);
+                        } else {
+                            SystemNotificationActivity.start(this, 1, false);
+                        }
+                    }
                     break;
                 case R.id.rl_order:
-                    SystemNotificationActivity.start(this, 2, false);
+                    if (messageUnreadEntity != null) {
+                        if (messageUnreadEntity.getOrder_msg() != 0) {
+                            mIvOrderUnread.setVisibility(View.GONE);
+                        } else {
+                            SystemNotificationActivity.start(this, 2, false);
+                        }
+                    }
                     break;
             }
         }

@@ -5,6 +5,7 @@ import android.util.SparseArray;
 import com.jess.arms.base.BaseEntity;
 import com.jess.arms.base.BaseObserver;
 import com.merchant.drifting.app.api.ApiProxy;
+import com.merchant.drifting.mvp.model.entity.BusinessBalanceEntity;
 import com.merchant.drifting.mvp.model.entity.HaveShopEntity;
 import com.merchant.drifting.mvp.model.entity.MessageUnreadEntity;
 import com.merchant.drifting.util.callback.BaseDataCallBack;
@@ -135,6 +136,76 @@ public class RequestUtil {
                     }
                 });
     }
+
+
+
+
+    /**
+     * 我的余额
+     *
+     * @param callBack
+     */
+    public void balance( String shopid,  BaseDataCallBack<BusinessBalanceEntity> callBack) {
+        ApiProxy.getApiService().balance(shopid)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new BaseObserver<BaseEntity<BusinessBalanceEntity>>() {
+
+                    @Override
+                    public void onSubscribe(Disposable disposable) {
+                        mDisposables.put(mRequestCount++, disposable);
+                    }
+
+                    @Override
+                    public void onNext(BaseEntity<BusinessBalanceEntity> entity) {
+                        if (callBack != null) {
+                            callBack.getData(entity);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (callBack != null) {
+                            callBack.getData(null);
+                        }
+                    }
+                });
+    }
+
+
+
+    /**
+     * 商品上下架
+     *
+     * @param callBack
+     */
+    public void goodsshelf(String shop_id,int selling,String sku_codes,  BaseDataCallBack callBack) {
+        ApiProxy.getApiService().goodsshelf(shop_id,selling,sku_codes)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new BaseObserver<BaseEntity>() {
+
+                    @Override
+                    public void onSubscribe(Disposable disposable) {
+                        mDisposables.put(mRequestCount++, disposable);
+                    }
+
+                    @Override
+                    public void onNext(BaseEntity entity) {
+                        if (callBack != null) {
+                            callBack.getData(entity);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (callBack != null) {
+                            callBack.getData(null);
+                        }
+                    }
+                });
+    }
+
 
 
     /**

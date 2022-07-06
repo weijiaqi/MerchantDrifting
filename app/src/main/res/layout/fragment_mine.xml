@@ -42,6 +42,7 @@
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/tv_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_name"
@@ -50,7 +51,7 @@
             android:drawableLeft="@drawable/call"
             android:drawablePadding="7dp"
             android:gravity="center_vertical"
-            android:text="+86 18235107237"
+            android:text=""
             android:textColor="@color/color_white_7f"
             android:textSize="12sp" />
 
@@ -64,6 +65,7 @@
         android:paddingTop="20dp">
 
         <RelativeLayout
+            android:id="@+id/rl_store_management"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="19dp"
@@ -98,6 +100,7 @@
 
 
         <RelativeLayout
+            android:id="@+id/rl_qualification_information"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="19dp"

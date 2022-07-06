@@ -16,7 +16,6 @@
 
     <FrameLayout
         android:id="@+id/frame"
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -35,22 +34,32 @@
 
 
     <com.hjq.shape.view.ShapeTextView
+        android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:paddingHorizontal="24dp"
         android:layout_marginTop="24dp"
+        android:paddingHorizontal="24dp"
         android:paddingVertical="5dp"
-        android:text="传递漂"
+        android:text=""
         android:textColor="@color/white"
         android:textStyle="bold"
         app:shape_radius="100dp"
         app:shape_solidColor="@color/color_42" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcy_shop"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="14dp" />
+        android:paddingStart="15dp"
+        android:paddingTop="14dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcy_shop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <include layout="@layout/layout_show_state"/>
+    </RelativeLayout>
+
+
 </LinearLayout>

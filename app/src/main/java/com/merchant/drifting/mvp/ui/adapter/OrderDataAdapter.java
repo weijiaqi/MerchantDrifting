@@ -7,14 +7,15 @@ import com.jess.arms.base.BaseRecyclerHolder;
 import com.merchant.drifting.R;
 import com.merchant.drifting.mvp.model.entity.OrderDataEntity;
 
+import com.merchant.drifting.mvp.model.entity.ShopStaticOrderEntity;
 import com.merchant.drifting.mvp.ui.holder.OrderDataHolder;
 
 import java.util.List;
 
 
-public class OrderDataAdapter extends BaseRecyclerAdapter<OrderDataEntity> {
+public class OrderDataAdapter extends BaseRecyclerAdapter<ShopStaticOrderEntity.RankingBean> {
 
-    public OrderDataAdapter(List<OrderDataEntity> infos) {
+    public OrderDataAdapter(List<ShopStaticOrderEntity.RankingBean> infos) {
         super(infos);
     }
 

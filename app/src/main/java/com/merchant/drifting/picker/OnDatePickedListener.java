@@ -28,6 +28,6 @@ public interface OnDatePickedListener {
      * @param month 月
      * @param day   日
      */
-    void onDatePicked(int year, int month, int day);
+    void onDatePicked(String year, String month, String day);
 
 }

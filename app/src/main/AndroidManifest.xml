@@ -167,7 +167,7 @@ package="com.merchant.drifting">
 
 
     <activity
-        android:name=".mvp.ui.activity.index.AddBankCardActivityActivity"
+        android:name=".mvp.ui.activity.index.AddBankCardActivity"
         android:screenOrientation="portrait" />
 
     <activity
@@ -186,6 +186,13 @@ package="com.merchant.drifting">
         android:name=".mvp.ui.activity.index.ApplyGoodsActivity"
         android:screenOrientation="portrait" />
 
+    <activity
+        android:name=".mvp.ui.activity.index.AddItemActivity"
+        android:screenOrientation="portrait" />
+
+    <activity
+        android:name=".mvp.ui.activity.index.AuditListActivity"
+        android:screenOrientation="portrait" />
     <provider
         android:name="androidx.core.content.FileProvider"
         android:authorities="${applicationId}.provider"

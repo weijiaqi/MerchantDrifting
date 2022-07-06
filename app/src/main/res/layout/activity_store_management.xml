@@ -37,6 +37,7 @@
                 android:paddingHorizontal="15dp">
 
                 <TextView
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -47,17 +48,22 @@
 
 
                 <TextView
+                    android:id="@+id/tv_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:text="18235107237"
+
+                    android:background="@null"
+                    android:gravity="end|center_vertical"
+                    android:hint="手机号"
+                    android:text=""
                     android:textColor="@color/color_42"
+                    android:textColorHint="@color/color_4d_97"
                     android:textSize="12sp" />
 
-
             </RelativeLayout>
-
+1
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.4dp"
@@ -66,6 +72,7 @@
 
 
             <RelativeLayout
+                android:id="@+id/rl_selected"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:paddingHorizontal="15dp">
@@ -80,19 +87,20 @@
 
 
                 <TextView
+                    android:id="@+id/tv_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:drawableRight="@drawable/iv_gray_back"
                     android:drawablePadding="11dp"
-                    android:text="11：30-13：30，17：30-19:30"
+                    android:text=""
                     android:textColor="@color/color_97"
                     android:textSize="12sp" />
 
 
             </RelativeLayout>
-
+            11
 
         </LinearLayout>
 

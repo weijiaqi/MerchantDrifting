@@ -48,7 +48,7 @@ public class RunningRecordsModel extends BaseModel implements RunningRecordsCont
     }
 
     @Override
-    public Observable<BaseEntity<BusinessBillEntity>> businessbill(int search_type, String date, int page, int limit) {
-        return mRepositoryManager.obtainRetrofitService(ApiService.class).businessbill(search_type, date, page, limit);
+    public Observable<BaseEntity<BusinessBillEntity>> businessbill( String shopid, int search_type, String date, int page, int limit) {
+        return mRepositoryManager.obtainRetrofitService(ApiService.class).businessbill(shopid,search_type, date, page, limit);
     }
 }

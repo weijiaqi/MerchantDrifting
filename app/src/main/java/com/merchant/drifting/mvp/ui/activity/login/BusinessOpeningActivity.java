@@ -183,7 +183,7 @@ public class BusinessOpeningActivity extends BaseActivity<BusinessOpeningPresent
                         return;
                     }
                     if (mPresenter != null) {
-                        mPresenter.register(mEtPhone.getText().toString(),mEtCode.getText().toString());
+                        mPresenter.register(mEtPhone.getText().toString(), mEtCode.getText().toString());
                     }
                     break;
             }

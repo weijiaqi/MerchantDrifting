@@ -6,8 +6,6 @@
     android:orientation="vertical">
 
 
-
-
     <LinearLayout
         android:id="@+id/ll_top"
         android:layout_width="match_parent"
@@ -29,11 +27,12 @@
 
 
         <TextView
+            android:id="@+id/tv_balance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
             android:layout_marginTop="5dp"
-            android:text="¥ 2,353.00"
+            android:text=""
             android:textColor="@color/white"
             android:textSize="17sp"
             android:textStyle="bold" />
@@ -57,7 +56,7 @@
                 android:layout_marginStart="14dp"
                 android:drawableLeft="@drawable/date_pickers"
                 android:drawablePadding="11dp"
-                android:text="2022/01/15"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="15sp" />
 
@@ -83,6 +82,8 @@
         <com.rb.core.xrecycleview.XRecyclerView
             android:id="@+id/rcy_flowing_water"
             android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="14dp"
             android:layout_height="match_parent" />
 
         <include layout="@layout/layout_show_state" />

@@ -10,6 +10,7 @@ import java.security.MessageDigest;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class StringUtil {
 
@@ -214,5 +215,21 @@ public class StringUtil {
         } else {
             return name + sku_name;
         }
+    }
+
+
+    //数组逗号拼接
+    public static String addlist(List<String> list) {
+        StringBuilder sb = new StringBuilder();
+        if (list != null && list.size() > 0) {
+            for (int i = 0; i < list.size(); i++) {
+                if (i < list.size() - 1) {
+                    sb.append(list.get(i) + ",");
+                } else {
+                    sb.append(list.get(i));
+                }
+            }
+        }
+        return sb.toString();
     }
 }

@@ -24,21 +24,21 @@ package com.merchant.drifting.picker;
 public class SimpleDateFormatter implements DateFormatter {
 
     @Override
-    public String formatYear(int year) {
-        if (year < 1000) {
+    public String formatYear(String year) {
+        if (Integer.parseInt(year)  < 1000) {
             year += 1000;
         }
         return "" + year;
     }
 
     @Override
-    public String formatMonth(int month) {
-        return month < 10 ? "0" + month : "" + month;
+    public String formatMonth(String month) {
+        return  Integer.parseInt(month)  < 10 ? "0" + month : "" + month;
     }
 
     @Override
-    public String formatDay(int day) {
-        return day < 10 ? "0" + day : "" + day;
+    public String formatDay(String day) {
+        return Integer.parseInt(day) < 10 ? "0" + day : "" + day;
     }
 
 }

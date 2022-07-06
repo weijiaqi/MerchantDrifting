@@ -6,6 +6,7 @@ import com.jess.arms.base.BaseRecyclerAdapter;
 import com.jess.arms.base.BaseRecyclerHolder;
 import com.merchant.drifting.R;
 import com.merchant.drifting.mvp.model.entity.CommodityManagerEntity;
+import com.merchant.drifting.mvp.model.entity.GoodsListEntity;
 import com.merchant.drifting.mvp.ui.holder.CommodityManagerHolder;
 import com.merchant.drifting.mvp.ui.holder.OrderHolder;
 import com.merchant.drifting.mvp.ui.holder.RecordHolder;
@@ -13,7 +14,7 @@ import com.merchant.drifting.mvp.ui.holder.RecordHolder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommodityManagerAdapter extends BaseRecyclerAdapter<CommodityManagerEntity> {
+public class CommodityManagerAdapter extends BaseRecyclerAdapter<GoodsListEntity> {
     private List<Object> selectEntities = new ArrayList<>();
     private int sellectCount = 0;
     private boolean idDelete;
@@ -25,7 +26,7 @@ public class CommodityManagerAdapter extends BaseRecyclerAdapter<CommodityManage
     }
 
 
-    public CommodityManagerAdapter(List<CommodityManagerEntity> infos,SeletChangeListener seletChangeListener) {
+    public CommodityManagerAdapter(List<GoodsListEntity> infos, SeletChangeListener seletChangeListener) {
         super(infos);
         this.mSeletChangeListener = seletChangeListener;
     }
@@ -44,7 +45,7 @@ public class CommodityManagerAdapter extends BaseRecyclerAdapter<CommodityManage
 
     @Override
     public BaseRecyclerHolder getCreateViewHolder(View view, int viewType) {
-        return new CommodityManagerHolder(view,this);
+        return new CommodityManagerHolder(view, this);
     }
 
 
@@ -78,7 +79,7 @@ public class CommodityManagerAdapter extends BaseRecyclerAdapter<CommodityManage
                 selectEntities.remove(object);
             }
             sellectCount = selectEntities.size();
-            // mSeletChangeListener.onSeletChange(sellectCount);
+            mSeletChangeListener.onSeletChange(sellectCount);
             notifyDataSetChanged();
         }
     }

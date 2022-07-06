@@ -10,17 +10,32 @@
 
     <!--google绘制-->
     <declare-styleable name="ViewfinderView">
-        <attr name="corner_color" format="color"/>
-        <attr name="laser_color" format="color"/>
+        <attr name="corner_color" format="color" />
+        <attr name="laser_color" format="color" />
         <attr name="frame_color" format="color" />
         <attr name="mask_color" format="color" />
-        <attr name="result_point_color" format="color"/>
+        <attr name="result_point_color" format="color" />
         <attr name="result_color" format="color" />
-        <attr name="label_text_color" format="color"/>
-        <attr name="label_text" format="string"/>
-        <attr name="label_text_size" format="float"/>
+        <attr name="label_text_color" format="color" />
+        <attr name="label_text" format="string" />
+        <attr name="label_text_size" format="float" />
     </declare-styleable>
 
+
+    <declare-styleable name="TimeWheelLayout">
+        <attr name="wheel_timeMode" />
+        <attr name="wheel_hourLabel" />
+        <attr name="wheel_minuteLabel" />
+        <attr name="wheel_secondLabel" />
+    </declare-styleable>
+
+    <attr name="wheel_timeMode" format="enum">
+        <enum name="none" value="-1" />
+        <enum name="hour_24_no_second" value="0" />
+        <enum name="hour_24_has_second" value="1" />
+        <enum name="hour_12_no_second" value="2" />
+        <enum name="hour_12_has_second" value="3" />
+    </attr>
 
     <attr name="WheelStyle" format="reference" />
 
@@ -135,4 +150,13 @@
     <attr name="wheel_firstVisible" format="boolean|reference" />
     <attr name="wheel_thirdVisible" format="boolean|reference" />
 
+
+    <declare-styleable name="TagFlowLayout">
+        <attr name="max_select" format="integer" />
+        <attr name="tag_gravity">
+            <enum name="left" value="-1" />
+            <enum name="center" value="0" />
+            <enum name="right" value="1" />
+        </attr>
+    </declare-styleable>
 </resources>

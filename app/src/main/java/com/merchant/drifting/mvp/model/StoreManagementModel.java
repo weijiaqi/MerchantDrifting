@@ -1,11 +1,17 @@
 package com.merchant.drifting.mvp.model;
 import android.app.Application;
 import com.google.gson.Gson;
+import com.jess.arms.base.BaseEntity;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
 import com.jess.arms.di.scope.ActivityScope;
 import javax.inject.Inject;
+
+import com.merchant.drifting.app.api.ApiService;
 import com.merchant.drifting.mvp.contract.StoreManagementContract;
+import com.merchant.drifting.mvp.model.entity.ShopInfoEntity;
+
+import io.reactivex.Observable;
 
 /**
  * ================================================
@@ -36,5 +42,15 @@ public class StoreManagementModel extends BaseModel implements StoreManagementCo
         super.onDestroy();
         this.mGson = null;
         this.mApplication = null;
+    }
+
+    @Override
+    public Observable<BaseEntity<ShopInfoEntity>> shopinfo(String shopid) {
+        return mRepositoryManager.obtainRetrofitService(ApiService.class).shopinfo(shopid);
+    }
+
+    @Override
+    public Observable<BaseEntity> setOpeningTime(String shop_id ,String opening,String opening_end) {
+        return mRepositoryManager.obtainRetrofitService(ApiService.class).setOpeningTime(shop_id,opening,opening_end);
     }
 }

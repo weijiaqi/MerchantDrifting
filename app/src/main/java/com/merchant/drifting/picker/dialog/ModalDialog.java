@@ -47,11 +47,11 @@ public abstract class ModalDialog extends BottomDialog implements View.OnClickLi
     protected ShapeTextView cancelView;
 
     protected TextView okView;
-
+    protected TextView titleView;
     protected View bodyView;
     protected View footerView;
 
-    protected int type = 3;
+    protected int type, status;
 
     public ModalDialog(@NonNull Activity activity) {
         super(activity, DialogConfig.getDialogStyle() == DialogStyle.Three
@@ -103,18 +103,24 @@ public abstract class ModalDialog extends BottomDialog implements View.OnClickLi
 
     @Nullable
     protected View createHeaderView() {
-        return View.inflate(activity, R.layout.dialog_header_style_default, null);
+        switch (DialogConfig.getDialogStyle()) {
+            case DialogStyle.One:
+                return View.inflate(activity, R.layout.dialog_header_style_default, null);
+            case DialogStyle.Two:
+                return View.inflate(activity, R.layout.dialog_header_style_2, null);
+            default:
+                return null;
+        }
+
+
     }
 
     @Nullable
     protected View createTopLineView() {
-        if (DialogConfig.getDialogStyle() == DialogStyle.Default) {
-            View view = new View(activity);
-            view.setLayoutParams(new LinearLayout.LayoutParams(MATCH_PARENT, (int) (1 * activity.getResources().getDisplayMetrics().density)));
-            view.setBackgroundColor(DialogConfig.getDialogColor().topLineColor());
-            return view;
-        }
-        return null;
+        View view = new View(activity);
+        view.setLayoutParams(new LinearLayout.LayoutParams(MATCH_PARENT, (int) (1 * activity.getResources().getDisplayMetrics().density)));
+        view.setBackgroundColor(DialogConfig.getDialogColor().topLineColor());
+        return view;
     }
 
     @NonNull
@@ -122,7 +128,13 @@ public abstract class ModalDialog extends BottomDialog implements View.OnClickLi
 
     @Nullable
     protected View createFooterView() {
-        return View.inflate(activity, R.layout.dialog_footer_style_default, null);
+        switch (DialogConfig.getDialogStyle()) {
+            case DialogStyle.One:
+                return View.inflate(activity, R.layout.dialog_footer_style_default, null);
+            default:
+                return null;
+        }
+
     }
 
     @CallSuper
@@ -132,6 +144,8 @@ public abstract class ModalDialog extends BottomDialog implements View.OnClickLi
         int color = DialogConfig.getDialogColor().contentBackgroundColor();
         switch (DialogConfig.getDialogStyle()) {
             case DialogStyle.One:
+                setBackgroundColor(CornerRound.No, color);
+                break;
             case DialogStyle.Two:
                 setBackgroundColor(CornerRound.Top, color);
                 break;
@@ -142,20 +156,36 @@ public abstract class ModalDialog extends BottomDialog implements View.OnClickLi
                 setBackgroundColor(CornerRound.No, color);
                 break;
         }
+
+        status = DialogConfig.getDialogStyle();
         cancelView = contentView.findViewById(R.id.dialog_modal_cancel);
+
+        okView = contentView.findViewById(R.id.dialog_modal_ok);
+        if (status == 1) {
+            type = DialogConfig.getDialogType();
+            cancelView.setTextColor(activity.getColor(R.color.white));
+            if (type == 2) {
+                cancelView.getShapeDrawableBuilder().setSolidColor(activity.getColor(R.color.color_f9)).intoBackground();
+                cancelView.setText("按月选择");
+            } else {
+                cancelView.getShapeDrawableBuilder().setSolidColor(activity.getColor(R.color.color_42)).intoBackground();
+                cancelView.setText("按日选择");
+            }
+        } else {
+            titleView = contentView.findViewById(R.id.dialog_modal_title);
+            if (titleView == null) {
+                throw new IllegalArgumentException("Title view id not found");
+            }
+        }
+
         if (cancelView == null) {
             throw new IllegalArgumentException("Cancel view id not found");
         }
-//        titleView = contentView.findViewById(R.id.dialog_modal_title);
-//        if (titleView == null) {
-//            throw new IllegalArgumentException("Title view id not found");
-//        }
-        okView = contentView.findViewById(R.id.dialog_modal_ok);
+
         if (okView == null) {
             throw new IllegalArgumentException("Ok view id not found");
         }
-//        titleView.setTextColor(DialogConfig.getDialogColor().titleTextColor());
-        cancelView.setTextColor(activity.getColor(R.color.white));
+
 //        okView.setTextColor(DialogConfig.getDialogColor().okTextColor());
         cancelView.setOnClickListener(this);
         okView.setOnClickListener(this);
@@ -163,65 +193,35 @@ public abstract class ModalDialog extends BottomDialog implements View.OnClickLi
     }
 
     private void maybeBuildEllipseButton() {
-        if (DialogConfig.getDialogStyle() != DialogStyle.One && DialogConfig.getDialogStyle() != DialogStyle.Two) {
-            return;
-        }
-        if (DialogConfig.getDialogStyle() == DialogStyle.Two) {
-//            Drawable background = cancelView.getBackground();
-//            if (background != null) {
-//                background.setColorFilter(new PorterDuffColorFilter(DialogConfig.getDialogColor().cancelEllipseColor(), PorterDuff.Mode.SRC_IN));
-//                cancelView.setBackground(background);
-//            } else {
-//                cancelView.setBackgroundResource(R.mipmap.dialog_close_icon);
-//            }
-        } else {
-            GradientDrawable cancelDrawable = new GradientDrawable();
-            cancelDrawable.setCornerRadius(okView.getResources().getDisplayMetrics().density * 999);
-            cancelDrawable.setColor(DialogConfig.getDialogColor().cancelEllipseColor());
-            cancelView.setBackground(cancelDrawable);
-            if (ColorUtils.calculateLuminance(DialogConfig.getDialogColor().cancelEllipseColor()) < 0.5f) {
-                cancelView.setTextColor(0xFFFFFFFF);
-            } else {
-                cancelView.setTextColor(0xFF666666);
-            }
-        }
-        GradientDrawable okDrawable = new GradientDrawable();
-        okDrawable.setCornerRadius(okView.getResources().getDisplayMetrics().density * 999);
-        okDrawable.setColor(DialogConfig.getDialogColor().okEllipseColor());
-        okView.setBackground(okDrawable);
-        if (ColorUtils.calculateLuminance(DialogConfig.getDialogColor().okEllipseColor()) < 0.5f) {
-            okView.setTextColor(0xFFFFFFFF);
-        } else {
-            okView.setTextColor(0xFF333333);
-        }
+
     }
 
     @Override
     public void setTitle(final @Nullable CharSequence title) {
-//        if (titleView != null) {
-//            titleView.post(new Runnable() {
-//                @Override
-//                public void run() {
-//                    titleView.setText(title);
-//                }
-//            });
-//        } else {
-//            super.setTitle(title);
-//        }
+        if (titleView != null) {
+            titleView.post(new Runnable() {
+                @Override
+                public void run() {
+                    titleView.setText(title);
+                }
+            });
+        } else {
+            super.setTitle(title);
+        }
     }
 
     @Override
     public void setTitle(final int titleId) {
-//        if (titleView != null) {
-//            titleView.post(new Runnable() {
-//                @Override
-//                public void run() {
-//                    titleView.setText(titleId);
-//                }
-//            });
-//        } else {
-//            super.setTitle(titleId);
-//        }
+        if (titleView != null) {
+            titleView.post(new Runnable() {
+                @Override
+                public void run() {
+                    titleView.setText(titleId);
+                }
+            });
+        } else {
+            super.setTitle(titleId);
+        }
     }
 
     @CallSuper
@@ -230,17 +230,20 @@ public abstract class ModalDialog extends BottomDialog implements View.OnClickLi
         int id = v.getId();
         if (id == R.id.dialog_modal_cancel) {
             DialogLog.print("cancel clicked");
-            if (type == 3) {
-                type = 2;
-                cancelView.getShapeDrawableBuilder().setSolidColor(activity.getColor(R.color.color_f9)).intoBackground();
-                cancelView.setText("按月选择");
+            if (status == 1) {
+                if (type == 3) {
+                    type = 2;
+                    cancelView.getShapeDrawableBuilder().setSolidColor(activity.getColor(R.color.color_f9)).intoBackground();
+                    cancelView.setText("按月选择");
+                } else {
+                    type = 3;
+                    cancelView.getShapeDrawableBuilder().setSolidColor(activity.getColor(R.color.color_42)).intoBackground();
+                    cancelView.setText("按日选择");
+                }
+                onCancel(type);
             } else {
-                type = 3;
-                cancelView.getShapeDrawableBuilder().setSolidColor(activity.getColor(R.color.color_42)).intoBackground();
-                cancelView.setText("按日选择");
+                dismiss();
             }
-            onCancel(type);
-
         } else if (id == R.id.dialog_modal_ok) {
             DialogLog.print("ok clicked");
             onOk();
@@ -278,7 +281,6 @@ public abstract class ModalDialog extends BottomDialog implements View.OnClickLi
         }
         return headerView;
     }
-
 
 
     public final View getBodyView() {

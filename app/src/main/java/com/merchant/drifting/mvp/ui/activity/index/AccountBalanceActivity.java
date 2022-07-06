@@ -1,5 +1,7 @@
 package com.merchant.drifting.mvp.ui.activity.index;
+
 import android.app.Activity;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -8,28 +10,32 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
-
 import com.merchant.drifting.R;
 import com.merchant.drifting.di.component.DaggerAccountBalanceComponent;
 import com.merchant.drifting.mvp.contract.AccountBalanceContract;
 import com.merchant.drifting.mvp.presenter.AccountBalancePresenter;
+import com.merchant.drifting.storageinfo.Preferences;
 import com.merchant.drifting.util.ClickUtil;
-
+import com.merchant.drifting.util.StringUtil;
+import com.merchant.drifting.util.request.RequestUtil;
 import butterknife.BindView;
 import butterknife.OnClick;
 
 
 /**
  * Created on 2022/06/29 10:56
+ *
  * @author 账户余额
  * module name is AccountBalanceActivity
  */
 public class AccountBalanceActivity extends BaseActivity<AccountBalancePresenter> implements AccountBalanceContract.View {
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
+    @BindView(R.id.tv_account_balance)
+    TextView mTvAccountBalance;
+
     public static void start(Context context, boolean closePage) {
         Intent intent = new Intent(context, AccountBalanceActivity.class);
         context.startActivity(intent);
@@ -47,7 +53,7 @@ public class AccountBalanceActivity extends BaseActivity<AccountBalancePresenter
     }
 
     @Override
-    public int initView(@Nullable Bundle savedInstanceState){
+    public int initView(@Nullable Bundle savedInstanceState) {
         return R.layout.activity_account_balance; //如果你不需要框架帮你设置 setContentView(id) 需要自行设置,请返回 0
     }
 
@@ -59,11 +65,16 @@ public class AccountBalanceActivity extends BaseActivity<AccountBalancePresenter
     }
 
     public void initListener() {
+        RequestUtil.create().balance(Preferences.getShopId(), entity -> {
+            if (entity != null & entity.getCode() == 200) {
+                mTvAccountBalance.setText("¥ " + StringUtil.frontCDecimalValue(entity.getData().getBalance()));
+            }
+        });
 
     }
 
 
-    @OnClick({R.id.toolbar_back,R.id.rl_bank,R.id.rl_running_records})
+    @OnClick({R.id.toolbar_back, R.id.rl_bank, R.id.rl_running_records})
     public void onClick(View view) {
         if (!ClickUtil.isFastClick(view.getId())) {
             switch (view.getId()) {
@@ -71,16 +82,16 @@ public class AccountBalanceActivity extends BaseActivity<AccountBalancePresenter
                     finish();
                     break;
                 case R.id.rl_bank:
-                    BankCardManagementActivity.start(this,false);
+                    BankCardManagementActivity.start(this, false);
                     break;
                 case R.id.rl_running_records:  //流水记录
-                    RunningRecordsActivity.start(this,false);
+                    RunningRecordsActivity.start(this, false);
                     break;
             }
         }
     }
 
-    public Activity getActivity(){
+    public Activity getActivity() {
         return this;
     }
 

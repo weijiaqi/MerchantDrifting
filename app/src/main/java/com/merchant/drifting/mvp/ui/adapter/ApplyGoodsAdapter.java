@@ -5,13 +5,13 @@ import android.view.View;
 import com.jess.arms.base.BaseRecyclerAdapter;
 import com.jess.arms.base.BaseRecyclerHolder;
 import com.merchant.drifting.R;
-import com.merchant.drifting.mvp.model.entity.CommodityManagerEntity;
+import com.merchant.drifting.mvp.model.entity.AvailableAllEntity;
 import com.merchant.drifting.mvp.ui.holder.ApplyGoodsHolder;
 import java.util.List;
 
-public class ApplyGoodsAdapter extends BaseRecyclerAdapter<CommodityManagerEntity> {
+public class ApplyGoodsAdapter extends BaseRecyclerAdapter<AvailableAllEntity.CupsBean> {
 
-    public ApplyGoodsAdapter(List<CommodityManagerEntity> infos) {
+    public ApplyGoodsAdapter(List<AvailableAllEntity.CupsBean> infos) {
         super(infos);
     }
 
