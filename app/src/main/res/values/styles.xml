@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+
+    <!--设置背景图Theme-->
+    <style name="AppSplash" parent="AppTheme">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowAnimationStyle">@style/RemoveTransitions</item>
+        <item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="LOLLIPOP">false</item>
+    </style>
+
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
@@ -9,6 +18,7 @@
         <item name="android:windowAnimationStyle">@style/Animation_Activity</item>
     </style>
 
+
     <style name="Animation_Activity">
         <!--        <item name="android:activityOpenEnterAnimation">@anim/translate_right_to_center</item>-->
         <!--        <item name="android:activityOpenExitAnimation">@anim/translate_center_to_left</item>-->
@@ -16,6 +26,22 @@
         <!--        <item name="android:activityCloseExitAnimation">@anim/translate_center_to_right</item>-->
     </style>
 
+
+    <!--移除转场效果-->
+    <style name="RemoveTransitions">
+        <item name="android:activityOpenEnterAnimation">@null</item>
+        <item name="android:activityOpenExitAnimation">@null</item>
+        <item name="android:activityCloseEnterAnimation">@null</item>
+        <item name="android:activityCloseExitAnimation">@null</item>
+        <item name="android:taskOpenEnterAnimation">@null</item>
+        <item name="android:taskOpenExitAnimation">@null</item>
+        <item name="android:taskCloseEnterAnimation">@null</item>
+        <item name="android:taskCloseExitAnimation">@null</item>
+        <item name="android:taskToFrontEnterAnimation">@null</item>
+        <item name="android:taskToFrontExitAnimation">@null</item>
+        <item name="android:taskToBackEnterAnimation">@null</item>
+        <item name="android:taskToBackExitAnimation">@null</item>
+    </style>
 
     <declare-styleable name="VerificationCodeView">
         <attr name="pwv_maxLength" format="integer" />

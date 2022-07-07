@@ -229,7 +229,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST("v/business/bank/unbind")
-    Observable<BaseEntity> unbind(@Field("bank_card_id") String bank_card_id);
+    Observable<BaseEntity> unbind(@Field("shop_id") String shop_id,@Field("bank_card_id") String bank_card_id);
 
 
     /**

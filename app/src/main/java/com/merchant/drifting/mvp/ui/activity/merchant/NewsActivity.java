@@ -156,18 +156,16 @@ public class NewsActivity extends BaseActivity<NewsPresenter> implements NewsCon
                     if (messageUnreadEntity != null) {
                         if (messageUnreadEntity.getSys_msg() != 0) {
                             mIvSystemUnread.setVisibility(View.GONE);
-                        } else {
-                            SystemNotificationActivity.start(this, 1, false);
                         }
+                        SystemNotificationActivity.start(this, 1, false);
                     }
                     break;
                 case R.id.rl_order:
                     if (messageUnreadEntity != null) {
                         if (messageUnreadEntity.getOrder_msg() != 0) {
                             mIvOrderUnread.setVisibility(View.GONE);
-                        } else {
-                            SystemNotificationActivity.start(this, 2, false);
                         }
+                        SystemNotificationActivity.start(this, 2, false);
                     }
                     break;
             }

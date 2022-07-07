@@ -283,7 +283,10 @@ public class TimeWheelLayout extends BaseWheelLayout {
         minuteWheelView.setFormatter(new WheelFormatter() {
             @Override
             public String formatItem(@NonNull Object value) {
-                return timeFormatter.formatMinute((Integer) value);
+                if (Integer.parseInt(String.valueOf(value)) < 10) {
+                    value = "0" + value;
+                }
+                return timeFormatter.formatMinute(String.valueOf(value));
             }
         });
         secondWheelView.setFormatter(new WheelFormatter() {

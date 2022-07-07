@@ -108,7 +108,7 @@ public class SwitchMerchantsActivity extends BaseActivity<SwitchMerchantsPresent
     public void initListener() {
         mTvName.setText(Preferences.getNickName());
         mTvPhone.setText(Preferences.getPhone());
-        GlideUtil.create().loadHeadCirclePic(this, Preferences.getPhoto(), mIvPhoto);
+        GlideUtil.create().loadFileSkipCirclePic(this, Preferences.getPhoto(), mIvPhoto);
         initTextSpan(mTvShopName, "选择店铺开始营业 ");
         if (type == 1) {
             mIvNoShop.setVisibility(View.VISIBLE);

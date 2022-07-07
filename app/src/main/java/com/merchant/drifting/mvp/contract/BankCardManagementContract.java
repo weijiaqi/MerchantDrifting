@@ -41,6 +41,6 @@ public interface BankCardManagementContract {
     interface Model extends IModel{
         Observable<BaseEntity<List<BankListEntity>>> banklist(String shopid );
 
-        Observable<BaseEntity> unbind(String bank_card_id);
+        Observable<BaseEntity> unbind( String shopid, String bank_card_id);
     }
 }

@@ -52,7 +52,7 @@ public class BankCardManagementModel extends BaseModel implements BankCardManage
     }
 
     @Override
-    public Observable<BaseEntity> unbind(String bank_card_id) {
-        return mRepositoryManager.obtainRetrofitService(ApiService.class).unbind(bank_card_id);
+    public Observable<BaseEntity> unbind( String shopid,  String bank_card_id) {
+        return mRepositoryManager.obtainRetrofitService(ApiService.class).unbind(shopid,bank_card_id);
     }
 }

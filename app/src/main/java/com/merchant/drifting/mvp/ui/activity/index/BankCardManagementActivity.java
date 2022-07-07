@@ -106,7 +106,7 @@ public class BankCardManagementActivity extends BaseActivity<BankCardManagementP
                     break;
                 case R.id.tv_unbind:  //解绑
                     if (mPresenter != null) {
-                        mPresenter.unbind(bankid);
+                        mPresenter.unbind(Preferences.getShopId(), bankid);
                     }
                     break;
             }

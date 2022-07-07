@@ -58,14 +58,15 @@ public class TimePicker extends ModalDialog {
 
     @Override
     protected void onOk() {
-        int hour = wheelLayout.getSelectedHour();
-        int minute = wheelLayout.getSelectedMinute();
-        int second = wheelLayout.getSelectedSecond();
+        String hour = wheelLayout.getSelectedHour()+"";
+        String minute =  wheelLayout.getSelectedMinute()<10?"0"+ wheelLayout.getSelectedMinute(): wheelLayout.getSelectedMinute()+"";
+        String second = wheelLayout.getSelectedSecond()<10?"0"+wheelLayout.getSelectedSecond():wheelLayout.getSelectedSecond()+"";
+
         if (onTimePickedListener != null) {
             onTimePickedListener.onTimePicked(hour, minute, second);
         }
         if (onTimeMeridiemPickedListener != null) {
-            onTimeMeridiemPickedListener.onTimePicked(hour, minute, second, wheelLayout.isAnteMeridiem());
+           // onTimeMeridiemPickedListener.onTimePicked(hour, minute, second, wheelLayout.isAnteMeridiem());
         }
     }
 

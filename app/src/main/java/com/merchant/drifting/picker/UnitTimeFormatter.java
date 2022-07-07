@@ -27,7 +27,7 @@ public class UnitTimeFormatter implements TimeFormatter {
     }
 
     @Override
-    public String formatMinute(int minute) {
+    public String formatMinute(String minute) {
         return minute + "分";
     }
 

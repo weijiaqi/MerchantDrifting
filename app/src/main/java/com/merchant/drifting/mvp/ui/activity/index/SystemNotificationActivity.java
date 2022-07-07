@@ -80,14 +80,14 @@ public class SystemNotificationActivity extends BaseActivity<SystemNotificationP
         if (getIntent() != null) {
             type = getIntent().getExtras().getInt(EXTRA_TYPE);
         }
-        mToolbarTitle.setText(type==1?"系统通知":"订单通知");
+        mToolbarTitle.setText(type == 1 ? "系统通知" : "订单通知");
         initListener();
     }
 
     public void initListener() {
         mRcyPublic.setLayoutManager(new LinearLayoutManager(this));
         mRcyPublic.setLoadingListener(this);
-        systemNotificationAdapter = new SystemNotificationAdapter(new ArrayList<>(),type);
+        systemNotificationAdapter = new SystemNotificationAdapter(new ArrayList<>(), type);
         mRcyPublic.setAdapter(systemNotificationAdapter);
         getData(mPage, true);
     }
@@ -146,12 +146,16 @@ public class SystemNotificationActivity extends BaseActivity<SystemNotificationP
 
     @Override
     public void loadState(int dataState) {
-        if (dataState == ViewUtil.NOT_DATA) {
-            ViewUtil.create().setView(this, mFlState, ViewUtil.NOT_DATA);
-        } else if (dataState == ViewUtil.NOT_SERVER) {
-            ViewUtil.create().setView(this, mFlState, ViewUtil.NOT_SERVER);
-        } else if (dataState == ViewUtil.NOT_NETWORK) {
-            ViewUtil.create().setView(this, mFlState, ViewUtil.NOT_NETWORK);
+        if (systemNotificationAdapter.getDatas() == null || systemNotificationAdapter.getDatas().size() == 0) {
+            if (dataState == ViewUtil.NOT_DATA) {
+                ViewUtil.create().setView(this, mFlState, ViewUtil.NOT_DATA);
+            } else if (dataState == ViewUtil.NOT_SERVER) {
+                ViewUtil.create().setView(this, mFlState, ViewUtil.NOT_SERVER);
+            } else if (dataState == ViewUtil.NOT_NETWORK) {
+                ViewUtil.create().setView(this, mFlState, ViewUtil.NOT_NETWORK);
+            } else {
+                ViewUtil.create().setView(mFlState);
+            }
         } else {
             ViewUtil.create().setView(mFlState);
         }

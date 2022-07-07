@@ -187,10 +187,6 @@ public class IndexFragment extends BaseFragment<IndexPresenter> implements Index
         return this;
     }
 
-    @Override
-    public void showMessage(@NonNull String message) {
-        ToastUtil.showToast(message);
-    }
 
     @OnClick({R.id.iv_message, R.id.tv_switch_merchants, R.id.iv_scan})
     public void onClick(View view) {
@@ -263,6 +259,12 @@ public class IndexFragment extends BaseFragment<IndexPresenter> implements Index
     public void OnShopWriteOff() {
           showMessage("核销成功");
     }
+
+    @Override
+    public void showMessage(@NonNull String message) {
+        ToastUtil.showToast(message);
+    }
+
 
     @Override
     public void onNetError() {

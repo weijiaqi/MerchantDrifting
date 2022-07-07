@@ -163,16 +163,16 @@ public class StoreManagementActivity extends BaseActivity<StoreManagementPresent
     }
 
     @Override
-    public void onTimePicked(int hour, int minute, int second) {
+    public void onTimePicked(String hour, String minute, String second) {
         if (!TextUtils.isEmpty(opening)) {
-            opening_end = hour + "：" + minute;
+            opening_end = hour + ":" + minute;
             mTvTime.setText(opening + "-" + opening_end);
             if (mPresenter != null) {
                 showLoading();
                 mPresenter.setOpeningTime(Preferences.getShopId(), opening, opening_end);
             }
         } else {
-            opening = hour + "：" + minute;
+            opening = hour + ":" + minute;
         }
         if (selected) {
             selected = false;

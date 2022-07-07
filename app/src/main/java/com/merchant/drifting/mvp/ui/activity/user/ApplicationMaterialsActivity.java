@@ -54,6 +54,7 @@ import com.merchant.drifting.mvp.ui.dialog.SelectSexDialog;
 import com.merchant.drifting.util.ClickUtil;
 import com.merchant.drifting.util.GlideEngine;
 import com.merchant.drifting.util.GlideUtil;
+import com.merchant.drifting.util.MapUtil;
 import com.merchant.drifting.util.PermissionDialog;
 import com.merchant.drifting.util.SpannableUtil;
 import com.merchant.drifting.util.StringUtil;
@@ -358,7 +359,7 @@ public class ApplicationMaterialsActivity extends BaseActivity<ApplicationMateri
     @Override
     public void OnInfoEditSuccess(InfoEditEntity entity) {
         if (entity != null) {
-            if (entity.getStatus() == 0 ||entity.getStatus() ==1) {  //审核中
+            if (entity.getStatus() == 0 || entity.getStatus() == 1) {  //审核中
                 mTvSubmit.setVisibility(View.GONE);
                 mEtName.setEnabled(false);
                 mEtPhone.setEnabled(false);
@@ -552,11 +553,11 @@ public class ApplicationMaterialsActivity extends BaseActivity<ApplicationMateri
             address = data.getStringExtra("address");
             LatLng latLng = data.getParcelableExtra("location");
             if (latLng != null) {
-                lat = latLng.latitude + "";
-                lng = latLng.longitude + "";
+                double[] gps = MapUtil.transformBD09ToWGS84(latLng.longitude, latLng.latitude);
+                lng = gps[0] + "";
+                lat = gps[1] + "";
             }
             mTvAddress.setText(address);
         }
-
     }
 }

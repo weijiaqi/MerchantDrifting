@@ -35,7 +35,7 @@ public interface TimeFormatter {
      * @param minute 分钟数
      * @return 格式化后最终显示的分钟数字符串
      */
-    String formatMinute(int minute);
+    String formatMinute(String minute);
 
     /**
      * 格式化秒数

@@ -13,6 +13,7 @@ import android.view.KeyEvent;
 
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
+import com.jess.arms.utils.ArmsUtils;
 import com.merchant.drifting.R;
 import com.merchant.drifting.di.component.DaggerHomeComponent;
 import com.merchant.drifting.mvp.contract.HomeContract;

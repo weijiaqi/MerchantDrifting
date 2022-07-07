@@ -54,8 +54,8 @@ public class BankCardManagementPresenter extends BasePresenter<BankCardManagemen
     /**
      *解绑银行卡
      */
-    public void unbind(String bank_card_id) {
-        mModel.unbind(bank_card_id).subscribeOn(Schedulers.io())
+    public void unbind( String shopid, String bank_card_id) {
+        mModel.unbind(shopid,bank_card_id).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
                 .subscribe(new ErrorHandleSubscriber<BaseEntity>(mErrorHandler) {

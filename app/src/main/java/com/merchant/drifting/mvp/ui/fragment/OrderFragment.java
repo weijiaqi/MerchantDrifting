@@ -154,12 +154,16 @@ public class OrderFragment extends BaseFragment<OrderPresenter> implements Order
 
     @Override
     public void loadState(int dataState) {
-        if (dataState == ViewUtil.NOT_DATA) {
-            ViewUtil.create().setView(mContext, mFlState, ViewUtil.NOT_DATA);
-        } else if (dataState == ViewUtil.NOT_SERVER) {
-            ViewUtil.create().setView(mContext, mFlState, ViewUtil.NOT_SERVER);
-        } else if (dataState == ViewUtil.NOT_NETWORK) {
-            ViewUtil.create().setView(mContext, mFlState, ViewUtil.NOT_NETWORK);
+        if (orderAdater.getDatas() == null || orderAdater.getDatas().size() == 0) {
+            if (dataState == ViewUtil.NOT_DATA) {
+                ViewUtil.create().setView(mContext, mFlState, ViewUtil.NOT_DATA);
+            } else if (dataState == ViewUtil.NOT_SERVER) {
+                ViewUtil.create().setView(mContext, mFlState, ViewUtil.NOT_SERVER);
+            } else if (dataState == ViewUtil.NOT_NETWORK) {
+                ViewUtil.create().setView(mContext, mFlState, ViewUtil.NOT_NETWORK);
+            } else {
+                ViewUtil.create().setView(mFlState);
+            }
         } else {
             ViewUtil.create().setView(mFlState);
         }

@@ -221,10 +221,10 @@ public class GlideUtil {
         if (!TextUtils.isEmpty(url)) {
             RequestOptions options = RequestOptions
                     .circleCropTransform()
-                    .placeholder(R.drawable.icon_pic)
-                    .error(R.drawable.icon_pic)
-//                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-//                    .skipMemoryCache(false)
+                    .placeholder(R.drawable.default_head)
+                    .error(R.drawable.default_head)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .skipMemoryCache(false)
                     .dontAnimate();
 
             Glide.with(context)
@@ -233,7 +233,7 @@ public class GlideUtil {
                     .into(imageView);
 
         } else {
-            imageView.setImageResource(R.drawable.icon_pic);
+            imageView.setImageResource(R.drawable.default_head);
         }
     }
 

@@ -42,8 +42,8 @@ public class SimpleTimeFormatter implements TimeFormatter {
     }
 
     @Override
-    public String formatMinute(int minute) {
-        return minute < 10 ? "0" + minute : "" + minute;
+    public String formatMinute(String minute) {
+        return Integer.parseInt(minute) < 10 ? "0" + minute : "" + minute;
     }
 
     @Override

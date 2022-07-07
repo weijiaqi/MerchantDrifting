@@ -118,7 +118,8 @@ public class RunningRecordsActivity extends BaseActivity<RunningRecordsPresenter
         mRcyFlowingWater.setLoadingListener(this);
         adapter = new RunningRecordsAdapter(new ArrayList<>());
         mRcyFlowingWater.setAdapter(adapter);
-        setDate(DateUtil.unxiToDateYMDMD());
+        date=DateUtil.unxiToDateYMDMD();
+        setDate(date);
     }
 
 

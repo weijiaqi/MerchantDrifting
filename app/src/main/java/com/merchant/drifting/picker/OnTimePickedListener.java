@@ -28,6 +28,6 @@ public interface OnTimePickedListener {
      * @param minute 分
      * @param second 秒
      */
-    void onTimePicked(int hour, int minute, int second);
+    void onTimePicked(String hour, String minute, String second);
 
 }
