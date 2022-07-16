@@ -6,8 +6,23 @@
     android:orientation="vertical">
 
 
+    <com.hjq.shape.view.ShapeTextView
+        android:id="@+id/tv_top"
+        android:layout_width="93dp"
+        android:layout_height="25dp"
+        app:shape_radius="100dp"
+       android:visibility="gone"
+        android:layout_marginStart="14dp"
+        android:textColor="@color/white"
+        android:gravity="center"
+        app:shape_solidColor="@color/color_42"
+        android:text="传递漂" />
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcy_public"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/tv_top"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="20dp" />
@@ -15,14 +30,13 @@
     <include layout="@layout/layout_show_state" />
 
 
-
     <com.hjq.shape.layout.ShapeRelativeLayout
         android:id="@+id/rl_bottoms"
-        android:visibility="gone"
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="86dp"
+        android:layout_alignParentBottom="true"
         android:orientation="vertical"
+        android:visibility="gone"
         app:shape="rectangle"
         app:shape_shadowColor="@color/color_4d_00"
         app:shape_shadowSize="2dp"

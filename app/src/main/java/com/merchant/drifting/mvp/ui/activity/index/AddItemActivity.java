@@ -104,7 +104,7 @@ public class AddItemActivity extends BaseActivity<AddItemPresenter> implements A
     TextView mTvAdd;
     @BindView(R.id.tv_cofim_the_application)
     TextView mTvCofimApplication;
-    private int type, status;
+    private int type, status, audit;
     private NewLabelDialog newLabelDialog;
     private List<String> scraplist = new ArrayList<>();
     private List<String> temperaturelist = new ArrayList<>();
@@ -163,22 +163,28 @@ public class AddItemActivity extends BaseActivity<AddItemPresenter> implements A
         setPicStyle();
         mScrapLayout.setOnTagClickListener((view, position, parent) -> {
             if (scraplist.size() > 0) {
-                scraplist.remove(position);
-                mScrapLayout.onChanged();
+                if (audit != 1 &&audit!=2) {
+                    scraplist.remove(position);
+                    mScrapLayout.onChanged();
+                }
             }
             return true;
         });
         mTemperatureLayout.setOnTagClickListener((view, position, parent) -> {
             if (temperaturelist.size() > 0) {
-                temperaturelist.remove(position);
-                mTemperatureLayout.onChanged();
+                if (audit != 1 &&audit!=2) {
+                    temperaturelist.remove(position);
+                    mTemperatureLayout.onChanged();
+                }
             }
             return true;
         });
         mSweetnessLayout.setOnTagClickListener((view, position, parent) -> {
             if (sweetnessist.size() > 0) {
-                sweetnessist.remove(position);
-                mSweetnessLayout.onChanged();
+                if (audit != 1 &&audit!=2) {
+                    sweetnessist.remove(position);
+                    mSweetnessLayout.onChanged();
+                }
             }
             return true;
         });
@@ -193,14 +199,17 @@ public class AddItemActivity extends BaseActivity<AddItemPresenter> implements A
     @Override
     public void OnGoodsInfoSuccess(GoodsInfoEntity entity) {
         if (entity != null) {
-            if (entity.getAudit() == 1 || entity.getAudit() == 2) {
+
+            audit = entity.getAudit();
+
+            if (audit == 1 || audit == 2) {
                 mTvCofimApplication.setVisibility(View.GONE);
                 mEtName.setEnabled(false);
                 mEtIntroduce.setEnabled(false);
                 mEtWeight.setEnabled(false);
                 mEtOffer.setEnabled(false);
                 mIvPic.setClickable(false);
-            } else if (entity.getAudit() == 3) {  //驳回
+            } else if (audit == 3) {  //驳回
                 mToolbarTitle.setText("编辑商品");
             }
             shoppic = entity.getGoods_image();
@@ -209,15 +218,19 @@ public class AddItemActivity extends BaseActivity<AddItemPresenter> implements A
             mEtIntroduce.setText(entity.getIntro());
             mEtWeight.setText(entity.getSpecs());
             mEtOffer.setText(entity.getPrice());
+
+
             List result = Arrays.asList(entity.getIngredient().split(","));
-            scraplist.addAll(result);
             List result2 = Arrays.asList(entity.getTemperature().split(","));
-            temperaturelist.addAll(result2);
             List result3 = Arrays.asList(entity.getSweet().split(","));
+            scraplist.addAll(result);
+            temperaturelist.addAll(result2);
             sweetnessist.addAll(result3);
-            AddScrapLayout();
-            AddTemperatureLayout();
-            AddSweetnessLayout();
+
+
+            AddScrapLayout(audit != 3 ? 1 : 0);
+            AddTemperatureLayout(audit !=3 ? 1 : 0);
+            AddSweetnessLayout(audit != 3 ? 1 : 0);
         }
     }
 
@@ -225,7 +238,7 @@ public class AddItemActivity extends BaseActivity<AddItemPresenter> implements A
     public void OnGoodsEditSuccess() {
         showMessage("提交成功");
 
-        AddItemEvent addItemEvent=new AddItemEvent();
+        AddItemEvent addItemEvent = new AddItemEvent();
         addItemEvent.setSku_code(goodscode);
         EventBus.getDefault().post(addItemEvent);
         finish();
@@ -243,11 +256,11 @@ public class AddItemActivity extends BaseActivity<AddItemPresenter> implements A
 
 
     //小料
-    public void AddScrapLayout() {
+    public void AddScrapLayout(int type) {
         mScrapLayout.setAdapter(new TagAdapter<String>(scraplist) {
             @Override
             public View getView(FlowLayout parent, int position, String s) {
-                TextView tv = (TextView) LayoutInflater.from(AddItemActivity.this).inflate(R.layout.layout_for_scrap,
+                TextView tv = (TextView) LayoutInflater.from(AddItemActivity.this).inflate(type == 0 ? R.layout.layout_for_scrap : R.layout.layout_for_scrap1,
                         mScrapLayout, false);
                 tv.setText(s);
                 return tv;
@@ -257,11 +270,11 @@ public class AddItemActivity extends BaseActivity<AddItemPresenter> implements A
     }
 
     //温度
-    public void AddTemperatureLayout() {
+    public void AddTemperatureLayout(int type) {
         mTemperatureLayout.setAdapter(new TagAdapter<String>(temperaturelist) {
             @Override
             public View getView(FlowLayout parent, int position, String s) {
-                TextView tv = (TextView) LayoutInflater.from(AddItemActivity.this).inflate(R.layout.layout_for_scrap,
+                TextView tv = (TextView) LayoutInflater.from(AddItemActivity.this).inflate(type == 0 ? R.layout.layout_for_scrap : R.layout.layout_for_scrap1,
                         mTemperatureLayout, false);
                 tv.setText(s);
                 return tv;
@@ -271,11 +284,11 @@ public class AddItemActivity extends BaseActivity<AddItemPresenter> implements A
     }
 
     //甜度
-    public void AddSweetnessLayout() {
+    public void AddSweetnessLayout(int type) {
         mSweetnessLayout.setAdapter(new TagAdapter<String>(sweetnessist) {
             @Override
             public View getView(FlowLayout parent, int position, String s) {
-                TextView tv = (TextView) LayoutInflater.from(AddItemActivity.this).inflate(R.layout.layout_for_scrap,
+                TextView tv = (TextView) LayoutInflater.from(AddItemActivity.this).inflate(type == 0 ? R.layout.layout_for_scrap : R.layout.layout_for_scrap1,
                         mSweetnessLayout, false);
                 tv.setText(s);
                 return tv;
@@ -349,7 +362,7 @@ public class AddItemActivity extends BaseActivity<AddItemPresenter> implements A
                     }
                     showLoading();
                     if (mPresenter != null) {
-                        if (type == 1) {
+                        if (status == 1) {
                             mPresenter.applyForEdit(explore_id, goodscode, mEtIntroduce.getText().toString(), mEtName.getText().toString(), mEtWeight.getText().toString(), mEtOffer.getText().toString(), Preferences.getShopId(), StringUtil.addlist(sweetnessist), StringUtil.addlist(temperaturelist), StringUtil.addlist(scraplist), new File(shoppic));
                         } else {
                             mPresenter.goodsedit(goodscode, mEtIntroduce.getText().toString(), mEtName.getText().toString(), mEtWeight.getText().toString(), mEtOffer.getText().toString(), Preferences.getShopId(), StringUtil.addlist(sweetnessist), StringUtil.addlist(temperaturelist), StringUtil.addlist(scraplist), shoppic);
@@ -591,13 +604,13 @@ public class AddItemActivity extends BaseActivity<AddItemPresenter> implements A
             mEtWeight.clearFocus();
             if (type == 1) {
                 scraplist.add(content);
-                AddScrapLayout();
+                AddScrapLayout(0);
             } else if (type == 2) {
                 temperaturelist.add(content);
-                AddTemperatureLayout();
+                AddTemperatureLayout(0);
             } else {
                 sweetnessist.add(content);
-                AddSweetnessLayout();
+                AddSweetnessLayout(0);
             }
         });
     }

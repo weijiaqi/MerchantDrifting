@@ -2,18 +2,27 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical">
+    android:background="@color/white">
+
 
     <include layout="@layout/view_height_title_lay" />
 
-    <com.rb.core.xrecycleview.XRecyclerView
-        android:id="@+id/rcy_public"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/rl_toolbar"
-        android:background="@color/color_f0"
-        android:paddingTop="14dp" />
+        android:background="@color/color_f0">
 
-    <include layout="@layout/layout_show_state" />
+        <com.rb.core.xrecycleview.XRecyclerView
+            android:id="@+id/rcy_public"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+
+            />
+
+        <include layout="@layout/layout_show_state" />
+
+    </RelativeLayout>
+
 </RelativeLayout>

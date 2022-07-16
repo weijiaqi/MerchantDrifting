@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+
+    <declare-styleable name="FontTextView">
+        <attr name="fontType" format="enum">
+            <enum name="PangMen" value="1" />
+        </attr>
+    </declare-styleable>
+
     <declare-styleable name="ClearEditText">
         <attr name="clearIcon" format="reference" />
         <attr name="scaleSize" format="float" />
@@ -159,4 +166,15 @@
             <enum name="right" value="1" />
         </attr>
     </declare-styleable>
+
+    <!--圆形图片-->
+    <declare-styleable name="RatioImageView">
+        <attr name="aspect_ratio" format="float" />
+        <attr name="corner_radius" format="dimension" />
+        <attr name="left_top_radius" format="dimension" />
+        <attr name="right_top_radius" format="dimension" />
+        <attr name="right_bottom_radius" format="dimension" />
+        <attr name="left_bottom_radius" format="dimension" />
+    </declare-styleable>
+
 </resources>

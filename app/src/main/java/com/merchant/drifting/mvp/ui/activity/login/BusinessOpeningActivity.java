@@ -22,7 +22,6 @@ import android.widget.TextView;
 
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
-
 import com.merchant.drifting.R;
 import com.merchant.drifting.di.component.DaggerBusinessOpeningComponent;
 import com.merchant.drifting.mvp.contract.BusinessOpeningContract;
@@ -32,9 +31,6 @@ import com.merchant.drifting.mvp.ui.activity.user.OpenShopActivity;
 import com.merchant.drifting.util.ClickUtil;
 import com.merchant.drifting.util.StringUtil;
 import com.merchant.drifting.util.ToastUtil;
-
-import org.w3c.dom.Text;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 

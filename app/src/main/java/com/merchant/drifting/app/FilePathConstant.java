@@ -18,4 +18,7 @@ public class FilePathConstant {
     public static final String CAREMA_PATH = Environment
             .getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
             + File.separator;
+
+    public static final String STAR_PATH = MerchantDriftingApplication.getContext().getFilesDir()+File.separator;
+
 }

@@ -16,6 +16,7 @@ import com.jess.arms.base.BaseFragment;
 import com.jess.arms.di.component.AppComponent;
 
 import com.merchant.drifting.R;
+import com.merchant.drifting.data.event.LogInEvent;
 import com.merchant.drifting.di.component.DaggerMineComponent;
 import com.merchant.drifting.mvp.contract.MineContract;
 import com.merchant.drifting.mvp.model.entity.ShopInfoEntity;
@@ -26,6 +27,9 @@ import com.merchant.drifting.mvp.ui.activity.user.SetUpActivity;
 import com.merchant.drifting.storageinfo.Preferences;
 import com.merchant.drifting.util.ClickUtil;
 import com.merchant.drifting.util.GlideUtil;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -132,6 +136,13 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     public Fragment getFragment() {
         return this;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void LoginEvent(LogInEvent logInEvent) {
+        if (logInEvent != null) {
+            initListener();
+        }
     }
 
     @Override

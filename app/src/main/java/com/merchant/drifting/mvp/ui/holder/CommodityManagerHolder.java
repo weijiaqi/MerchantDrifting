@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -35,6 +36,8 @@ public class CommodityManagerHolder extends BaseRecyclerHolder {
     CheckBox ckSellect;
     @BindView(R.id.iv_pic)
     ImageView mIvPic;
+    @BindView(R.id.rl_content)
+    RelativeLayout mRlContent;
     private Context context;
     private CommodityManagerAdapter mAdapter;
 
@@ -64,7 +67,7 @@ public class CommodityManagerHolder extends BaseRecyclerHolder {
             }
         }
 
-        ckSellect.setOnClickListener(v -> {  //选择
+        mRlContent.setOnClickListener(v -> {  //选择
             mAdapter.onItemCheckChange(listBeanList.get(position));
         });
     }

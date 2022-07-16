@@ -51,6 +51,15 @@ public class BusinessBillEntity {
         private Integer apply_id;
         private Integer created_at_int;
         private Integer updated_at_int;
+        private String image;
+
+        public String getImage() {
+            return image;
+        }
+
+        public void setImage(String image) {
+            this.image = image;
+        }
 
         public Integer getShop_bill_id() {
             return shop_bill_id;

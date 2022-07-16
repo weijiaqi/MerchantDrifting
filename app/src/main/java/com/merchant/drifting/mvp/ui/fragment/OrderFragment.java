@@ -16,6 +16,8 @@ import android.widget.TextView;
 import com.jess.arms.base.BaseFragment;
 import com.jess.arms.di.component.AppComponent;
 import com.merchant.drifting.R;
+import com.merchant.drifting.data.event.LogInEvent;
+import com.merchant.drifting.data.event.RankingEvent;
 import com.merchant.drifting.di.component.DaggerOrderComponent;
 import com.merchant.drifting.mvp.contract.OrderContract;
 
@@ -24,8 +26,12 @@ import com.merchant.drifting.mvp.presenter.OrderPresenter;
 import com.merchant.drifting.mvp.ui.adapter.OrderAdater;
 
 import com.merchant.drifting.storageinfo.Preferences;
+import com.merchant.drifting.util.ToastUtil;
 import com.merchant.drifting.util.ViewUtil;
 import com.rb.core.xrecycleview.XRecyclerView;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,20 +82,22 @@ public class OrderFragment extends BaseFragment<OrderPresenter> implements Order
         return inflater.inflate(R.layout.fragment_order, container, false);
     }
 
-    /**
-     * 在 onActivityCreate()时调用
-     */
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         setStatusBarHeight(mTvBar);
         mToolbarTitle.setText("核销订单");
         mToolBarBack.setVisibility(View.GONE);
-        initListener();
     }
 
     @Override
     public void setData(@Nullable Object data) {
 
+    }
+
+    @Override
+    protected void onFirstVisible() {
+        super.onFirstVisible();
+        initListener();
     }
 
     private void initListener() {
@@ -178,10 +186,24 @@ public class OrderFragment extends BaseFragment<OrderPresenter> implements Order
         return this;
     }
 
-    @Override
-    public void showMessage(@NonNull String message) {
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void LoginEvent(LogInEvent logInEvent) {
+        if (logInEvent != null) {
+            onRefresh();
+        }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void RankingEvent(RankingEvent event) {
+        if (event != null) {
+            onRefresh();
+        }
+    }
+
+    @Override
+    public void showMessage(@NonNull String message) {
+        ToastUtil.showToast(message);
+    }
 
 }

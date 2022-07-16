@@ -1,5 +1,7 @@
 package com.merchant.drifting.mvp.ui.activity.index;
 
+import static com.merchant.drifting.app.api.Api.WEB_LINECHART_BASEURL;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 
@@ -167,12 +169,10 @@ public class OrderDataActivity extends BaseActivity<OrderDataPresenter> implemen
                 mTvWeekUpDown.getTextColorBuilder().setTextColor(getColor(R.color.color_42c)).intoTextColor();
                 mTvWeekUpDown.setText(entity.getThis_week_ratio() * 100 + "%");
             }
-
             List<ShopStaticOrderEntity.RankingBean> rankingBeanList = entity.getRanking();
             orderDataAdapter.setData(rankingBeanList);
             data = GsonUtil.toJson(entity.getTrending());
-
-            webView.loadUrl("http://192.168.1.31:5501/LineChart.html");
+            webView.loadUrl(WEB_LINECHART_BASEURL);
             webFrame.addView(webView);
 
         }

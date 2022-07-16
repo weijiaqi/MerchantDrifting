@@ -63,6 +63,8 @@ public class CommodityManagerFragment extends BaseFragment<CommodityManagerPrese
     RelativeLayout mRlBottom;
     @BindView(R.id.tv_off_shelf)
     TextView mTvOffShelf;
+    @BindView(R.id.tv_top)
+    TextView mTvTop;
     private static final String BUNDLE_TYPE = "bundle_type";
     private int type, count;
     private CommodityManagerAdapter commodityManagerAdapter;
@@ -176,6 +178,7 @@ public class CommodityManagerFragment extends BaseFragment<CommodityManagerPrese
     @Override
     public void loadState(int dataState) {
         if (commodityManagerAdapter.getItemCount() == 0) {
+            mTvTop.setVisibility(View.GONE);
             if (dataState == ViewUtil.NOT_DATA) {
                 ViewUtil.create().setView(mContext, mFlState, ViewUtil.NOT_DATA);
             } else if (dataState == ViewUtil.NOT_SERVER) {
@@ -186,6 +189,7 @@ public class CommodityManagerFragment extends BaseFragment<CommodityManagerPrese
                 ViewUtil.create().setView(mFlState);
             }
         } else {
+            mTvTop.setVisibility(View.VISIBLE);
             ViewUtil.create().setView(mFlState);
         }
     }

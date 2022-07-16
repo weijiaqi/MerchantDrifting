@@ -148,7 +148,7 @@ public class XRecyclerViewHeader extends LinearLayout {
                     ad2.stop();
                 }
                 mStatusTextView.setText(R.string.down_refresh);
-               // mStatusTextView.setText(prush_content);
+                // mStatusTextView.setText(prush_content);
                 break;
             case STATE_RELEASE_TO_REFRESH:
                 if (mState != STATE_RELEASE_TO_REFRESH) {
@@ -161,17 +161,17 @@ public class XRecyclerViewHeader extends LinearLayout {
                     if (mState == STATE_REFRESHING) {
                         mArrowImageView.clearAnimation();
                     }
-                     // 设置背景动画
-                      mArrowImageView.startAnimation(mRotateUpAnim);
-                 //   mArrowImageView.setBackgroundResource(R.drawable.round_spinner_fade);
+                    // 设置背景动画
+                    mArrowImageView.startAnimation(mRotateUpAnim);
+                    //   mArrowImageView.setBackgroundResource(R.drawable.round_spinner_fade);
 //                    ad2 = (AnimationDrawable) mArrowImageView.getBackground();
 //                    ad2.start();
                     mStatusTextView.setText(R.string.to_refresh);
-                   // mStatusTextView.setText(prush_content);
+                    // mStatusTextView.setText(prush_content);
                 }
                 break;
             case STATE_REFRESHING:
-               mProgressBar.startAnimation(refreshingAnimation);
+                mProgressBar.startAnimation(refreshingAnimation);
                 if (ad != null && ad.isRunning()) {
                     ad.stop();
                 }
@@ -182,8 +182,8 @@ public class XRecyclerViewHeader extends LinearLayout {
 //                mProgressBar.setBackgroundResource(R.drawable.round_spinner_fade);
 //                ad = (AnimationDrawable) mProgressBar.getBackground();
 //                ad.start();
-               mStatusTextView.setText(R.string.loading);
-             //   mStatusTextView.setText(prush_content);
+                mStatusTextView.setText(R.string.loading);
+                //   mStatusTextView.setText(prush_content);
                 break;
             default:
                 break;

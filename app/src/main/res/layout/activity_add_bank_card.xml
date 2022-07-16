@@ -171,7 +171,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:drawablePadding="16dp"
-            android:text="开户支行"
+            android:text="联系方式"
             android:textColor="@color/color_17"
             android:textSize="15sp" />
 

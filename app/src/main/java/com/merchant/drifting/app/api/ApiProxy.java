@@ -3,6 +3,7 @@ package com.merchant.drifting.app.api;
 
 
 import com.merchant.drifting.app.interceptor.CommonParInterceptor;
+import com.merchant.drifting.app.interceptor.DownLoadInterceptor;
 
 import java.util.concurrent.TimeUnit;
 
@@ -19,7 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class ApiProxy {
     private static ApiService apiService;
-
+    private static ApiService apiDownload;
     public static ApiService getApiService() {
         if (apiService == null) {
             OkHttpClient okHttpClient = new OkHttpClient.Builder()
@@ -37,5 +38,22 @@ public class ApiProxy {
             apiService = sRetrofit.create(ApiService.class);
         }
         return apiService;
+    }
+
+
+    public static ApiService getDownLoad() {
+        if (apiDownload == null) {
+            OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                    .connectTimeout(20, TimeUnit.SECONDS)
+                    .addNetworkInterceptor(new DownLoadInterceptor())
+                    .build();
+            Retrofit retrofit = new Retrofit.Builder()
+                    .client(okHttpClient)
+                    .baseUrl(Api.API_SERVER)
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .build();
+            apiDownload = retrofit.create(ApiService.class);
+        }
+        return apiDownload;
     }
 }

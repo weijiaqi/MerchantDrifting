@@ -22,6 +22,8 @@ import android.content.pm.ActivityInfo;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
+import android.os.MessageQueue;
 import android.util.AttributeSet;
 import android.view.InflateException;
 import android.view.View;
@@ -75,7 +77,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     protected P mPresenter;//如果当前页面逻辑简单, Presenter 可以为 null
     private Cache<String, Object> mCache;
     private Unbinder mUnbinder;
-
+    private boolean initFlag;
     @NonNull
     @Override
     public synchronized Cache<String, Object> provideCache() {
@@ -121,6 +123,30 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
             e.printStackTrace();
         }
         initData(savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!initFlag) {
+            Looper.myQueue().addIdleHandler(new MessageQueue.IdleHandler() {
+                @Override
+                public boolean queueIdle() {
+                    initVisible();
+                    return false;
+                }
+            });
+            initFlag = true;
+        } else {
+            onReVisible();
+        }
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
     }
 
 
@@ -242,4 +268,19 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     public boolean useFragment() {
         return true;
     }
+
+
+    /**
+     * Activity初始化，Activity可见用于网路请求等耗时方法，第一次
+     */
+    protected void initVisible() {
+
+    }
+
+    /**
+     * Activity第二次及以后
+     */
+    protected void onReVisible() {
+    }
+
 }

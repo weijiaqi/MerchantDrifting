@@ -84,6 +84,15 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
         initListener();
     }
 
+    @Override
+    protected void initVisible() {
+        super.initVisible();
+        if (mPresenter != null) {
+            mPresenter.getVersionInfo(this);
+        }
+    }
+
+
     public void initListener() {
         initTab();
     }

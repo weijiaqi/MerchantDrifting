@@ -87,7 +87,7 @@ public class BusinessOpeningPresenter extends BasePresenter<BusinessOpeningContr
 
 
     /**
-     * 登录
+     * 注册
      */
     public void register(String mobile, String code) {
         mModel.register(mobile, code).subscribeOn(Schedulers.io())
@@ -99,7 +99,6 @@ public class BusinessOpeningPresenter extends BasePresenter<BusinessOpeningContr
                         if (mRootView != null) {
                             mRootView.hideLoading();
                             if (entity.getCode() == 200) {
-                                LogInOutDataUtil.successInSetData(entity.getData());
                                 mRootView.onLoginSuccess(entity.getData());
                             } else {
                                 mRootView.showMessage(entity.getMsg());

@@ -20,18 +20,23 @@ import com.merchant.drifting.mvp.model.entity.ShopListEntity;
 import com.merchant.drifting.mvp.model.entity.ShopStaticOrderEntity;
 import com.merchant.drifting.mvp.model.entity.SystemNotificationEntity;
 import com.merchant.drifting.mvp.model.entity.TodayOrderEntity;
+import com.merchant.drifting.mvp.model.entity.VersionUpdateEntity;
 import com.merchant.drifting.mvp.model.entity.WriteOffDetailEntity;
+import com.merchant.drifting.mvp.model.entity.WriteOffEntity;
 import com.merchant.drifting.mvp.model.entity.WriteOffListEntity;
 
 import java.util.List;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
+import okhttp3.ResponseBody;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Streaming;
+import retrofit2.http.Url;
 
 /**
  * @Description: API接口
@@ -39,6 +44,25 @@ import retrofit2.http.POST;
  * @CreateDate: 2022/2/15 13:26
  */
 public interface ApiService {
+
+    /**
+     * app下载
+     *
+     * @param url
+     * @return
+     */
+    @Streaming
+    @GET
+    Observable<ResponseBody> download(@Url String url);
+
+    /**
+     * 版本更新
+     *
+     * @return
+     */
+    @GET("n/version/update")
+    Observable<BaseEntity<VersionUpdateEntity>> checkVersion();
+
 
     /**
      * 获取验证码
@@ -163,7 +187,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST("v/shop/writeOff")
-    Observable<BaseEntity> shopwriteOff(@Field("token") String token, @Field("shop_id") String shop_id);
+    Observable<BaseEntity<WriteOffEntity>> shopwriteOff(@Field("token") String token, @Field("shop_id") String shop_id);
 
 
     /**

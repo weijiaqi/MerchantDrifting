@@ -1,17 +1,26 @@
 package com.merchant.drifting.mvp.presenter;
 
+import android.app.Activity;
 import android.app.Application;
 
+import com.jess.arms.base.BaseEntity;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.http.imageloader.ImageLoader;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 
 import javax.inject.Inject;
 
+import com.jess.arms.utils.RxLifecycleUtils;
 import com.merchant.drifting.mvp.contract.HomeContract;
+import com.merchant.drifting.mvp.model.entity.VersionUpdateEntity;
+import com.merchant.drifting.mvp.ui.dialog.VersionUpdateDialog;
+import com.merchant.drifting.util.StringUtil;
 import com.merchant.drifting.util.ToastUtil;
 
 import java.util.Timer;
@@ -45,6 +54,48 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
     public HomePresenter(HomeContract.Model model, HomeContract.View rootView) {
         super(model, rootView);
     }
+
+
+    /**
+     * 版本更新
+     *
+     * @param activity this
+     */
+    public void getVersionInfo(Activity activity) {
+        mModel.checkVersion()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseEntity<VersionUpdateEntity>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseEntity<VersionUpdateEntity> data) {
+                        if (mRootView != null && data.getData() != null) {
+                            if (StringUtil.compareVersions(data.getData().getVersion(), StringUtil.getVersion(activity))) {
+                                showVersionDialog(activity, data.getData());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        t.printStackTrace();
+                    }
+                });
+    }
+
+
+
+    /**
+     * 版本更新dialog
+     *
+     * @param activity
+     */
+    public void showVersionDialog(Activity activity, VersionUpdateEntity data) {
+        VersionUpdateDialog versionUpdateDialog = new VersionUpdateDialog(activity, data.getUrl() + "?" + System.currentTimeMillis(), data.getStatus(), data.getMessage(), data.getVersion());
+        versionUpdateDialog.show();
+    }
+
+
 
 
     /**

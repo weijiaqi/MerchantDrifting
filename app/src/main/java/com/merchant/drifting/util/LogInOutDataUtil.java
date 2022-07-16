@@ -1,9 +1,12 @@
 package com.merchant.drifting.util;
 
 
+import com.merchant.drifting.data.event.LogInEvent;
 import com.merchant.drifting.mvp.model.entity.LoginEntity;
 import com.merchant.drifting.mvp.ui.activity.login.MerchantCenterActivity;
 import com.merchant.drifting.storageinfo.Preferences;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * @Description:

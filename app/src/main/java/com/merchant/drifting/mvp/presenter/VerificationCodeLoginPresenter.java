@@ -1,4 +1,5 @@
 package com.merchant.drifting.mvp.presenter;
+
 import android.app.Application;
 import android.text.TextUtils;
 
@@ -33,7 +34,7 @@ import com.merchant.drifting.util.LogInOutDataUtil;
  * ================================================
  */
 @ActivityScope
-public class VerificationCodeLoginPresenter extends BasePresenter<VerificationCodeLoginContract.Model, VerificationCodeLoginContract.View>{
+public class VerificationCodeLoginPresenter extends BasePresenter<VerificationCodeLoginContract.Model, VerificationCodeLoginContract.View> {
     @Inject
     RxErrorHandler mErrorHandler;
     @Inject
@@ -44,7 +45,7 @@ public class VerificationCodeLoginPresenter extends BasePresenter<VerificationCo
     AppManager mAppManager;
 
     @Inject
-    public VerificationCodeLoginPresenter (VerificationCodeLoginContract.Model model, VerificationCodeLoginContract.View rootView) {
+    public VerificationCodeLoginPresenter(VerificationCodeLoginContract.Model model, VerificationCodeLoginContract.View rootView) {
         super(model, rootView);
     }
 
@@ -97,7 +98,7 @@ public class VerificationCodeLoginPresenter extends BasePresenter<VerificationCo
                                 mRootView.OnLoginSuccess(entity.getData());
                             } else {
                                 if (!TextUtils.isEmpty(entity.getMsg())) {
-                                   mRootView.showMessage(entity.getMsg());
+                                    mRootView.showMessage(entity.getMsg());
                                 }
                             }
                         }

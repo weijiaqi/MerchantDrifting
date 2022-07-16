@@ -17,6 +17,7 @@ import com.jess.arms.base.BaseActivity;
 import com.jess.arms.base.BaseEntity;
 import com.jess.arms.di.component.AppComponent;
 import com.merchant.drifting.R;
+import com.merchant.drifting.data.event.LogInEvent;
 import com.merchant.drifting.di.component.DaggerVerificationCodeLoginComponent;
 import com.merchant.drifting.mvp.contract.VerificationCodeLoginContract;
 import com.merchant.drifting.mvp.model.entity.HaveShopEntity;
@@ -32,6 +33,8 @@ import com.merchant.drifting.util.ToastUtil;
 import com.merchant.drifting.util.callback.BaseDataCallBack;
 import com.merchant.drifting.util.request.RequestUtil;
 import com.merchant.drifting.view.VerificationCodeView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -118,6 +121,7 @@ public class VerificationCodeLoginActivity extends BaseActivity<VerificationCode
                 if (entity1.getData().getTotal() > 0) {
                     Preferences.saveShopId(entity1.getData().getShops().get(0).getShop_id() + "");
                     Preferences.saveShopName(entity1.getData().getShops().get(0).getShop_name() + "");
+                    EventBus.getDefault().post(new LogInEvent());
                     HomeActivity.start(this, true);
                 } else {
                     SwitchMerchantsActivity.start(this, 1, true);

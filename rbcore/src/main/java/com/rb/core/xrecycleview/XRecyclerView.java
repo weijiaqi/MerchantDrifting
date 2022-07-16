@@ -16,8 +16,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.star.core.R;
 import com.rb.core.util.Utils;
+import com.star.core.R;
+
 
 import java.util.ArrayList;
 import java.util.List;

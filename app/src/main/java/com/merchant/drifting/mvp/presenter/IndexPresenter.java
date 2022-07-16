@@ -26,6 +26,7 @@ import com.jess.arms.utils.RxLifecycleUtils;
 import com.merchant.drifting.mvp.contract.IndexContract;
 import com.merchant.drifting.mvp.model.entity.ShopApplyLogEntity;
 import com.merchant.drifting.mvp.model.entity.TodayOrderEntity;
+import com.merchant.drifting.mvp.model.entity.WriteOffEntity;
 import com.merchant.drifting.util.PermissionDialog;
 import com.merchant.drifting.util.ViewUtil;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -95,12 +96,12 @@ public class IndexPresenter extends BasePresenter<IndexContract.Model, IndexCont
         mModel.shopwriteOff(token,shop_id).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<BaseEntity>(mErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<BaseEntity<WriteOffEntity>>(mErrorHandler) {
                     @Override
-                    public void onNext(BaseEntity baseEntity) {
+                    public void onNext(BaseEntity<WriteOffEntity> baseEntity) {
                         if (mRootView != null) {
                             if (baseEntity.getCode() == 200) {
-                                mRootView.OnShopWriteOff();
+                                mRootView.OnShopWriteOff(baseEntity.getData());
                             }else {
                                 mRootView.showMessage(baseEntity.getMsg());
                             }

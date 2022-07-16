@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hjq.shape.view.ShapeTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:shape_radius="100dp"
+    android:layout_marginBottom="14dp"
+    android:paddingHorizontal="10dp"
+    android:drawablePadding="10dp"
+    android:paddingVertical="3dp"
+    android:text="椰果粒"
+    android:layout_marginEnd="14dp"
+    app:shape_strokeColor="@color/color_42"
+    app:shape_strokeWidth="0.5dp"
+    android:textColor="@color/color_ccd_42"
+    android:textSize="14sp">
+
+</com.hjq.shape.view.ShapeTextView>

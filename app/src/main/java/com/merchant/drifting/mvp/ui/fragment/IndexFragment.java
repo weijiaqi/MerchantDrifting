@@ -28,16 +28,20 @@ import com.merchant.drifting.R;
 import com.merchant.drifting.app.MDConstant;
 import com.merchant.drifting.data.entity.TransactionEntity;
 import com.merchant.drifting.data.event.GoodsOnOffEvent;
+import com.merchant.drifting.data.event.LogInEvent;
 import com.merchant.drifting.data.event.MessageReadEvent;
+import com.merchant.drifting.data.event.RankingEvent;
 import com.merchant.drifting.di.component.DaggerIndexComponent;
 import com.merchant.drifting.mvp.contract.IndexContract;
 import com.merchant.drifting.mvp.model.entity.MessageUnreadEntity;
 import com.merchant.drifting.mvp.model.entity.TodayOrderEntity;
+import com.merchant.drifting.mvp.model.entity.WriteOffEntity;
 import com.merchant.drifting.mvp.presenter.IndexPresenter;
 import com.merchant.drifting.mvp.ui.activity.index.SwitchMerchantsActivity;
 import com.merchant.drifting.mvp.ui.activity.merchant.NewsActivity;
 import com.merchant.drifting.mvp.ui.adapter.OderRecordPagerAdapter;
 import com.merchant.drifting.mvp.ui.adapter.TransactionAdapter;
+import com.merchant.drifting.mvp.ui.dialog.VerificationDialog;
 import com.merchant.drifting.storageinfo.Preferences;
 import com.merchant.drifting.util.ClickUtil;
 import com.merchant.drifting.util.StringUtil;
@@ -49,6 +53,7 @@ import com.rb.core.tab.view.indicator.IndicatorViewPager;
 import com.rb.core.tab.view.indicator.ScrollIndicatorView;
 import com.rb.core.tab.view.indicator.transition.OnTransitionTextListener;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -90,6 +95,7 @@ public class IndexFragment extends BaseFragment<IndexPresenter> implements Index
     @BindView(R.id.viewpager)
     ViewPager viewpager;
 
+    private VerificationDialog verificationDialog;
     private TransactionAdapter transactionAdapter;
     private IndicatorViewPager mIndicatorViewPager;
     private OderRecordPagerAdapter oderRecordPagerAdapter;
@@ -141,7 +147,7 @@ public class IndexFragment extends BaseFragment<IndexPresenter> implements Index
             }
         });
         initTextSpan(mTvTransaction, "交易功能 ");
-        initTextSpan(mTvOrderRecord, "订单记录 ");
+        initTextSpan(mTvOrderRecord, "销售排行 ");
         mRcyTransaction.setLayoutManager(new GridLayoutManager(mContext, 4));
         transactionAdapter = new TransactionAdapter(new ArrayList<>());
         mRcyTransaction.setAdapter(transactionAdapter);
@@ -158,7 +164,10 @@ public class IndexFragment extends BaseFragment<IndexPresenter> implements Index
                 setTextStytle(preItem, false);
             }
         });
+        getTotal();
+    }
 
+    public void getTotal() {
         if (mPresenter != null) {
             mPresenter.statistictoday(Preferences.getShopId());
         }
@@ -249,15 +258,20 @@ public class IndexFragment extends BaseFragment<IndexPresenter> implements Index
         if (requestCode == MDConstant.REQ_QR_CODE && resultCode == RESULT_OK) {
             Bundle bundle = data.getExtras();
             String token = bundle.getString(MDConstant.INTENT_EXTRA_KEY_QR_SCAN);
-            if (mPresenter!=null){
+            if (mPresenter != null) {
                 mPresenter.shopwriteOff(token, Preferences.getShopId());
             }
         }
-}
+    }
 
     @Override
-    public void OnShopWriteOff() {
-          showMessage("核销成功");
+    public void OnShopWriteOff(WriteOffEntity entity) {
+        if (entity != null) {
+            getTotal();
+            EventBus.getDefault().post(new RankingEvent());
+            verificationDialog = new VerificationDialog(mContext, entity);
+            verificationDialog.show();
+        }
     }
 
     @Override
@@ -278,6 +292,13 @@ public class IndexFragment extends BaseFragment<IndexPresenter> implements Index
     public void MessageReadEvent(MessageReadEvent editEvent) {
         if (editEvent != null) {
             mIvMessage.setImageResource(R.drawable.unread);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void LoginEvent(LogInEvent logInEvent) {
+        if (logInEvent != null) {
+            initListener();
         }
     }
 }

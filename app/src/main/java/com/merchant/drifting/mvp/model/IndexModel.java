@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import com.merchant.drifting.app.api.ApiService;
 import com.merchant.drifting.mvp.contract.IndexContract;
 import com.merchant.drifting.mvp.model.entity.TodayOrderEntity;
+import com.merchant.drifting.mvp.model.entity.WriteOffEntity;
 
 import io.reactivex.Observable;
 
@@ -53,7 +54,7 @@ public class IndexModel extends BaseModel implements IndexContract.Model {
     }
 
     @Override
-    public Observable<BaseEntity> shopwriteOff(String token, String shop_id) {
+    public Observable<BaseEntity<WriteOffEntity>> shopwriteOff(String token, String shop_id) {
         return mRepositoryManager.obtainRetrofitService(ApiService.class).shopwriteOff(token,shop_id);
     }
 }

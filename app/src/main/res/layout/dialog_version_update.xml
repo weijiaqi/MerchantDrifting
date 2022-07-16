@@ -1,0 +1,101 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="297dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal">
+
+
+    <RelativeLayout
+        android:id="@+id/rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp">
+
+
+        <com.hjq.shape.layout.ShapeLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_top"
+            android:layout_marginTop="-15dp"
+            android:orientation="vertical"
+            app:shape_bottomLeftRadius="10dp"
+            app:shape_bottomRightRadius="10dp"
+            app:shape_solidColor="@color/white">
+
+            <com.merchant.drifting.view.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="36dp"
+                android:text="发现新功能"
+                android:textColor="@color/color_17"
+                android:textSize="25sp"
+                app:fontType="PangMen" />
+
+            <TextView
+                android:id="@+id/tv_version_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="14dp"
+                android:text=""
+                android:textColor="@color/color_17"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginHorizontal="41dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="40dp"
+                android:lineSpacingExtra="5dp"
+                android:text=""
+                android:textColor="@color/color_17"
+                android:textSize="12sp" />
+
+        </com.hjq.shape.layout.ShapeLinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/message_bg" />
+
+    </RelativeLayout>
+
+
+    <com.hjq.shape.view.ShapeTextView
+        android:id="@+id/tv_upload"
+        android:layout_width="207dp"
+        android:layout_height="34dp"
+        android:layout_below="@+id/rl_top"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="27dp"
+        app:shape_endColor="@color/color_ff"
+        app:shape_radius="100dp"
+        android:text="立 即 更 新"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:shape_startColor="@color/color_f9"
+        android:layout_marginBottom="17dp" />
+
+    <ImageView
+        android:id="@+id/iv_colse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_upload"
+        android:layout_centerHorizontal="true"
+        android:padding="15dp"
+        android:src="@drawable/icon_version_close" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/message_eye" />
+</RelativeLayout>

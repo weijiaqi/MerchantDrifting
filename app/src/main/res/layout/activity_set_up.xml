@@ -16,6 +16,7 @@
 
 
     <RelativeLayout
+        android:id="@+id/rl_privacy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingVertical="19dp"
@@ -49,6 +50,7 @@
         android:background="@color/color_4d_97" />
 
     <RelativeLayout
+        android:id="@+id/rl_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingVertical="19dp"
@@ -61,7 +63,7 @@
             android:layout_centerVertical="true"
             android:drawableLeft="@drawable/icon_about"
             android:drawablePadding="16dp"
-            android:text="关于我们"
+            android:text="用户协议"
             android:textColor="@color/color_17"
             android:textSize="15sp" />
 

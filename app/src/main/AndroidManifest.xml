@@ -1,215 +1,237 @@
-<?xml version="1.0" encoding="utf-8"?><manifest xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-package="com.merchant.drifting">
-<!-- 这个权限用于进行网络定位-->
-<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-<!-- 这个权限用于访问GPS定位-->
-<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-<!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位-->
-<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-<!-- 获取运营商信息，用于支持提供运营商信息相关的接口-->
-<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.merchant.drifting">
+    <!-- 这个权限用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 这个权限用于访问GPS定位-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-<!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
-<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-<!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据-->
-<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-<!-- 用于读取手机当前的状态-->
-<uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
-
-<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-<uses-permission
-    android:name="android.permission.WRITE_MEDIA_STORAGE"
-    tools:ignore="ProtectedPermissions" />
-<uses-permission
-    android:name="android.permission.WRITE_SETTINGS"
-    tools:ignore="ProtectedPermissions" />
-<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-<uses-permission
-    android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
-    tools:ignore="ProtectedPermissions" />
-<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-<uses-permission android:name="android.permission.RECORD_AUDIO" />
-<uses-permission android:name="android.permission.CAMERA" />
-<uses-permission android:name="android.permission.VIBRATE" />
-<uses-permission android:name="android.permission.BLUETOOTH" />
-<uses-permission android:name="android.permission.INTERNET" />
-
-<!-- SD卡读取权限，用户写入离线定位数据-->
-<uses-permission
-    android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
-    tools:ignore="ProtectedPermissions" />
-
-<application
-    android:name=".app.application.MerchantDriftingApplication"
-    android:allowBackup="true"
-    android:icon="@mipmap/icon_logo"
-    android:label="@string/app_name"
-    android:largeHeap="true"
-    android:networkSecurityConfig="@xml/network_security_config"
-    android:requestLegacyExternalStorage="true"
-    android:supportsRtl="true"
-    android:theme="@style/AppTheme"
-    android:usesCleartextTraffic="true">
-
-    <meta-data
-        android:name="com.baidu.lbsapi.API_KEY"
-        android:value="X3NU68DKtHtvuyPBCevzAGG7WuLYTPVI" />
-    <service
-        android:name="com.baidu.location.f"
-        android:enabled="true"
-        android:process=":remote" />
+    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 用于读取手机当前的状态-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
 
-    <activity
-        android:name=".mvp.ui.activity.SplashActivity"
-        android:exported="true"
-        android:screenOrientation="portrait"
-        android:theme="@style/AppSplash"
-        tools:ignore="Instantiatable">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.WRITE_MEDIA_STORAGE"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission
+        android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <!-- SD卡读取权限，用户写入离线定位数据-->
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
 
-    <!-- 只要依赖 AutoSize 就必须填写设计图尺寸, 否则报错, 不想使用 AutoSize 就不要依赖 AutoSize
-                            只要填写完设计图的尺寸, AutoSize 就会自动启动, 以下 dp 尺寸是根据公式 px / (dpi / 160) 求出, 运算时使用测试机的 dpi 即可
-                            AutoSize 的详细介绍请看这里 https://juejin.im/post/5bce688e6fb9a05cf715d1c2
-                            -->
-    <meta-data
-        android:name="design_width_in_dp"
-        android:value="360" />
-    <meta-data
-        android:name="design_height_in_dp"
-        android:value="640" />
+    <application
+        android:name=".app.application.MerchantDriftingApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/icon_logo"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:requestLegacyExternalStorage="true"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
 
-    <!-- Arms 配置 -->
-    <meta-data
-        android:name="com.merchant.drifting.app.GlobalConfiguration"
-        android:value="ConfigModule" />
-
-    <activity
-        android:name=".mvp.ui.activity.login.VerificationCodeActivity"
-        android:screenOrientation="portrait" />
-
-    <activity
-        android:name=".mvp.ui.activity.login.MerchantCenterActivity"
-        android:screenOrientation="portrait" />
-
-    <activity
-        android:name=".mvp.ui.activity.login.VerificationCodeLoginActivity"
-        android:screenOrientation="portrait" />
-
-    <activity
-        android:name=".mvp.ui.activity.login.BusinessOpeningActivity"
-        android:screenOrientation="portrait" />
-
-    <activity
-        android:name=".mvp.ui.activity.merchant.NewsActivity"
-        android:screenOrientation="portrait" />
-
-    <activity
-        android:name=".mvp.ui.activity.user.OpenShopActivity"
-        android:screenOrientation="portrait" />
-
-    <activity
-        android:name=".mvp.ui.activity.user.ApplicationMaterialsActivity"
-        android:screenOrientation="portrait" />
-
-    <activity
-        android:name=".mvp.ui.activity.user.ApplicationCompletedActivity"
-        android:screenOrientation="portrait" />
-
-    <activity
-        android:name=".mvp.ui.activity.home.HomeActivity"
-        android:configChanges="orientation|keyboardHidden|screenSize"
-        android:launchMode="singleTask"
-        android:screenOrientation="portrait"
-        android:windowSoftInputMode="adjustResize" />
-
-    <activity
-        android:name=".mvp.ui.activity.index.SystemNotificationActivity"
-        android:screenOrientation="portrait" />
-
-    <activity
-        android:name=".mvp.ui.activity.index.ApplicationRecordActivity"
-        android:screenOrientation="portrait" />
-
-    <activity
-        android:name=".mvp.ui.activity.index.SwitchMerchantsActivity"
-        android:screenOrientation="portrait" />
-
-    <activity
-        android:name=".mvp.ui.activity.index.OrderDataActivity"
-        android:screenOrientation="portrait" />
-
-    <activity
-        android:name=".mvp.ui.activity.index.StoreManagementActivity"
-        android:screenOrientation="portrait" />
-
-    <activity
-        android:name=".mvp.ui.activity.index.OrderDetailActivity"
-        android:screenOrientation="portrait" />
-
-    <activity
-        android:name=".mvp.ui.activity.user.SetUpActivity"
-        android:screenOrientation="portrait" />
-
-    <activity
-        android:name=".mvp.ui.activity.index.AccountBalanceActivity"
-        android:screenOrientation="portrait" />
-
-    <activity
-        android:name=".mvp.ui.activity.index.BankCardManagementActivity"
-        android:screenOrientation="portrait" />
-
-
-    <activity
-        android:name="com.google.zxing.activity.CaptureActivity"
-        android:screenOrientation="portrait"
-        tools:ignore="DuplicateActivity" />
-
-
-    <activity
-        android:name=".mvp.ui.activity.index.AddBankCardActivity"
-        android:screenOrientation="portrait" />
-
-    <activity
-        android:name=".mvp.ui.activity.index.RunningRecordsActivity"
-        android:screenOrientation="portrait" />
-
-    <activity
-        android:name=".mvp.ui.activity.index.CommodityManagementActivity"
-        android:screenOrientation="portrait" />
-
-    <activity
-        android:name=".location.SelectAddressByMapActivity"
-        android:screenOrientation="portrait" />
-
-    <activity
-        android:name=".mvp.ui.activity.index.ApplyGoodsActivity"
-        android:screenOrientation="portrait" />
-
-    <activity
-        android:name=".mvp.ui.activity.index.AddItemActivity"
-        android:screenOrientation="portrait" />
-
-    <activity
-        android:name=".mvp.ui.activity.index.AuditListActivity"
-        android:screenOrientation="portrait" />
-    <provider
-        android:name="androidx.core.content.FileProvider"
-        android:authorities="${applicationId}.provider"
-        android:exported="false"
-        android:grantUriPermissions="true">
         <meta-data
-            android:name="android.support.FILE_PROVIDER_PATHS"
-            android:resource="@xml/file_paths" />
-    </provider>
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="X3NU68DKtHtvuyPBCevzAGG7WuLYTPVI" />
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" />
 
-</application>
+
+        <activity
+            android:name=".mvp.ui.activity.SplashActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppSplash"
+            tools:ignore="Instantiatable">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- 只要依赖 AutoSize 就必须填写设计图尺寸, 否则报错, 不想使用 AutoSize 就不要依赖 AutoSize
+                                只要填写完设计图的尺寸, AutoSize 就会自动启动, 以下 dp 尺寸是根据公式 px / (dpi / 160) 求出, 运算时使用测试机的 dpi 即可
+                                AutoSize 的详细介绍请看这里 https://juejin.im/post/5bce688e6fb9a05cf715d1c2
+                                -->
+        <meta-data
+            android:name="design_width_in_dp"
+            android:value="360" />
+        <meta-data
+            android:name="design_height_in_dp"
+            android:value="640" />
+
+        <!-- Arms 配置 -->
+        <meta-data
+            android:name="com.merchant.drifting.app.GlobalConfiguration"
+            android:value="ConfigModule" />
+
+        <activity
+            android:name=".mvp.ui.activity.login.VerificationCodeActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.ui.activity.login.MerchantCenterActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.ui.activity.login.VerificationCodeLoginActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.ui.activity.login.BusinessOpeningActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.ui.activity.merchant.NewsActivity"
+            android:screenOrientation="portrait" />
+
+
+        <activity
+            android:name=".mvp.ui.activity.web.ShowWebViewActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.ui.activity.user.OpenShopActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.ui.activity.user.ApplicationMaterialsActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.ui.activity.user.ApplicationCompletedActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.ui.activity.home.HomeActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".mvp.ui.activity.index.SystemNotificationActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.ui.activity.index.ApplicationRecordActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.ui.activity.index.SwitchMerchantsActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.ui.activity.index.OrderDataActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.ui.activity.index.StoreManagementActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.ui.activity.index.OrderDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.ui.activity.user.SetUpActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.ui.activity.index.AccountBalanceActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.ui.activity.index.BankCardManagementActivity"
+            android:screenOrientation="portrait" />
+
+
+        <activity
+            android:name="com.google.zxing.activity.CaptureActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="DuplicateActivity" />
+
+
+        <activity
+            android:name=".mvp.ui.activity.index.AddBankCardActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.ui.activity.index.RunningRecordsActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.ui.activity.index.CommodityManagementActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".location.SelectAddressByMapActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.ui.activity.index.ApplyGoodsActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.ui.activity.index.AddItemActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.ui.activity.index.AuditListActivity"
+            android:screenOrientation="portrait" />
+
+        <service
+            android:name=".util.downloadutil.DownLoadIntentService"
+            tools:ignore="InnerclassSeparator" />
+
+        <provider
+            android:name=".util.downloadutil.DownLoadFileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            tools:ignore="InnerclassSeparator,MissingClass">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+    </application>
 </manifest>
 

@@ -15,6 +15,8 @@ import android.widget.FrameLayout;
 import com.jess.arms.base.BaseFragment;
 import com.jess.arms.di.component.AppComponent;
 import com.merchant.drifting.R;
+import com.merchant.drifting.data.event.RankingEvent;
+import com.merchant.drifting.data.event.SelectAllEvent;
 import com.merchant.drifting.di.component.DaggerOrderRecordComponent;
 import com.merchant.drifting.mvp.contract.OrderRecordContract;
 import com.merchant.drifting.mvp.model.entity.OrderRecordEntity;
@@ -22,6 +24,9 @@ import com.merchant.drifting.mvp.presenter.OrderRecordPresenter;
 import com.merchant.drifting.mvp.ui.adapter.OrderRecordAdapter;
 import com.merchant.drifting.storageinfo.Preferences;
 import com.merchant.drifting.util.ViewUtil;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,11 +115,15 @@ public class OrderRecordFragment extends BaseFragment<OrderRecordPresenter> impl
         mRcyOrderRecord.setLayoutManager(new LinearLayoutManager(mContext));
         orderRecordAdapter = new OrderRecordAdapter(new ArrayList<>());
         mRcyOrderRecord.setAdapter(orderRecordAdapter);
+        getData();
+    }
+
+
+    public void getData(){
         if (mPresenter != null) {
             mPresenter.salesranking(Preferences.getShopId(), days);
         }
     }
-
 
     @Override
     public void onloadStart() {
@@ -159,5 +168,13 @@ public class OrderRecordFragment extends BaseFragment<OrderRecordPresenter> impl
     @Override
     public void showMessage(@NonNull String message) {
 
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void RankingEvent(RankingEvent event) {
+        if (event != null) {
+            getData();
+        }
     }
 }
