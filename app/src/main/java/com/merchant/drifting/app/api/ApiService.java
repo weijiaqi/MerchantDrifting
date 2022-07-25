@@ -324,4 +324,12 @@ public interface ApiService {
     @POST("v/shop/setOpeningTime")
     Observable<BaseEntity> setOpeningTime(@Field("shop_id") String shop_id,@Field("opening") String opening,@Field("opening_end") String opening_end);
 
+
+    /**
+     * 全部标记已读
+     */
+    @GET("v/business/unregister")
+    Observable<BaseEntity> businessunregister();
+
+
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,99 +9,155 @@
 
     <include layout="@layout/include_title" />
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/color_f0" />
+
+
+        <RelativeLayout
+            android:id="@+id/rl_privacy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="19dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="14dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/icon_privacy"
+                android:drawablePadding="16dp"
+                android:text="隐私管理"
+                android:textColor="@color/color_17"
+                android:textSize="15sp" />
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/iv_gray_back" />
+        </RelativeLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:layout_marginHorizontal="14dp"
+            android:background="@color/color_4d_97" />
+
+        <RelativeLayout
+            android:id="@+id/rl_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="19dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="14dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/icon_about"
+                android:drawablePadding="16dp"
+                android:text="用户协议"
+                android:textColor="@color/color_17"
+                android:textSize="15sp" />
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/iv_gray_back" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:layout_marginHorizontal="14dp"
+            android:background="@color/color_4d_97" />
+
+
+        <RelativeLayout
+            android:id="@+id/rl_log_out"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="19dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="14dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/log_out"
+                android:drawablePadding="16dp"
+                android:text="注销信息"
+                android:textColor="@color/color_17"
+                android:textSize="15sp" />
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/iv_gray_back" />
+        </RelativeLayout>
+
+        <com.hjq.shape.view.ShapeTextView
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_marginHorizontal="46dp"
+            android:layout_marginTop="120dp"
+            android:gravity="center"
+            android:text="切换店铺"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            app:shape_radius="100dp"
+            app:shape_solidColor="@color/color_d4" />
+
+
+        <com.hjq.shape.view.ShapeTextView
+            android:id="@+id/tv_exit"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_marginHorizontal="46dp"
+            android:layout_marginTop="120dp"
+            android:gravity="center"
+            android:text="退出登录"
+            android:textColor="@color/white"
+            app:shape_angle="270"
+            app:shape_endColor="@color/color_ff"
+            app:shape_radius="100dp"
+            app:shape_startColor="@color/color_f9" />
+
+
+    </LinearLayout>
+
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="@color/color_f0" />
-
-
-    <RelativeLayout
-        android:id="@+id/rl_privacy"
-        android:layout_width="match_parent"
+        android:id="@+id/tv_version_code"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingVertical="19dp"
-        android:paddingStart="24dp"
-        android:paddingEnd="14dp">
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="50dp"
+        android:text=""
+        android:textColor="@color/color_66"
+        android:textSize="12sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:drawableLeft="@drawable/icon_privacy"
-            android:drawablePadding="16dp"
-            android:text="隐私管理"
-            android:textColor="@color/color_17"
-            android:textSize="15sp" />
-
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/iv_gray_back" />
-    </RelativeLayout>
-
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.4dp"
-        android:layout_marginHorizontal="14dp"
-        android:background="@color/color_4d_97" />
-
-    <RelativeLayout
-        android:id="@+id/rl_user"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingVertical="19dp"
-        android:paddingStart="24dp"
-        android:paddingEnd="14dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:drawableLeft="@drawable/icon_about"
-            android:drawablePadding="16dp"
-            android:text="用户协议"
-            android:textColor="@color/color_17"
-            android:textSize="15sp" />
-
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/iv_gray_back" />
-    </RelativeLayout>
-
-
-    <com.hjq.shape.view.ShapeTextView
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="38dp"
-        android:layout_marginHorizontal="46dp"
-        android:layout_marginTop="120dp"
-        android:gravity="center"
-        android:text="切换店铺"
-        android:textColor="@color/white"
-        app:shape_radius="100dp"
-        app:shape_solidColor="@color/color_d4" />
-
-
-    <com.hjq.shape.view.ShapeTextView
-        android:id="@+id/tv_exit"
-        android:layout_width="match_parent"
-        android:layout_height="38dp"
-        android:layout_marginHorizontal="46dp"
-        android:layout_marginTop="120dp"
-        android:gravity="center"
-        android:text="退出登录"
-        android:textColor="@color/white"
-        app:shape_angle="270"
-        app:shape_endColor="@color/color_ff"
-        app:shape_radius="100dp"
-        app:shape_startColor="@color/color_f9" />
-
-</LinearLayout>
+</RelativeLayout>

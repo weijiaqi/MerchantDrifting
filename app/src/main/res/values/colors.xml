@@ -73,4 +73,6 @@
     <color name="result_point_color">#C0FFFF00</color>
 
     <color name="color_black_99000000">#99000000</color><!-- #000000 60% -->
+
+    <color name="color_66">#666666</color>
 </resources>

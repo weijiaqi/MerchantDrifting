@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.google.zxing.activity.CaptureActivity;
 import com.hjq.shape.view.ShapeTextView;
+import com.jess.arms.base.BaseDialog;
 import com.jess.arms.base.BaseEntity;
 import com.jess.arms.base.BaseFragment;
 import com.jess.arms.di.component.AppComponent;
@@ -267,10 +268,15 @@ public class IndexFragment extends BaseFragment<IndexPresenter> implements Index
     @Override
     public void OnShopWriteOff(WriteOffEntity entity) {
         if (entity != null) {
-            getTotal();
-            EventBus.getDefault().post(new RankingEvent());
             verificationDialog = new VerificationDialog(mContext, entity);
+            verificationDialog.setCancelable(false);
             verificationDialog.show();
+            verificationDialog.setOnClickCallback(type -> {
+                if (type == VerificationDialog.SELECT_FINISH) {
+                    getTotal();
+                    EventBus.getDefault().post(new RankingEvent());
+                }
+            });
         }
     }
 

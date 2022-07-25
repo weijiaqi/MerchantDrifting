@@ -208,6 +208,40 @@ public class RequestUtil {
 
 
 
+
+    /**
+     * 商家注销
+     *
+     * @param callBack
+     */
+    public void businessunregister(BaseDataCallBack callBack) {
+        ApiProxy.getApiService().businessunregister()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new BaseObserver<BaseEntity>() {
+
+                    @Override
+                    public void onSubscribe(Disposable disposable) {
+                        mDisposables.put(mRequestCount++, disposable);
+                    }
+
+                    @Override
+                    public void onNext(BaseEntity entity) {
+                        if (callBack != null) {
+                            callBack.getData(entity);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (callBack != null) {
+                            callBack.getData(null);
+                        }
+                    }
+                });
+    }
+
+
     /**
      * 取消订阅
      */

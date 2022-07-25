@@ -11,6 +11,7 @@ import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,7 +21,9 @@ import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.merchant.drifting.R;
 import com.merchant.drifting.mvp.ui.activity.merchant.NewsActivity;
+import com.merchant.drifting.mvp.ui.activity.web.ShowWebViewActivity;
 import com.merchant.drifting.util.ClickUtil;
+import com.merchant.drifting.util.ToastUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -35,6 +38,8 @@ public class OpenShopActivity extends BaseActivity {
     TextView mToolbarTitle;
     @BindView(R.id.tv_protocol)
     TextView mTvProtocol;
+    @BindView(R.id.ck_protocol)
+    CheckBox mCkProtocol;
 
     public static void start(Context context, boolean closePage) {
         Intent intent = new Intent(context, OpenShopActivity.class);
@@ -85,7 +90,7 @@ public class OpenShopActivity extends BaseActivity {
             @Override
             public void onClick(View widget) {
                 if (!ClickUtil.isFastClick(widget.getId())) {
-
+                    ShowWebViewActivity.start(OpenShopActivity.this,3,false);
                 }
             }
 
@@ -107,7 +112,11 @@ public class OpenShopActivity extends BaseActivity {
                     finish();
                     break;
                 case R.id.tv_be_ready:
-                    ApplicationMaterialsActivity.start(this,1,"",false);
+                    if (mCkProtocol.isChecked()) {
+                        ApplicationMaterialsActivity.start(this, 1, "", false);
+                    } else {
+                        ToastUtil.showToast("请勾选是否同意开店协议!");
+                    }
                     break;
             }
         }

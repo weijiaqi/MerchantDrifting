@@ -4,6 +4,7 @@ package com.merchant.drifting.mvp.ui.activity.web;
 
 import static com.merchant.drifting.WebUrlConstant.USER_LICENSE;
 import static com.merchant.drifting.WebUrlConstant.USER_PRIVACY;
+import static com.merchant.drifting.WebUrlConstant.USER_SHOP_AGREEMENT;
 
 import android.app.Activity;
 import android.content.Context;
@@ -102,6 +103,10 @@ public class ShowWebViewActivity extends BaseActivity implements WebLoadingListe
             case 2:
                 mTvTitle.setText("用户协议");
                 mWebView.loadUrl(USER_LICENSE);
+                break;
+            case 3:
+                mTvTitle.setText("开店协议");
+                mWebView.loadUrl(USER_SHOP_AGREEMENT);
                 break;
         }
     }

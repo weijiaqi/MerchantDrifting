@@ -60,7 +60,7 @@ public class VerificationDialog extends BaseDialog implements View.OnClickListen
         mTvTitle.setText(writeOffEntity.getSku_name());
         mTvDesc.setText(writeOffEntity.getIntro());
         mTvPrice.setText("¥" + writeOffEntity.getPrice());
-        GlideUtil.create().loadNormalPic(context,writeOffEntity.getImage(),mIvPic);
+        GlideUtil.create().loadNormalPic(context, writeOffEntity.getImage(), mIvPic);
     }
 
 
@@ -74,7 +74,9 @@ public class VerificationDialog extends BaseDialog implements View.OnClickListen
         switch (view.getId()) {
             case R.id.tv_cofim:
                 dismiss();
-
+                if (onClickCallback != null) {
+                    onClickCallback.onClickType(SELECT_FINISH);
+                }
                 break;
         }
     }

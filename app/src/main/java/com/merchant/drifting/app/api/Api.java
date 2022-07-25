@@ -11,6 +11,6 @@ public class Api {
 
     public static String WEB_BASEURL = "https://metadrift.metapeza.com/";//WEB页面基本地址
 
-    public static String WEB_LINECHART_BASEURL = "https://metadrift.metapeza.com/chart/LineChart.html";
+    public static String WEB_LINECHART_BASEURL = WEB_BASEURL+"chart/LineChart.html";
 
 }
